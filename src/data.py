@@ -123,10 +123,10 @@ def load_dialogs(dataset_name: str, split: str, max_dialogs: int) -> List[List[R
         # Datasets versions differ in the auth kwarg name.
         if token:
             try:
-                return load_dataset(repo_id, split=split, token=token)
+                return load_dataset(repo_id, split=split, token=token, trust_remote_code=True)
             except TypeError:
-                return load_dataset(repo_id, split=split, use_auth_token=token)
-        return load_dataset(repo_id, split=split)
+                return load_dataset(repo_id, split=split, use_auth_token=token, trust_remote_code=True)
+        return load_dataset(repo_id, split=split, trust_remote_code=True)
 
     loaded_name = None
     for name in dataset_order:
