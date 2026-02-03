@@ -25,15 +25,19 @@ def _dedupe(items: List[str]) -> List[str]:
 def _tfidf_top_terms(texts: List[str], ngram_range: tuple, max_items: int) -> List[str]:
     if not texts:
         return []
-    vectorizer = TfidfVectorizer(stop_words="english", ngram_range=ngram_range, min_df=1)
-    tfidf = vectorizer.fit_transform(texts)
-    if tfidf.shape[1] == 0:
+    try:
+        vectorizer = TfidfVectorizer(stop_words="english", ngram_range=ngram_range, min_df=1)
+        tfidf = vectorizer.fit_transform(texts)
+        if tfidf.shape[1] == 0:
+            return []
+        scores = np.asarray(tfidf.sum(axis=0)).ravel()
+        terms = vectorizer.get_feature_names_out()
+        ranked = list(zip(terms, scores))
+        ranked.sort(key=lambda x: x[1], reverse=True)
+        return [t for t, _ in ranked[:max_items]]
+    except ValueError:
+        # Handle case where vocabulary is empty (e.g., all stop words)
         return []
-    scores = np.asarray(tfidf.sum(axis=0)).ravel()
-    terms = vectorizer.get_feature_names_out()
-    ranked = list(zip(terms, scores))
-    ranked.sort(key=lambda x: x[1], reverse=True)
-    return [t for t, _ in ranked[:max_items]]
 
 
 def extract_priors(candidates: List[str], max_keywords: int = 30, max_keyterms: int = 30) -> Dict[str, List[str]]:
