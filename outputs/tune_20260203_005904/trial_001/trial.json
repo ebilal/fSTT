@@ -1,0 +1,21 @@
+{
+  "trial": "trial_001",
+  "score_mrr@10": 0.06174684159378036,
+  "metrics": {
+    "recall@1": 0.025510204081632654,
+    "recall@5": 0.10714285714285714,
+    "recall@10": 0.16326530612244897,
+    "mrr@10": 0.06174684159378036
+  },
+  "config": {
+    "batch_size": 16,
+    "learning_rate": 1.047149293812545e-05,
+    "warmup_ratio": 0.06,
+    "weight_decay": 0.0,
+    "adam_beta1": 0.9,
+    "adam_beta2": 0.999,
+    "adam_eps": 1e-08,
+    "max_grad_norm": 0.0,
+    "grad_accum_steps": 2
+  }
+}

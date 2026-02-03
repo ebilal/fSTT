@@ -1,0 +1,9 @@
+datasets<4.0.0
+sentence-transformers
+torch
+scikit-learn
+numpy
+pandas
+tqdm
+pytest
+pyyaml
