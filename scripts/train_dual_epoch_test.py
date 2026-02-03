@@ -56,6 +56,7 @@ def main() -> None:
     p.add_argument("--max_dialogs_multiwoz", type=int, default=8437)
     p.add_argument("--max_dialogs_dailydialog", type=int, default=11118)
     p.add_argument("--history_turns", type=int, default=6)
+    p.add_argument("--target_role", type=str, default="USER")
 
     p.add_argument("--epochs", type=int, default=5)
     p.add_argument("--batch_size", type=int, default=32)
@@ -96,8 +97,12 @@ def main() -> None:
     mw_train = load_dialogs("multiwoz", split="train", max_dialogs=args.max_dialogs_multiwoz)
     dd_train = load_dialogs("dailydialog", split="train", max_dialogs=args.max_dialogs_dailydialog)
 
-    mw_ex = build_examples(mw_train, history_turns=args.history_turns)
-    dd_ex = build_examples(dd_train, history_turns=args.history_turns)
+    mw_ex = build_examples(
+        mw_train, history_turns=args.history_turns, target_role=args.target_role
+    )
+    dd_ex = build_examples(
+        dd_train, history_turns=args.history_turns, target_role=args.target_role
+    )
     examples: List[Dict] = mw_ex + dd_ex
 
     train_examples, val_examples, test_examples = _split_examples(
@@ -127,6 +132,7 @@ def main() -> None:
             "max_dialogs_multiwoz": args.max_dialogs_multiwoz,
             "max_dialogs_dailydialog": args.max_dialogs_dailydialog,
             "history_turns": args.history_turns,
+            "target_role": args.target_role,
             "seed": args.seed,
             "val_ratio": args.val_ratio,
             "test_ratio": args.test_ratio,

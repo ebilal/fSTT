@@ -177,11 +177,16 @@ def load_dialogs(dataset_name: str, split: str, max_dialogs: int) -> List[List[R
     return dialogs
 
 
-def build_examples(dialogs: Iterable[List[RoleTurn]], history_turns: int) -> List[Dict]:
+def build_examples(
+    dialogs: Iterable[List[RoleTurn]],
+    history_turns: int,
+    target_role: str = "USER",
+) -> List[Dict]:
+    target_role = _normalize_role(target_role)
     examples: List[Dict] = []
     for dialog in dialogs:
         for idx, (role, text) in enumerate(dialog):
-            if role != "USER":
+            if _normalize_role(role) != target_role:
                 continue
             start = max(0, idx - history_turns)
             history = dialog[start:idx]
