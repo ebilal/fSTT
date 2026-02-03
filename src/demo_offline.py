@@ -14,13 +14,15 @@ def main() -> None:
     parser.add_argument("--run", type=str, default="outputs/latest")
     parser.add_argument("--topk", type=int, default=5)
     parser.add_argument("--device", type=str, default="auto")
+    parser.add_argument("--encoder_subdir", type=str, default="encoder")
+    parser.add_argument("--index_subdir", type=str, default="index")
     args = parser.parse_args()
 
     run_dir = resolve_run_dir(args.run)
     device = get_device(args.device)
 
-    encoder = load_encoder(os.path.join(run_dir, "encoder"), device=device)
-    index = VectorIndex.load(os.path.join(run_dir, "index"))
+    encoder = load_encoder(os.path.join(run_dir, args.encoder_subdir), device=device)
+    index = VectorIndex.load(os.path.join(run_dir, args.index_subdir))
 
     examples_path = os.path.join(run_dir, "examples.jsonl")
     examples = load_examples_jsonl(examples_path)
@@ -45,4 +47,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

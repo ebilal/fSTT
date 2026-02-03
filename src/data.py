@@ -3,6 +3,8 @@ import os
 from typing import Dict, Iterable, List, Tuple
 
 from datasets import load_dataset
+from packaging.version import Version
+import datasets as _datasets_pkg
 
 RoleTurn = Tuple[str, str]
 
@@ -77,6 +79,20 @@ def _extract_turns_from_item(item: Dict) -> List[RoleTurn]:
 
 
 def load_dialogs(dataset_name: str, split: str, max_dialogs: int) -> List[List[RoleTurn]]:
+    # Newer `datasets` releases have removed dataset loading scripts (and/or `trust_remote_code`).
+    # MultiWOZ 2.2 and many DailyDialog mirrors are still distributed as loading scripts, so
+    # we require a compatible datasets version.
+    try:
+        ds_ver = Version(getattr(_datasets_pkg, "__version__", "0.0.0"))
+    except Exception:
+        ds_ver = Version("0.0.0")
+    if ds_ver >= Version("4.0.0"):
+        raise RuntimeError(
+            "Your installed 'datasets' version is too new for script-based datasets used here. "
+            f"Detected datasets=={ds_ver}. Please install a 3.x release, e.g. `pip install 'datasets<4.0.0'` "
+            "(and restart the runtime) so MultiWOZ/DailyDialog can load."
+        )
+
     if dataset_name not in {"multiwoz", "dailydialog"}:
         raise ValueError("dataset_name must be 'multiwoz' or 'dailydialog'")
 
@@ -93,6 +109,25 @@ def load_dialogs(dataset_name: str, split: str, max_dialogs: int) -> List[List[R
         # Legacy fallback (may rely on an external zip URL).
         "dailydialog_legacy": "daily_dialog",
     }
+
+    # Respect Hugging Face auth if present. (Public repos work without a token.)
+    # We avoid persisting tokens anywhere; callers should set env vars (e.g. Colab Secrets).
+    token = (
+        os.environ.get("HF_TOKEN")
+        or os.environ.get("HUGGINGFACE_HUB_TOKEN")
+        or os.environ.get("HUGGING_FACE_HUB_TOKEN")
+        or None
+    )
+
+    def _load(repo_id: str):
+        # Datasets versions differ in the auth kwarg name.
+        if token:
+            try:
+                return load_dataset(repo_id, split=split, token=token)
+            except TypeError:
+                return load_dataset(repo_id, split=split, use_auth_token=token)
+        return load_dataset(repo_id, split=split)
+
     loaded_name = None
     for name in dataset_order:
         try:
@@ -100,7 +135,7 @@ def load_dialogs(dataset_name: str, split: str, max_dialogs: int) -> List[List[R
                 for repo_key in ["dailydialog", "dailydialog_legacy"]:
                     repo_id = name_to_repo[repo_key]
                     try:
-                        dataset = load_dataset(repo_id, split=split, trust_remote_code=True)
+                        dataset = _load(repo_id)
                         loaded_name = repo_key
                         break
                     except Exception as exc:
@@ -110,7 +145,7 @@ def load_dialogs(dataset_name: str, split: str, max_dialogs: int) -> List[List[R
                     break
                 continue
             repo_id = name_to_repo[name]
-            dataset = load_dataset(repo_id, split=split, trust_remote_code=True)
+            dataset = _load(repo_id)
             loaded_name = name
             break
         except Exception as exc:

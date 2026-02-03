@@ -31,7 +31,7 @@ def _try_load_splits(dataset_name: str, splits, max_dialogs: int):
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Train listener prior bi-encoder")
-    parser.add_argument("--dataset", type=str, required=True, choices=["multiwoz", "dailydialog"])
+    parser.add_argument("--dataset", type=str, required=True, choices=["multiwoz", "dailydialog", "combined"])
     parser.add_argument("--output_dir", type=str, default=None)
     parser.add_argument("--max_dialogs", type=int, default=2000)
     parser.add_argument("--history_turns", type=int, default=6)
@@ -60,14 +60,31 @@ def main() -> None:
     index_dir = os.path.join(output_dir, "index")
     ensure_dir(output_dir)
 
-    train_dialogs, train_split = _try_load_splits(args.dataset, ["train"], args.max_dialogs)
-    try:
-        eval_dialogs, eval_split = _try_load_splits(
-            args.dataset, ["validation", "dev", "test"], max(args.max_dialogs // 5, 1)
-        )
-    except Exception:
-        eval_dialogs = train_dialogs[: max(args.max_dialogs // 10, 1)]
-        eval_split = train_split
+    if args.dataset == "combined":
+        # Interpret max_dialogs as max per dataset.
+        mw_train, mw_train_split = _try_load_splits("multiwoz", ["train"], args.max_dialogs)
+        dd_train, dd_train_split = _try_load_splits("dailydialog", ["train"], args.max_dialogs)
+        train_dialogs = mw_train + dd_train
+        train_split = f"multiwoz:{mw_train_split}+dailydialog:{dd_train_split}"
+        try:
+            mw_eval, mw_eval_split = _try_load_splits("multiwoz", ["validation", "dev", "test"], max(args.max_dialogs // 5, 1))
+        except Exception:
+            mw_eval, mw_eval_split = mw_train[: max(args.max_dialogs // 10, 1)], mw_train_split
+        try:
+            dd_eval, dd_eval_split = _try_load_splits("dailydialog", ["validation", "dev", "test"], max(args.max_dialogs // 5, 1))
+        except Exception:
+            dd_eval, dd_eval_split = dd_train[: max(args.max_dialogs // 10, 1)], dd_train_split
+        eval_dialogs = mw_eval + dd_eval
+        eval_split = f"multiwoz:{mw_eval_split}+dailydialog:{dd_eval_split}"
+    else:
+        train_dialogs, train_split = _try_load_splits(args.dataset, ["train"], args.max_dialogs)
+        try:
+            eval_dialogs, eval_split = _try_load_splits(
+                args.dataset, ["validation", "dev", "test"], max(args.max_dialogs // 5, 1)
+            )
+        except Exception:
+            eval_dialogs = train_dialogs[: max(args.max_dialogs // 10, 1)]
+            eval_split = train_split
 
     train_examples = build_examples(train_dialogs, history_turns=args.history_turns)
     eval_examples = build_examples(eval_dialogs, history_turns=args.history_turns)

@@ -7,3 +7,4 @@ pandas
 tqdm
 pytest
 pyyaml
+packaging

@@ -13,7 +13,7 @@ from src.utils import ensure_dir, get_device, timestamp_run_id, write_json, writ
 
 def main() -> None:
     p = argparse.ArgumentParser(description="Long-running training with periodic eval + best checkpoint")
-    p.add_argument("--dataset", type=str, required=True, choices=["multiwoz", "dailydialog"])
+    p.add_argument("--dataset", type=str, required=True, choices=["multiwoz", "dailydialog", "combined"])
     p.add_argument("--output_dir", type=str, default=None)
     p.add_argument("--max_dialogs", type=int, default=8437)
     p.add_argument("--history_turns", type=int, default=6)
@@ -25,12 +25,12 @@ def main() -> None:
     # Tuned defaults (also used by scripts/train.py)
     p.add_argument("--model_name", type=str, default="sentence-transformers/all-MiniLM-L6-v2")
     p.add_argument("--batch_size", type=int, default=32)
-    p.add_argument("--learning_rate", type=float, default=4.4e-5)
+    p.add_argument("--learning_rate", type=float, default=4.3e-5)
     p.add_argument("--warmup_ratio", type=float, default=0.0)
-    p.add_argument("--weight_decay", type=float, default=0.0)
+    p.add_argument("--weight_decay", type=float, default=0.01)
     p.add_argument("--adam_beta1", type=float, default=0.95)
     p.add_argument("--adam_beta2", type=float, default=0.98)
-    p.add_argument("--adam_eps", type=float, default=1e-6)
+    p.add_argument("--adam_eps", type=float, default=1e-8)
     p.add_argument("--max_grad_norm", type=float, default=0.0)
     p.add_argument("--grad_accum_steps", type=int, default=2)
 
@@ -40,12 +40,28 @@ def main() -> None:
     output_dir = args.output_dir or os.path.join("outputs", timestamp_run_id(prefix="long"))
     ensure_dir(output_dir)
 
-    train_dialogs = load_dialogs(args.dataset, split="train", max_dialogs=args.max_dialogs)
-    # Prefer validation, but fall back to a subset of train.
-    try:
-        eval_dialogs = load_dialogs(args.dataset, split="validation", max_dialogs=max(args.max_dialogs // 5, 1))
-    except Exception:
-        eval_dialogs = train_dialogs[: max(args.max_dialogs // 10, 1)]
+    if args.dataset == "combined":
+        # Interpret max_dialogs as max per dataset.
+        mw_train = load_dialogs("multiwoz", split="train", max_dialogs=args.max_dialogs)
+        dd_train = load_dialogs("dailydialog", split="train", max_dialogs=args.max_dialogs)
+        train_dialogs = mw_train + dd_train
+        # Prefer validation, but fall back to a subset of train.
+        try:
+            mw_eval = load_dialogs("multiwoz", split="validation", max_dialogs=max(args.max_dialogs // 5, 1))
+        except Exception:
+            mw_eval = mw_train[: max(args.max_dialogs // 10, 1)]
+        try:
+            dd_eval = load_dialogs("dailydialog", split="validation", max_dialogs=max(args.max_dialogs // 5, 1))
+        except Exception:
+            dd_eval = dd_train[: max(args.max_dialogs // 10, 1)]
+        eval_dialogs = mw_eval + dd_eval
+    else:
+        train_dialogs = load_dialogs(args.dataset, split="train", max_dialogs=args.max_dialogs)
+        # Prefer validation, but fall back to a subset of train.
+        try:
+            eval_dialogs = load_dialogs(args.dataset, split="validation", max_dialogs=max(args.max_dialogs // 5, 1))
+        except Exception:
+            eval_dialogs = train_dialogs[: max(args.max_dialogs // 10, 1)]
 
     train_examples = build_examples(train_dialogs, history_turns=args.history_turns)
     eval_examples = build_examples(eval_dialogs, history_turns=args.history_turns)
