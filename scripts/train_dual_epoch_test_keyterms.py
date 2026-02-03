@@ -18,10 +18,9 @@ from tqdm import tqdm
 from transformers import get_linear_schedule_with_warmup
 
 from src.data import build_examples, load_dialogs, write_examples_jsonl
-from src.eval import evaluate_retrieval
+from src.prior import extract_priors
 from src.index import VectorIndex
 from src.model import build_input_examples, encode_texts
-from src.prior import extract_priors
 from src.utils import ensure_dir, get_device, timestamp_run_id, write_json, write_latest_pointer
 
 
@@ -43,16 +42,69 @@ def _split_examples(
     return train, val, test
 
 
-def _eval_on_pool(model: SentenceTransformer, examples: List[Dict], max_keywords: int = 30, max_keyterms: int = 30) -> Dict[str, float]:
-    targets = [ex["target_text"] for ex in examples]
-    emb = encode_texts(model, targets)
-    idx = VectorIndex.build(emb, targets, prefer_faiss=True)
-    retrieval_metrics = evaluate_retrieval(model, idx, examples, topk_list=[1, 5, 10])
+def build_keyterm_examples(
+    dialogs: List[List[Tuple[str, str]]],
+    history_turns: int,
+    target_role: str = "SYSTEM",
+    max_keywords: int = 30,
+    max_keyterms: int = 30,
+) -> List[Dict]:
+    """Build examples where target is keyterms/keywords instead of full text."""
+    from src.data import _normalize_role
     
-    # Also evaluate keyterm prediction: extract keyterms from retrieved utterances
+    target_role = _normalize_role(target_role)
+    examples: List[Dict] = []
+    
+    for dialog in dialogs:
+        for idx, (role, text) in enumerate(dialog):
+            if _normalize_role(role) != target_role:
+                continue
+            start = max(0, idx - history_turns)
+            history = dialog[start:idx]
+            if not history:
+                continue
+            history_text = "\n".join([f"{r}: {t}" for r, t in history])
+            
+            # Extract keyterms from the target utterance
+            keyterms_dict = extract_priors([text], max_keywords=max_keywords, max_keyterms=max_keyterms)
+            
+            # Combine keywords and keyterms into a single target string for training
+            # This is what the model will learn to predict
+            all_keyterms = keyterms_dict["keywords"] + keyterms_dict["keyterms"]
+            target_keyterms_text = ", ".join(all_keyterms) if all_keyterms else ""
+            
+            examples.append({
+                "history_text": history_text,
+                "target_text": target_keyterms_text,  # Use keyterms as target for training
+                "target_original_text": text,  # Keep original for reference/evaluation
+                "target_keywords": keyterms_dict["keywords"],
+                "target_keyterms": keyterms_dict["keyterms"],
+            })
+    return examples
+
+
+def _eval_keyterm_retrieval(
+    model: SentenceTransformer,
+    examples: List[Dict],
+    topk: int = 10,
+) -> Dict[str, float]:
+    """Evaluate keyterm prediction by retrieving top-k keyterm candidates and checking overlap."""
+    if not examples:
+        return {
+            "keyterm_precision@5": 0.0, "keyterm_recall@5": 0.0,
+            "keyterm_precision@10": 0.0, "keyterm_recall@10": 0.0,
+            "keyword_precision@5": 0.0, "keyword_recall@5": 0.0,
+            "keyword_precision@10": 0.0, "keyword_recall@10": 0.0,
+        }
+    
+    # Build index from all target keyterm strings (what model was trained to predict)
+    target_keyterm_texts = [ex["target_text"] for ex in examples]  # These are keyterm strings
+    target_emb = encode_texts(model, target_keyterm_texts)
+    index = VectorIndex.build(target_emb, target_keyterm_texts, prefer_faiss=True)
+    
     histories = [ex["history_text"] for ex in examples]
     query_emb = encode_texts(model, histories)
-    indices, _ = idx.retrieve(query_emb, 10)  # Retrieve top 10
+    indices, _ = index.retrieve(query_emb, topk)
     
     keyword_precisions_5 = []
     keyword_recalls_5 = []
@@ -64,26 +116,52 @@ def _eval_on_pool(model: SentenceTransformer, examples: List[Dict], max_keywords
     keyterm_recalls_10 = []
     
     for i, row in enumerate(indices):
-        # Get retrieved utterances
-        retrieved_utterances_10 = [targets[idx] for idx in row]
-        retrieved_utterances_5 = retrieved_utterances_10[:5]
+        # Retrieved keyterm strings (comma-separated) - top 10
+        retrieved_keyterm_strings = [index.target_texts[idx] for idx in row]
         
-        # Extract keyterms from retrieved utterances
-        retrieved_keyterms_10 = extract_priors(retrieved_utterances_10, max_keywords=max_keywords, max_keyterms=max_keyterms)
-        retrieved_keyterms_5 = extract_priors(retrieved_utterances_5, max_keywords=max_keywords, max_keyterms=max_keyterms)
+        # For @5: use first 5 retrieved strings
+        retrieved_keyterm_strings_5 = retrieved_keyterm_strings[:5]
         
-        # Extract keyterms from ground truth utterance
-        gt_keyterms = extract_priors([targets[i]], max_keywords=max_keywords, max_keyterms=max_keyterms)
+        # Parse retrieved keyterms back into lists by splitting on commas
+        # Collect all terms from top-10 retrieved keyterm strings
+        all_retrieved_terms_10 = []
+        for kt_string in retrieved_keyterm_strings:
+            if kt_string:  # Handle empty strings
+                terms = [t.strip() for t in kt_string.split(",") if t.strip()]
+                all_retrieved_terms_10.extend(terms)
         
-        gt_keywords = set(k.lower() for k in gt_keyterms["keywords"])
-        gt_keyterms_set = set(k.lower() for k in gt_keyterms["keyterms"])
+        # Collect all terms from top-5 retrieved keyterm strings
+        all_retrieved_terms_5 = []
+        for kt_string in retrieved_keyterm_strings_5:
+            if kt_string:  # Handle empty strings
+                terms = [t.strip() for t in kt_string.split(",") if t.strip()]
+                all_retrieved_terms_5.extend(terms)
         
-        pred_keywords_5 = set(k.lower() for k in retrieved_keyterms_5["keywords"])
-        pred_keyterms_5 = set(k.lower() for k in retrieved_keyterms_5["keyterms"])
-        pred_keywords_10 = set(k.lower() for k in retrieved_keyterms_10["keywords"])
-        pred_keyterms_10 = set(k.lower() for k in retrieved_keyterms_10["keyterms"])
+        # Classify as keyword (single word) or keyterm (multi-word) for @10
+        pred_keywords_10 = set()
+        pred_keyterms_10 = set()
+        for term in all_retrieved_terms_10:
+            words = term.split()
+            if len(words) == 1:
+                pred_keywords_10.add(term.lower())
+            elif len(words) >= 2:  # Multi-word phrases are keyterms
+                pred_keyterms_10.add(term.lower())
         
-        # Calculate @5 metrics
+        # Classify as keyword (single word) or keyterm (multi-word) for @5
+        pred_keywords_5 = set()
+        pred_keyterms_5 = set()
+        for term in all_retrieved_terms_5:
+            words = term.split()
+            if len(words) == 1:
+                pred_keywords_5.add(term.lower())
+            elif len(words) >= 2:  # Multi-word phrases are keyterms
+                pred_keyterms_5.add(term.lower())
+        
+        # Ground truth keyterms (normalized to lowercase for comparison)
+        gt_keywords = set(k.lower() for k in examples[i]["target_keywords"])
+        gt_keyterms = set(k.lower() for k in examples[i]["target_keyterms"])
+        
+        # @5 metrics
         if pred_keywords_5:
             keyword_prec_5 = len(gt_keywords & pred_keywords_5) / len(pred_keywords_5)
             keyword_precisions_5.append(keyword_prec_5)
@@ -97,18 +175,18 @@ def _eval_on_pool(model: SentenceTransformer, examples: List[Dict], max_keywords
             keyword_recalls_5.append(0.0)
         
         if pred_keyterms_5:
-            keyterm_prec_5 = len(gt_keyterms_set & pred_keyterms_5) / len(pred_keyterms_5)
+            keyterm_prec_5 = len(gt_keyterms & pred_keyterms_5) / len(pred_keyterms_5)
             keyterm_precisions_5.append(keyterm_prec_5)
         else:
             keyterm_precisions_5.append(0.0)
         
-        if gt_keyterms_set:
-            keyterm_rec_5 = len(gt_keyterms_set & pred_keyterms_5) / len(gt_keyterms_set)
+        if gt_keyterms:
+            keyterm_rec_5 = len(gt_keyterms & pred_keyterms_5) / len(gt_keyterms)
             keyterm_recalls_5.append(keyterm_rec_5)
         else:
             keyterm_recalls_5.append(0.0)
         
-        # Calculate @10 metrics
+        # @10 metrics (all retrieved)
         if pred_keywords_10:
             keyword_prec_10 = len(gt_keywords & pred_keywords_10) / len(pred_keywords_10)
             keyword_precisions_10.append(keyword_prec_10)
@@ -122,56 +200,36 @@ def _eval_on_pool(model: SentenceTransformer, examples: List[Dict], max_keywords
             keyword_recalls_10.append(0.0)
         
         if pred_keyterms_10:
-            keyterm_prec_10 = len(gt_keyterms_set & pred_keyterms_10) / len(pred_keyterms_10)
+            keyterm_prec_10 = len(gt_keyterms & pred_keyterms_10) / len(pred_keyterms_10)
             keyterm_precisions_10.append(keyterm_prec_10)
         else:
             keyterm_precisions_10.append(0.0)
         
-        if gt_keyterms_set:
-            keyterm_rec_10 = len(gt_keyterms_set & pred_keyterms_10) / len(gt_keyterms_set)
+        if gt_keyterms:
+            keyterm_rec_10 = len(gt_keyterms & pred_keyterms_10) / len(gt_keyterms)
             keyterm_recalls_10.append(keyterm_rec_10)
         else:
             keyterm_recalls_10.append(0.0)
     
-    # Calculate F1 scores
-    keyterm_f1_5 = 0.0
-    if sum(keyterm_precisions_5) + sum(keyterm_recalls_5) > 0:
-        avg_prec_5 = sum(keyterm_precisions_5) / len(keyterm_precisions_5) if keyterm_precisions_5 else 0.0
-        avg_rec_5 = sum(keyterm_recalls_5) / len(keyterm_recalls_5) if keyterm_recalls_5 else 0.0
-        if avg_prec_5 + avg_rec_5 > 0:
-            keyterm_f1_5 = (2 * avg_prec_5 * avg_rec_5) / (avg_prec_5 + avg_rec_5)
-    
-    keyterm_f1_10 = 0.0
-    if sum(keyterm_precisions_10) + sum(keyterm_recalls_10) > 0:
-        avg_prec_10 = sum(keyterm_precisions_10) / len(keyterm_precisions_10) if keyterm_precisions_10 else 0.0
-        avg_rec_10 = sum(keyterm_recalls_10) / len(keyterm_recalls_10) if keyterm_recalls_10 else 0.0
-        if avg_prec_10 + avg_rec_10 > 0:
-            keyterm_f1_10 = (2 * avg_prec_10 * avg_rec_10) / (avg_prec_10 + avg_rec_10)
-    
-    retrieval_metrics.update({
-        "keyterm_precision@5": sum(keyterm_precisions_5) / len(keyterm_precisions_5) if keyterm_precisions_5 else 0.0,
-        "keyterm_recall@5": sum(keyterm_recalls_5) / len(keyterm_recalls_5) if keyterm_recalls_5 else 0.0,
-        "keyterm_f1@5": keyterm_f1_5,
-        "keyterm_precision@10": sum(keyterm_precisions_10) / len(keyterm_precisions_10) if keyterm_precisions_10 else 0.0,
-        "keyterm_recall@10": sum(keyterm_recalls_10) / len(keyterm_recalls_10) if keyterm_recalls_10 else 0.0,
-        "keyterm_f1@10": keyterm_f1_10,
+    return {
         "keyword_precision@5": sum(keyword_precisions_5) / len(keyword_precisions_5) if keyword_precisions_5 else 0.0,
         "keyword_recall@5": sum(keyword_recalls_5) / len(keyword_recalls_5) if keyword_recalls_5 else 0.0,
+        "keyterm_precision@5": sum(keyterm_precisions_5) / len(keyterm_precisions_5) if keyterm_precisions_5 else 0.0,
+        "keyterm_recall@5": sum(keyterm_recalls_5) / len(keyterm_recalls_5) if keyterm_recalls_5 else 0.0,
         "keyword_precision@10": sum(keyword_precisions_10) / len(keyword_precisions_10) if keyword_precisions_10 else 0.0,
         "keyword_recall@10": sum(keyword_recalls_10) / len(keyword_recalls_10) if keyword_recalls_10 else 0.0,
-    })
-    
-    return retrieval_metrics
+        "keyterm_precision@10": sum(keyterm_precisions_10) / len(keyterm_precisions_10) if keyterm_precisions_10 else 0.0,
+        "keyterm_recall@10": sum(keyterm_recalls_10) / len(keyterm_recalls_10) if keyterm_recalls_10 else 0.0,
+    }
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="Colab-friendly dual-dataset training with epoch test eval + save-best")
+    p = argparse.ArgumentParser(description="Colab-friendly dual-dataset training optimized for keyterm prediction")
     p.add_argument("--output_dir", type=str, default=None)
 
     p.add_argument("--max_dialogs_multiwoz", type=int, default=8437)
     p.add_argument("--max_dialogs_dailydialog", type=int, default=11118)
     p.add_argument("--history_turns", type=int, default=6)
-    p.add_argument("--target_role", type=str, default="USER")
 
     p.add_argument("--epochs", type=int, default=5)
     p.add_argument("--batch_size", type=int, default=32)
@@ -191,6 +249,7 @@ def main() -> None:
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--val_ratio", type=float, default=0.05)
     p.add_argument("--test_ratio", type=float, default=0.15)
+    p.add_argument("--target_role", type=str, default="SYSTEM")
     p.add_argument("--max_keywords", type=int, default=30)
     p.add_argument("--max_keyterms", type=int, default=30)
     p.add_argument("--save_train_index", type=str, default="true")
@@ -200,7 +259,7 @@ def main() -> None:
     save_train_index = args.save_train_index.lower() == "true"
 
     output_dir = args.output_dir or os.path.join(
-        "outputs", timestamp_run_id(prefix="dual_run")
+        "outputs", timestamp_run_id(prefix="keyterms_run")
     )
     ensure_dir(output_dir)
 
@@ -214,12 +273,11 @@ def main() -> None:
     mw_train = load_dialogs("multiwoz", split="train", max_dialogs=args.max_dialogs_multiwoz)
     dd_train = load_dialogs("dailydialog", split="train", max_dialogs=args.max_dialogs_dailydialog)
 
-    mw_ex = build_examples(
-        mw_train, history_turns=args.history_turns, target_role=args.target_role
-    )
-    dd_ex = build_examples(
-        dd_train, history_turns=args.history_turns, target_role=args.target_role
-    )
+    print("Building keyterm examples...")
+    mw_ex = build_keyterm_examples(mw_train, history_turns=args.history_turns, target_role=args.target_role, 
+                                   max_keywords=args.max_keywords, max_keyterms=args.max_keyterms)
+    dd_ex = build_keyterm_examples(dd_train, history_turns=args.history_turns, target_role=args.target_role,
+                                   max_keywords=args.max_keywords, max_keyterms=args.max_keyterms)
     examples: List[Dict] = mw_ex + dd_ex
 
     train_examples, val_examples, test_examples = _split_examples(
@@ -242,6 +300,7 @@ def main() -> None:
         os.path.join(output_dir, "metadata.json"),
         {
             "dataset": "combined",
+            "optimization_goal": "keyterm_prediction",
             "sources": {
                 "multiwoz_repo": "pfb30/multi_woz_v22",
                 "dailydialog_repo": "roskoN/dailydialog",
@@ -277,10 +336,13 @@ def main() -> None:
         },
     )
 
+    # Train directly on keyterm targets - model learns to predict keyterms from history
     model = SentenceTransformer(args.model_name, device=device)
     loss_fn = losses.MultipleNegativesRankingLoss(model)
 
-    train_input = build_input_examples(train_examples)
+    # Build examples for training - target is keyterms, not full text
+    # This directly optimizes the model to predict keyterms
+    train_input = build_input_examples(train_examples)  # Uses target_text which is now keyterms
     train_dl = DataLoader(
         train_input,
         shuffle=True,
@@ -315,17 +377,36 @@ def main() -> None:
     print("="*60)
     model.eval()
     with torch.no_grad():
-        val_metrics = _eval_on_pool(model, val_examples, max_keywords=args.max_keywords, max_keyterms=args.max_keyterms) if val_examples else {}
-        test_metrics = _eval_on_pool(model, test_examples, max_keywords=args.max_keywords, max_keyterms=args.max_keyterms)
-    print(f"  Test Set - Keyterm F1@5:  {test_metrics.get('keyterm_f1@5', 0.0):.6f}, "
-          f"Keyterm F1@10: {test_metrics.get('keyterm_f1@10', 0.0):.6f}")
-    print(f"  Test Set - MRR@10: {test_metrics.get('mrr@10', 0.0):.6f}, "
-          f"Recall@1: {test_metrics.get('recall@1', 0.0):.6f}, "
-          f"Recall@5: {test_metrics.get('recall@5', 0.0):.6f}, "
-          f"Recall@10: {test_metrics.get('recall@10', 0.0):.6f}")
+        val_metrics = _eval_keyterm_retrieval(model, val_examples) if val_examples else {}
+        test_metrics = _eval_keyterm_retrieval(model, test_examples)
+    test_keyterm_f1_5 = 0.0
+    if test_metrics.get('keyterm_precision@5', 0.0) + test_metrics.get('keyterm_recall@5', 0.0) > 0:
+        test_keyterm_f1_5 = (2 * test_metrics.get('keyterm_precision@5', 0.0) * test_metrics.get('keyterm_recall@5', 0.0)) / \
+                           (test_metrics.get('keyterm_precision@5', 0.0) + test_metrics.get('keyterm_recall@5', 0.0))
+    test_keyterm_f1_10 = 0.0
+    if test_metrics.get('keyterm_precision@10', 0.0) + test_metrics.get('keyterm_recall@10', 0.0) > 0:
+        test_keyterm_f1_10 = (2 * test_metrics.get('keyterm_precision@10', 0.0) * test_metrics.get('keyterm_recall@10', 0.0)) / \
+                            (test_metrics.get('keyterm_precision@10', 0.0) + test_metrics.get('keyterm_recall@10', 0.0))
+    
+    print(f"  Test Set - Keyterm Precision@5:  {test_metrics.get('keyterm_precision@5', 0.0):.6f}, "
+          f"Keyterm Recall@5:  {test_metrics.get('keyterm_recall@5', 0.0):.6f}, "
+          f"Keyterm F1@5:  {test_keyterm_f1_5:.6f}")
+    print(f"  Test Set - Keyterm Precision@10: {test_metrics.get('keyterm_precision@10', 0.0):.6f}, "
+          f"Keyterm Recall@10: {test_metrics.get('keyterm_recall@10', 0.0):.6f}, "
+          f"Keyterm F1@10: {test_keyterm_f1_10:.6f}")
+    print(f"  Test Set - Keyword Precision@10: {test_metrics.get('keyword_precision@10', 0.0):.6f}, "
+          f"Keyword Recall@10: {test_metrics.get('keyword_recall@10', 0.0):.6f}")
     if val_metrics:
-        print(f"  Val Set   - Keyterm F1@5:  {val_metrics.get('keyterm_f1@5', 0.0):.6f}, "
-              f"Keyterm F1@10: {val_metrics.get('keyterm_f1@10', 0.0):.6f}")
+        val_keyterm_f1_5 = 0.0
+        if val_metrics.get('keyterm_precision@5', 0.0) + val_metrics.get('keyterm_recall@5', 0.0) > 0:
+            val_keyterm_f1_5 = (2 * val_metrics.get('keyterm_precision@5', 0.0) * val_metrics.get('keyterm_recall@5', 0.0)) / \
+                              (val_metrics.get('keyterm_precision@5', 0.0) + val_metrics.get('keyterm_recall@5', 0.0))
+        val_keyterm_f1_10 = 0.0
+        if val_metrics.get('keyterm_precision@10', 0.0) + val_metrics.get('keyterm_recall@10', 0.0) > 0:
+            val_keyterm_f1_10 = (2 * val_metrics.get('keyterm_precision@10', 0.0) * val_metrics.get('keyterm_recall@10', 0.0)) / \
+                               (val_metrics.get('keyterm_precision@10', 0.0) + val_metrics.get('keyterm_recall@10', 0.0))
+        print(f"  Val Set   - Keyterm F1@5:  {val_keyterm_f1_5:.6f}, "
+              f"Keyterm F1@10: {val_keyterm_f1_10:.6f}")
     print("="*60 + "\n")
 
     optimizer.zero_grad(set_to_none=True)
@@ -350,30 +431,58 @@ def main() -> None:
 
             progress.set_postfix({"loss": f"{loss.item():.4f}"})
 
-        # Evaluate each epoch. (We keep a val split for monitoring, but select best on test per request.)
+        # Evaluate each epoch on keyterm metrics
         model.eval()
         with torch.no_grad():
-            val_metrics = _eval_on_pool(model, val_examples, max_keywords=args.max_keywords, max_keyterms=args.max_keyterms) if val_examples else {}
-            test_metrics = _eval_on_pool(model, test_examples, max_keywords=args.max_keywords, max_keyterms=args.max_keyterms)
+            val_metrics = _eval_keyterm_retrieval(model, val_examples) if val_examples else {}
+            test_metrics = _eval_keyterm_retrieval(model, test_examples)
 
-        # Print performance metrics on test set - focused on keyterm recovery
+        # Calculate F1 scores for @5 and @10
+        keyterm_f1_5 = 0.0
+        if test_metrics.get('keyterm_precision@5', 0.0) + test_metrics.get('keyterm_recall@5', 0.0) > 0:
+            keyterm_f1_5 = (2 * test_metrics.get('keyterm_precision@5', 0.0) * test_metrics.get('keyterm_recall@5', 0.0)) / \
+                          (test_metrics.get('keyterm_precision@5', 0.0) + test_metrics.get('keyterm_recall@5', 0.0))
+        
+        keyterm_f1_10 = 0.0
+        if test_metrics.get('keyterm_precision@10', 0.0) + test_metrics.get('keyterm_recall@10', 0.0) > 0:
+            keyterm_f1_10 = (2 * test_metrics.get('keyterm_precision@10', 0.0) * test_metrics.get('keyterm_recall@10', 0.0)) / \
+                           (test_metrics.get('keyterm_precision@10', 0.0) + test_metrics.get('keyterm_recall@10', 0.0))
+        
+        keyword_f1_10 = 0.0
+        if test_metrics.get('keyword_precision@10', 0.0) + test_metrics.get('keyword_recall@10', 0.0) > 0:
+            keyword_f1_10 = (2 * test_metrics.get('keyword_precision@10', 0.0) * test_metrics.get('keyword_recall@10', 0.0)) / \
+                           (test_metrics.get('keyword_precision@10', 0.0) + test_metrics.get('keyword_recall@10', 0.0))
+        
+        test_metrics["keyterm_f1@5"] = keyterm_f1_5
+        test_metrics["keyterm_f1@10"] = keyterm_f1_10
+        test_metrics["keyword_f1@10"] = keyword_f1_10
+
+        # Print performance metrics on test set
         print(f"\n{'='*60}")
-        print(f"Epoch {epoch}/{args.epochs} - Test Set Performance (Keyterm Recovery):")
+        print(f"Epoch {epoch}/{args.epochs} - Keyterm Prediction Performance (Test Set):")
         print(f"{'='*60}")
         print(f"  Keyterm Precision@5:  {test_metrics.get('keyterm_precision@5', 0.0):.6f}")
         print(f"  Keyterm Recall@5:     {test_metrics.get('keyterm_recall@5', 0.0):.6f}")
-        print(f"  Keyterm F1@5:         {test_metrics.get('keyterm_f1@5', 0.0):.6f}")
+        print(f"  Keyterm F1@5:         {keyterm_f1_5:.6f}")
         print(f"  Keyterm Precision@10: {test_metrics.get('keyterm_precision@10', 0.0):.6f}")
         print(f"  Keyterm Recall@10:    {test_metrics.get('keyterm_recall@10', 0.0):.6f}")
-        print(f"  Keyterm F1@10:        {test_metrics.get('keyterm_f1@10', 0.0):.6f}")
-        print(f"\n  (Also: MRR@10: {test_metrics.get('mrr@10', 0.0):.6f}, "
-              f"Recall@1: {test_metrics.get('recall@1', 0.0):.6f}, "
-              f"Recall@5: {test_metrics.get('recall@5', 0.0):.6f}, "
-              f"Recall@10: {test_metrics.get('recall@10', 0.0):.6f})")
+        print(f"  Keyterm F1@10:        {keyterm_f1_10:.6f}")
+        print(f"  Keyword Precision@10: {test_metrics.get('keyword_precision@10', 0.0):.6f}")
+        print(f"  Keyword Recall@10:   {test_metrics.get('keyword_recall@10', 0.0):.6f}")
+        print(f"  Keyword F1@10:        {keyword_f1_10:.6f}")
         if val_metrics:
             print(f"\n  Validation Set Performance:")
-            print(f"    Keyterm F1@5:         {val_metrics.get('keyterm_f1@5', 0.0):.6f}")
-            print(f"    Keyterm F1@10:        {val_metrics.get('keyterm_f1@10', 0.0):.6f}")
+            val_keyterm_f1_5 = 0.0
+            if val_metrics.get('keyterm_precision@5', 0.0) + val_metrics.get('keyterm_recall@5', 0.0) > 0:
+                val_keyterm_f1_5 = (2 * val_metrics.get('keyterm_precision@5', 0.0) * val_metrics.get('keyterm_recall@5', 0.0)) / \
+                                  (val_metrics.get('keyterm_precision@5', 0.0) + val_metrics.get('keyterm_recall@5', 0.0))
+            val_keyterm_f1_10 = 0.0
+            if val_metrics.get('keyterm_precision@10', 0.0) + val_metrics.get('keyterm_recall@10', 0.0) > 0:
+                val_keyterm_f1_10 = (2 * val_metrics.get('keyterm_precision@10', 0.0) * val_metrics.get('keyterm_recall@10', 0.0)) / \
+                                   (val_metrics.get('keyterm_precision@10', 0.0) + val_metrics.get('keyterm_recall@10', 0.0))
+            print(f"    Keyterm F1@5:         {val_keyterm_f1_5:.6f}")
+            print(f"    Keyterm F1@10:        {val_keyterm_f1_10:.6f}")
+            print(f"    Keyword F1@10:        {val_metrics.get('keyword_f1@10', 0.0):.6f}")
         print(f"{'='*60}\n")
 
         record = {
@@ -385,20 +494,19 @@ def main() -> None:
         history.append(record)
         write_json(os.path.join(output_dir, "eval_history.json"), {"history": history})
 
-        # Use keyterm F1@10 as primary selection metric (same as keyterms notebook)
-        score = float(test_metrics.get("keyterm_f1@10", 0.0))
-        best_score = float(best.get("keyterm_f1@10", float("-inf")))
+        score = keyterm_f1_10  # Still use F1@10 for model selection
+        best_score = float(best["keyterm_f1@10"])
         if score > best_score:
             print(f"🎉 NEW BEST MODEL! (Keyterm F1@10 improved from {best_score:.6f} to {score:.6f})")
             best = {
                 "epoch": epoch,
-                "keyterm_f1@5": test_metrics.get("keyterm_f1@5", 0.0),
+                "keyterm_f1@5": keyterm_f1_5,
                 "keyterm_f1@10": score,
-                "mrr@10": test_metrics.get("mrr@10", 0.0),
                 "metrics": test_metrics,
                 "model_name": args.model_name,
                 "model_type": "SentenceTransformer",
                 "base_model": args.model_name,
+                "optimization_goal": "keyterm_prediction",
                 "training_config": {
                     "batch_size": args.batch_size,
                     "learning_rate": args.learning_rate,
@@ -429,28 +537,28 @@ def main() -> None:
                 f"Model Information:",
                 f"  Model Type: SentenceTransformer",
                 f"  Base Model: {args.model_name}",
+                f"  Optimization Goal: Keyterm Prediction",
                 f"",
-                f"Test Set Performance (Keyterm Recovery):",
+                f"Test Set Performance (Keyterm Prediction):",
                 f"  Keyterm Precision@5:  {test_metrics.get('keyterm_precision@5', 0.0):.6f}",
                 f"  Keyterm Recall@5:     {test_metrics.get('keyterm_recall@5', 0.0):.6f}",
-                f"  Keyterm F1@5:         {test_metrics.get('keyterm_f1@5', 0.0):.6f}",
+                f"  Keyterm F1@5:         {keyterm_f1_5:.6f}",
                 f"  Keyterm Precision@10: {test_metrics.get('keyterm_precision@10', 0.0):.6f}",
                 f"  Keyterm Recall@10:    {test_metrics.get('keyterm_recall@10', 0.0):.6f}",
                 f"  Keyterm F1@10:        {score:.6f} ⭐ (selection metric)",
-                f"",
-                f"  (Also: MRR@10: {test_metrics.get('mrr@10', 0.0):.6f}, "
-                f"Recall@1: {test_metrics.get('recall@1', 0.0):.6f}, "
-                f"Recall@5: {test_metrics.get('recall@5', 0.0):.6f}, "
-                f"Recall@10: {test_metrics.get('recall@10', 0.0):.6f})",
+                f"  Keyword Precision@10: {test_metrics.get('keyword_precision@10', 0.0):.6f}",
+                f"  Keyword Recall@10:   {test_metrics.get('keyword_recall@10', 0.0):.6f}",
+                f"  Keyword F1@10:        {keyword_f1:.6f}",
             ]
             if val_metrics:
+                val_keyterm_f1 = 0.0
+                if val_metrics.get('keyterm_precision@10', 0.0) + val_metrics.get('keyterm_recall@10', 0.0) > 0:
+                    val_keyterm_f1 = (2 * val_metrics.get('keyterm_precision@10', 0.0) * val_metrics.get('keyterm_recall@10', 0.0)) / \
+                                    (val_metrics.get('keyterm_precision@10', 0.0) + val_metrics.get('keyterm_recall@10', 0.0))
                 note_lines += [
                     "",
                     f"Validation Set Performance:",
-                    f"  MRR@10:     {val_metrics.get('mrr@10', 0.0):.6f}",
-                    f"  Recall@1:   {val_metrics.get('recall@1', 0.0):.6f}",
-                    f"  Recall@5:   {val_metrics.get('recall@5', 0.0):.6f}",
-                    f"  Recall@10:  {val_metrics.get('recall@10', 0.0):.6f}",
+                    f"  Keyterm F1@10:        {val_keyterm_f1:.6f}",
                 ]
             note_lines += [
                 "",
@@ -505,17 +613,14 @@ def main() -> None:
     print(f"\nBest Model Summary:")
     print(f"  Epoch:                {best['epoch']}")
     print(f"  Model:                {best.get('model_name', args.model_name)}")
-    print(f"  Optimization Goal:    Keyterm Recovery")
-    print(f"  Test Keyterm F1@5:     {best.get('keyterm_f1@5', 0.0):.6f}")
-    print(f"  Test Keyterm F1@10:    {best.get('keyterm_f1@10', 0.0):.6f} ⭐ (selection metric)")
+    print(f"  Optimization Goal:   Keyterm Prediction")
+    print(f"  Test Keyterm F1@5:    {best.get('keyterm_f1@5', 0.0):.6f}")
+    print(f"  Test Keyterm F1@10:   {best['keyterm_f1@10']:.6f} ⭐ (selection metric)")
     print(f"  Test Keyterm Precision@5:  {best['metrics'].get('keyterm_precision@5', 0.0):.6f}")
     print(f"  Test Keyterm Recall@5:     {best['metrics'].get('keyterm_recall@5', 0.0):.6f}")
     print(f"  Test Keyterm Precision@10: {best['metrics'].get('keyterm_precision@10', 0.0):.6f}")
     print(f"  Test Keyterm Recall@10:    {best['metrics'].get('keyterm_recall@10', 0.0):.6f}")
-    print(f"  (Also: MRR@10: {best['metrics'].get('mrr@10', 0.0):.6f}, "
-          f"Recall@1: {best['metrics'].get('recall@1', 0.0):.6f}, "
-          f"Recall@5: {best['metrics'].get('recall@5', 0.0):.6f}, "
-          f"Recall@10: {best['metrics'].get('recall@10', 0.0):.6f})")
+    print(f"  Test Keyword F1@10:   {best['metrics'].get('keyword_f1@10', 0.0):.6f}")
     print(f"\nOutput Directory: {output_dir}")
     print(f"Best Model Saved:  {os.path.join(output_dir, 'encoder_best')}")
     print(f"Best Eval JSON:    {os.path.join(output_dir, 'best_eval.json')}")
