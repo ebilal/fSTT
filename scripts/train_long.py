@@ -32,7 +32,7 @@ def main() -> None:
     p.add_argument("--adam_beta2", type=float, default=0.98)
     p.add_argument("--adam_eps", type=float, default=1e-6)
     p.add_argument("--max_grad_norm", type=float, default=0.0)
-    p.add_argument("--grad_accum_steps", type=int, default=1)
+    p.add_argument("--grad_accum_steps", type=int, default=2)
 
     args = p.parse_args()
 

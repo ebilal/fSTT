@@ -62,15 +62,21 @@ def sample_trial(rng: random.Random) -> TrialConfig:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Hyperparameter tuning for listener prior bi-encoder")
-    parser.add_argument("--dataset", type=str, required=True, choices=["multiwoz", "dailydialog"])
+    parser.add_argument("--dataset", type=str, required=True, choices=["multiwoz", "dailydialog", "combined"])
     parser.add_argument("--output_dir", type=str, default=None)
-    parser.add_argument("--max_dialogs", type=int, default=500)
+    parser.add_argument("--max_dialogs", type=int, default=500, help="Used for single-dataset tuning.")
+    parser.add_argument("--max_dialogs_multiwoz", type=int, default=800, help="Used when --dataset combined.")
+    parser.add_argument("--max_dialogs_dailydialog", type=int, default=1000, help="Used when --dataset combined.")
     parser.add_argument("--history_turns", type=int, default=6)
     parser.add_argument("--epochs", type=int, default=1)
     parser.add_argument("--device", type=str, default="auto")
     parser.add_argument("--trials", type=int, default=8)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--model_name", type=str, default="sentence-transformers/all-MiniLM-L6-v2")
+    parser.add_argument("--val_ratio", type=float, default=0.05)
+    parser.add_argument("--test_ratio", type=float, default=0.15)
+    parser.add_argument("--max_val_examples", type=int, default=2000)
+    parser.add_argument("--max_test_examples", type=int, default=4000)
     args = parser.parse_args()
 
     device = get_device(args.device)
@@ -79,22 +85,53 @@ def main() -> None:
     output_dir = args.output_dir or os.path.join("outputs", timestamp_run_id(prefix="tune"))
     ensure_dir(output_dir)
 
-    train_dialogs = _try_load_split(args.dataset, "train", args.max_dialogs)
-    try:
-        eval_dialogs = _try_load_split(args.dataset, "validation", max(args.max_dialogs // 5, 1))
-    except Exception:
-        eval_dialogs = train_dialogs[: max(args.max_dialogs // 10, 1)]
+    if args.dataset == "combined":
+        # Build combined examples, then split into train/val/test.
+        mw_dialogs = _try_load_split("multiwoz", "train", args.max_dialogs_multiwoz)
+        dd_dialogs = _try_load_split("dailydialog", "train", args.max_dialogs_dailydialog)
 
-    train_examples = build_examples(train_dialogs, history_turns=args.history_turns)
-    eval_examples = build_examples(eval_dialogs, history_turns=args.history_turns)
-    if len(train_examples) < 50 or len(eval_examples) < 10:
-        raise ValueError(f"Not enough examples for tuning (train={len(train_examples)}, eval={len(eval_examples)})")
+        mw_ex = build_examples(mw_dialogs, history_turns=args.history_turns)
+        dd_ex = build_examples(dd_dialogs, history_turns=args.history_turns)
+        all_examples = mw_ex + dd_ex
+        rng.shuffle(all_examples)
+
+        n = len(all_examples)
+        val_n = int(n * args.val_ratio)
+        test_n = int(n * args.test_ratio)
+        train_n = n - val_n - test_n
+        if train_n <= 0 or val_n <= 0 or test_n <= 0:
+            raise ValueError(f"Invalid split sizes: n={n}, train={train_n}, val={val_n}, test={test_n}")
+
+        train_examples = all_examples[:train_n]
+        val_examples = all_examples[train_n : train_n + val_n]
+        test_examples = all_examples[train_n + val_n :]
+    else:
+        train_dialogs = _try_load_split(args.dataset, "train", args.max_dialogs)
+        try:
+            eval_dialogs = _try_load_split(args.dataset, "validation", max(args.max_dialogs // 5, 1))
+        except Exception:
+            eval_dialogs = train_dialogs[: max(args.max_dialogs // 10, 1)]
+
+        train_examples = build_examples(train_dialogs, history_turns=args.history_turns)
+        val_examples = build_examples(eval_dialogs, history_turns=args.history_turns)
+        test_examples = val_examples
+
+    if args.max_val_examples and len(val_examples) > args.max_val_examples:
+        val_examples = val_examples[: args.max_val_examples]
+    if args.max_test_examples and len(test_examples) > args.max_test_examples:
+        test_examples = test_examples[: args.max_test_examples]
+
+    if len(train_examples) < 200 or len(val_examples) < 50 or len(test_examples) < 50:
+        raise ValueError(
+            f"Not enough examples for tuning (train={len(train_examples)}, val={len(val_examples)}, test={len(test_examples)})"
+        )
 
     examples_path = os.path.join(output_dir, "examples.jsonl")
     if os.path.exists(examples_path):
         os.remove(examples_path)
     write_examples_jsonl(examples_path, train_examples, split="train")
-    write_examples_jsonl(examples_path, eval_examples, split="eval")
+    write_examples_jsonl(examples_path, val_examples, split="val")
+    write_examples_jsonl(examples_path, test_examples, split="test")
 
     best_score = -1.0
     best_trial = None
@@ -124,23 +161,29 @@ def main() -> None:
             gradient_accumulation_steps=trial_cfg.grad_accum_steps,
         )
 
-        # Save an index for inspection (mainly for qualitative); eval uses eval-pool index.
+        # Save an index for inspection (mainly for qualitative); selection uses val/test pool indices.
         train_targets = [ex["target_text"] for ex in train_examples]
         train_emb = encode_texts(encoder, train_targets)
         train_index = VectorIndex.build(train_emb, train_targets, prefer_faiss=True)
         train_index.save(index_dir)
 
-        eval_targets = [ex["target_text"] for ex in eval_examples]
-        eval_emb = encode_texts(encoder, eval_targets)
-        eval_index = VectorIndex.build(eval_emb, eval_targets, prefer_faiss=True)
+        val_targets = [ex["target_text"] for ex in val_examples]
+        val_emb = encode_texts(encoder, val_targets)
+        val_index = VectorIndex.build(val_emb, val_targets, prefer_faiss=True)
+        val_metrics = evaluate_retrieval(encoder, val_index, val_examples)
 
-        metrics = evaluate_retrieval(encoder, eval_index, eval_examples)
-        score = float(metrics.get("mrr@10", 0.0))
+        test_targets = [ex["target_text"] for ex in test_examples]
+        test_emb = encode_texts(encoder, test_targets)
+        test_index = VectorIndex.build(test_emb, test_targets, prefer_faiss=True)
+        test_metrics = evaluate_retrieval(encoder, test_index, test_examples)
+
+        score = float(val_metrics.get("mrr@10", 0.0))
 
         record = {
             "trial": trial_id,
-            "score_mrr@10": score,
-            "metrics": metrics,
+            "score_mrr@10_val": score,
+            "val_metrics": val_metrics,
+            "test_metrics": test_metrics,
             "config": asdict(trial_cfg),
         }
         results.append(record)
@@ -151,14 +194,14 @@ def main() -> None:
             best_trial = record
             write_latest_pointer(os.path.join(output_dir, "best"), trial_dir)
             write_json(os.path.join(output_dir, "best_trial.json"), best_trial)
-            print(f"New best: {trial_id} mrr@10={best_score:.4f}")
+            print(f"New best: {trial_id} val_mrr@10={best_score:.4f} (test_mrr@10={test_metrics.get('mrr@10', 0.0):.4f})")
 
     write_json(os.path.join(output_dir, "all_trials.json"), {"results": results})
     if best_trial is None:
         raise RuntimeError("No successful trials")
 
     write_latest_pointer(os.path.join("outputs", "latest_tune"), output_dir)
-    print(f"Tuning finished. Best mrr@10={best_score:.4f}")
+    print(f"Tuning finished. Best val_mrr@10={best_score:.4f}")
     print(f"Best trial dir: {os.path.join(output_dir, best_trial['trial'])}")
 
 

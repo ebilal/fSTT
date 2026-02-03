@@ -26,6 +26,21 @@ def _extract_text(turn: Dict) -> str:
 def _extract_turns_from_item(item: Dict) -> List[RoleTurn]:
     turns: List[RoleTurn] = []
 
+    # DailyDialog (roskoN/dailydialog) style: a single list of utterances.
+    # Roles are not explicitly provided; alternate USER/SYSTEM by index.
+    if "utterances" in item and isinstance(item["utterances"], list) and item["utterances"]:
+        utterances = item["utterances"]
+        for i, text in enumerate(utterances):
+            if not isinstance(text, str):
+                continue
+            text = text.strip()
+            if not text:
+                continue
+            role = "USER" if i % 2 == 0 else "SYSTEM"
+            turns.append((role, text))
+        if turns:
+            return turns
+
     if "turns" in item and isinstance(item["turns"], dict):
         speakers = item["turns"].get("speaker") or []
         utterances = item["turns"].get("utterance") or []
@@ -73,18 +88,20 @@ def load_dialogs(dataset_name: str, split: str, max_dialogs: int) -> List[List[R
     dataset = None
     name_to_repo = {
         "multiwoz": "pfb30/multi_woz_v22",
-        "dailydialog": "daily_dialog",
-        "dailydialog_alt": "roskoN/dailydialog",
+        # Prefer the HF-hosted DailyDialog mirror (no external zip link).
+        "dailydialog": "roskoN/dailydialog",
+        # Legacy fallback (may rely on an external zip URL).
+        "dailydialog_legacy": "daily_dialog",
     }
     loaded_name = None
     for name in dataset_order:
         try:
             if name == "dailydialog":
-                for repo_key in ["dailydialog_alt", "dailydialog"]:
+                for repo_key in ["dailydialog", "dailydialog_legacy"]:
                     repo_id = name_to_repo[repo_key]
                     try:
                         dataset = load_dataset(repo_id, split=split, trust_remote_code=True)
-                        loaded_name = name if repo_key == "dailydialog" else "dailydialog_alt"
+                        loaded_name = repo_key
                         break
                     except Exception as exc:
                         last_error = exc
@@ -106,8 +123,10 @@ def load_dialogs(dataset_name: str, split: str, max_dialogs: int) -> List[List[R
             f"Failed to load dataset(s) for split '{split}'. "
             f"Last error: {last_error}"
         )
-    if loaded_name and loaded_name != dataset_name:
+    if loaded_name and loaded_name not in {dataset_name, "dailydialog"}:
         print(f"Warning: falling back to '{loaded_name}' for split '{split}'.")
+    if dataset_name == "dailydialog" and loaded_name == "dailydialog_legacy":
+        print(f"Warning: using legacy 'daily_dialog' source for split '{split}'. Prefer 'roskoN/dailydialog'.")
 
     dialogs: List[List[RoleTurn]] = []
     for item in dataset:

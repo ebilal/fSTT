@@ -41,15 +41,15 @@ def main() -> None:
     parser.add_argument("--build_index", type=str, default="true")
     parser.add_argument("--topk", type=int, default=5)
     parser.add_argument("--model_name", type=str, default="sentence-transformers/all-MiniLM-L6-v2")
-    # Tuned defaults (see scripts/tune.py): conservative batch size, CPU-friendly.
-    parser.add_argument("--learning_rate", type=float, default=4.4e-5)
+    # Tuned defaults (see scripts/tune.py for combined MultiWOZ+DailyDialog tuning).
+    parser.add_argument("--learning_rate", type=float, default=4.3e-5)
     parser.add_argument("--warmup_ratio", type=float, default=0.0)
-    parser.add_argument("--weight_decay", type=float, default=0.0)
+    parser.add_argument("--weight_decay", type=float, default=0.01)
     parser.add_argument("--adam_beta1", type=float, default=0.95)
     parser.add_argument("--adam_beta2", type=float, default=0.98)
-    parser.add_argument("--adam_eps", type=float, default=1e-6)
+    parser.add_argument("--adam_eps", type=float, default=1e-8)
     parser.add_argument("--max_grad_norm", type=float, default=0.0)
-    parser.add_argument("--grad_accum_steps", type=int, default=1)
+    parser.add_argument("--grad_accum_steps", type=int, default=2)
     args = parser.parse_args()
 
     device = get_device(args.device)

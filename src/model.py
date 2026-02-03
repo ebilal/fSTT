@@ -19,13 +19,14 @@ def train_biencoder(
     epochs: int,
     batch_size: int,
     output_dir: str,
-    learning_rate: float = 4.4e-5,
+    # Tuned defaults for combined (MultiWOZ + DailyDialog) training.
+    learning_rate: float = 4.3e-5,
     warmup_ratio: float = 0.0,
-    weight_decay: float = 0.0,
+    weight_decay: float = 0.01,
     adam_betas: Tuple[float, float] = (0.95, 0.98),
-    adam_eps: float = 1e-6,
+    adam_eps: float = 1e-8,
     max_grad_norm: float = 0.0,
-    gradient_accumulation_steps: int = 1,
+    gradient_accumulation_steps: int = 2,
 ) -> SentenceTransformer:
     model = SentenceTransformer(model_name, device=device)
     input_examples = build_input_examples(train_examples)
