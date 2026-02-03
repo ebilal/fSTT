@@ -20,8 +20,7 @@ Both use the public Colab notebooks in `notebooks/`.
 Notebook: `notebooks/colab_train_gpu_public_dual_dataset.ipynb`
 
 1. **Upload the notebook** to Colab (File → Upload notebook) or open it from GitHub.
-2. In **Cell 1**, set:
-   - `REPO_URL = "https://github.com/<YOUR_GITHUB_USERNAME>/<YOUR_REPO_NAME>.git"`
+2. The notebook is already configured with `REPO_URL = "https://github.com/ebilal/fSTT.git"` (no changes needed).
 3. (Optional) In Colab: **Tools → Secrets**, add a secret:
    - `HF_TOKEN` (Hugging Face token, recommended for faster/less rate-limited downloads)
 4. Run cells from top to bottom:
@@ -45,8 +44,7 @@ Notes:
 Notebook: `notebooks/colab_train_gpu_public_dual_dataset_keyterms.ipynb`
 
 1. **Upload the notebook** to Colab (File → Upload notebook) or open it from GitHub.
-2. In **Cell 1**, set:
-   - `REPO_URL = "https://github.com/<YOUR_GITHUB_USERNAME>/<YOUR_REPO_NAME>.git"`
+2. The notebook is already configured with `REPO_URL = "https://github.com/ebilal/fSTT.git"` (no changes needed).
 3. (Optional) In Colab: **Tools → Secrets**, add:
    - `HF_TOKEN`
 4. Run cells from top to bottom:
