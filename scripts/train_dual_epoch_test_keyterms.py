@@ -86,7 +86,7 @@ def build_keyterm_examples(
 def _eval_keyterm_retrieval(
     model: SentenceTransformer,
     examples: List[Dict],
-    topk: int = 20,
+    topk: int = 30,
 ) -> Dict[str, float]:
     """Evaluate keyterm prediction by retrieving top-k keyterm candidates and checking overlap."""
     if not examples:
@@ -94,9 +94,11 @@ def _eval_keyterm_retrieval(
             "keyterm_precision@5": 0.0, "keyterm_recall@5": 0.0,
             "keyterm_precision@10": 0.0, "keyterm_recall@10": 0.0,
             "keyterm_precision@20": 0.0, "keyterm_recall@20": 0.0,
+            "keyterm_precision@30": 0.0, "keyterm_recall@30": 0.0,
             "keyword_precision@5": 0.0, "keyword_recall@5": 0.0,
             "keyword_precision@10": 0.0, "keyword_recall@10": 0.0,
             "keyword_precision@20": 0.0, "keyword_recall@20": 0.0,
+            "keyword_precision@30": 0.0, "keyword_recall@30": 0.0,
         }
     
     # Build index from all target keyterm strings (what model was trained to predict)
@@ -120,20 +122,33 @@ def _eval_keyterm_retrieval(
     keyword_recalls_20 = []
     keyterm_precisions_20 = []
     keyterm_recalls_20 = []
+    keyword_precisions_30 = []
+    keyword_recalls_30 = []
+    keyterm_precisions_30 = []
+    keyterm_recalls_30 = []
     
     for i, row in enumerate(indices):
-        # Retrieved keyterm strings (comma-separated) - top 20
+        # Retrieved keyterm strings (comma-separated) - top 30
         retrieved_keyterm_strings = [index.target_texts[idx] for idx in row]
         
         # For @5: use first 5 retrieved strings
         retrieved_keyterm_strings_5 = retrieved_keyterm_strings[:5]
         # For @10: use first 10 retrieved strings
         retrieved_keyterm_strings_10 = retrieved_keyterm_strings[:10]
+        # For @20: use first 20 retrieved strings
+        retrieved_keyterm_strings_20 = retrieved_keyterm_strings[:20]
         
         # Parse retrieved keyterms back into lists by splitting on commas
+        # Collect all terms from top-30 retrieved keyterm strings
+        all_retrieved_terms_30 = []
+        for kt_string in retrieved_keyterm_strings:
+            if kt_string:  # Handle empty strings
+                terms = [t.strip() for t in kt_string.split(",") if t.strip()]
+                all_retrieved_terms_30.extend(terms)
+        
         # Collect all terms from top-20 retrieved keyterm strings
         all_retrieved_terms_20 = []
-        for kt_string in retrieved_keyterm_strings:
+        for kt_string in retrieved_keyterm_strings_20:
             if kt_string:  # Handle empty strings
                 terms = [t.strip() for t in kt_string.split(",") if t.strip()]
                 all_retrieved_terms_20.extend(terms)
@@ -151,6 +166,16 @@ def _eval_keyterm_retrieval(
             if kt_string:  # Handle empty strings
                 terms = [t.strip() for t in kt_string.split(",") if t.strip()]
                 all_retrieved_terms_5.extend(terms)
+        
+        # Classify as keyword (single word) or keyterm (multi-word) for @30
+        pred_keywords_30 = set()
+        pred_keyterms_30 = set()
+        for term in all_retrieved_terms_30:
+            words = term.split()
+            if len(words) == 1:
+                pred_keywords_30.add(term.lower())
+            elif len(words) >= 2:  # Multi-word phrases are keyterms
+                pred_keyterms_30.add(term.lower())
         
         # Classify as keyword (single word) or keyterm (multi-word) for @20
         pred_keywords_20 = set()
@@ -260,6 +285,31 @@ def _eval_keyterm_retrieval(
             keyterm_recalls_20.append(keyterm_rec_20)
         else:
             keyterm_recalls_20.append(0.0)
+        
+        # @30 metrics
+        if pred_keywords_30:
+            keyword_prec_30 = len(gt_keywords & pred_keywords_30) / len(pred_keywords_30)
+            keyword_precisions_30.append(keyword_prec_30)
+        else:
+            keyword_precisions_30.append(0.0)
+        
+        if gt_keywords:
+            keyword_rec_30 = len(gt_keywords & pred_keywords_30) / len(gt_keywords)
+            keyword_recalls_30.append(keyword_rec_30)
+        else:
+            keyword_recalls_30.append(0.0)
+        
+        if pred_keyterms_30:
+            keyterm_prec_30 = len(gt_keyterms & pred_keyterms_30) / len(pred_keyterms_30)
+            keyterm_precisions_30.append(keyterm_prec_30)
+        else:
+            keyterm_precisions_30.append(0.0)
+        
+        if gt_keyterms:
+            keyterm_rec_30 = len(gt_keyterms & pred_keyterms_30) / len(gt_keyterms)
+            keyterm_recalls_30.append(keyterm_rec_30)
+        else:
+            keyterm_recalls_30.append(0.0)
     
     return {
         "keyword_precision@5": sum(keyword_precisions_5) / len(keyword_precisions_5) if keyword_precisions_5 else 0.0,
@@ -274,6 +324,10 @@ def _eval_keyterm_retrieval(
         "keyword_recall@20": sum(keyword_recalls_20) / len(keyword_recalls_20) if keyword_recalls_20 else 0.0,
         "keyterm_precision@20": sum(keyterm_precisions_20) / len(keyterm_precisions_20) if keyterm_precisions_20 else 0.0,
         "keyterm_recall@20": sum(keyterm_recalls_20) / len(keyterm_recalls_20) if keyterm_recalls_20 else 0.0,
+        "keyword_precision@30": sum(keyword_precisions_30) / len(keyword_precisions_30) if keyword_precisions_30 else 0.0,
+        "keyword_recall@30": sum(keyword_recalls_30) / len(keyword_recalls_30) if keyword_recalls_30 else 0.0,
+        "keyterm_precision@30": sum(keyterm_precisions_30) / len(keyterm_precisions_30) if keyterm_precisions_30 else 0.0,
+        "keyterm_recall@30": sum(keyterm_recalls_30) / len(keyterm_recalls_30) if keyterm_recalls_30 else 0.0,
     }
 
 
@@ -452,6 +506,10 @@ def main() -> None:
           f"Keyword Recall@10: {test_metrics.get('keyword_recall@10', 0.0):.6f}")
     print(f"  Test Set - Keyword Precision@20: {test_metrics.get('keyword_precision@20', 0.0):.6f}, "
           f"Keyword Recall@20: {test_metrics.get('keyword_recall@20', 0.0):.6f} ⭐ (selection metric)")
+    print(f"  Test Set - Keyword Precision@30: {test_metrics.get('keyword_precision@30', 0.0):.6f}, "
+          f"Keyword Recall@30: {test_metrics.get('keyword_recall@30', 0.0):.6f}")
+    print(f"  Test Set - Keyterm Precision@30: {test_metrics.get('keyterm_precision@30', 0.0):.6f}, "
+          f"Keyterm Recall@30: {test_metrics.get('keyterm_recall@30', 0.0):.6f}")
     if val_metrics:
         val_keyterm_f1_5 = 0.0
         if val_metrics.get('keyterm_precision@5', 0.0) + val_metrics.get('keyterm_recall@5', 0.0) > 0:
@@ -530,6 +588,10 @@ def main() -> None:
         print(f"  Keyword F1@10:        {keyword_f1_10:.6f}")
         print(f"  Keyword Precision@20: {test_metrics.get('keyword_precision@20', 0.0):.6f}")
         print(f"  Keyword Recall@20:   {test_metrics.get('keyword_recall@20', 0.0):.6f} ⭐ (selection metric)")
+        print(f"  Keyword Precision@30: {test_metrics.get('keyword_precision@30', 0.0):.6f}")
+        print(f"  Keyword Recall@30:   {test_metrics.get('keyword_recall@30', 0.0):.6f}")
+        print(f"  Keyterm Precision@30: {test_metrics.get('keyterm_precision@30', 0.0):.6f}")
+        print(f"  Keyterm Recall@30:   {test_metrics.get('keyterm_recall@30', 0.0):.6f}")
         if val_metrics:
             print(f"\n  Validation Set Performance:")
             val_keyterm_f1_5 = 0.0
@@ -614,6 +676,10 @@ def main() -> None:
                 f"  Keyword F1@10:        {keyword_f1_10:.6f}",
                 f"  Keyword Precision@20: {test_metrics.get('keyword_precision@20', 0.0):.6f}",
                 f"  Keyword Recall@20:   {score:.6f} ⭐ (selection metric)",
+                f"  Keyword Precision@30: {test_metrics.get('keyword_precision@30', 0.0):.6f}",
+                f"  Keyword Recall@30:   {test_metrics.get('keyword_recall@30', 0.0):.6f}",
+                f"  Keyterm Precision@30: {test_metrics.get('keyterm_precision@30', 0.0):.6f}",
+                f"  Keyterm Recall@30:   {test_metrics.get('keyterm_recall@30', 0.0):.6f}",
             ]
             if val_metrics:
                 val_keyterm_f1 = 0.0
@@ -692,6 +758,10 @@ def main() -> None:
     print(f"  Test Keyword F1@10:        {best['metrics'].get('keyword_f1@10', 0.0):.6f}")
     print(f"  Test Keyword Precision@20: {best['metrics'].get('keyword_precision@20', 0.0):.6f}")
     print(f"  Test Keyword Recall@20:    {best.get('keyword_recall@20', 0.0):.6f} ⭐ (selection metric)")
+    print(f"  Test Keyword Precision@30: {best['metrics'].get('keyword_precision@30', 0.0):.6f}")
+    print(f"  Test Keyword Recall@30:    {best['metrics'].get('keyword_recall@30', 0.0):.6f}")
+    print(f"  Test Keyterm Precision@30: {best['metrics'].get('keyterm_precision@30', 0.0):.6f}")
+    print(f"  Test Keyterm Recall@30:    {best['metrics'].get('keyterm_recall@30', 0.0):.6f}")
     print(f"\nOutput Directory: {output_dir}")
     print(f"Best Model Saved:  {os.path.join(output_dir, 'encoder_best')}")
     print(f"Best Eval JSON:    {os.path.join(output_dir, 'best_eval.json')}")
