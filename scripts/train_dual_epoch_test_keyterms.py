@@ -548,7 +548,7 @@ def main() -> None:
                 f"  Keyterm F1@10:        {score:.6f} ⭐ (selection metric)",
                 f"  Keyword Precision@10: {test_metrics.get('keyword_precision@10', 0.0):.6f}",
                 f"  Keyword Recall@10:   {test_metrics.get('keyword_recall@10', 0.0):.6f}",
-                f"  Keyword F1@10:        {keyword_f1:.6f}",
+                f"  Keyword F1@10:        {keyword_f1_10:.6f}",
             ]
             if val_metrics:
                 val_keyterm_f1 = 0.0
