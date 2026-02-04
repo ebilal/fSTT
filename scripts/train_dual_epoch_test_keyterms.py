@@ -86,15 +86,17 @@ def build_keyterm_examples(
 def _eval_keyterm_retrieval(
     model: SentenceTransformer,
     examples: List[Dict],
-    topk: int = 10,
+    topk: int = 20,
 ) -> Dict[str, float]:
     """Evaluate keyterm prediction by retrieving top-k keyterm candidates and checking overlap."""
     if not examples:
         return {
             "keyterm_precision@5": 0.0, "keyterm_recall@5": 0.0,
             "keyterm_precision@10": 0.0, "keyterm_recall@10": 0.0,
+            "keyterm_precision@20": 0.0, "keyterm_recall@20": 0.0,
             "keyword_precision@5": 0.0, "keyword_recall@5": 0.0,
             "keyword_precision@10": 0.0, "keyword_recall@10": 0.0,
+            "keyword_precision@20": 0.0, "keyword_recall@20": 0.0,
         }
     
     # Build index from all target keyterm strings (what model was trained to predict)
@@ -114,18 +116,31 @@ def _eval_keyterm_retrieval(
     keyword_recalls_10 = []
     keyterm_precisions_10 = []
     keyterm_recalls_10 = []
+    keyword_precisions_20 = []
+    keyword_recalls_20 = []
+    keyterm_precisions_20 = []
+    keyterm_recalls_20 = []
     
     for i, row in enumerate(indices):
-        # Retrieved keyterm strings (comma-separated) - top 10
+        # Retrieved keyterm strings (comma-separated) - top 20
         retrieved_keyterm_strings = [index.target_texts[idx] for idx in row]
         
         # For @5: use first 5 retrieved strings
         retrieved_keyterm_strings_5 = retrieved_keyterm_strings[:5]
+        # For @10: use first 10 retrieved strings
+        retrieved_keyterm_strings_10 = retrieved_keyterm_strings[:10]
         
         # Parse retrieved keyterms back into lists by splitting on commas
+        # Collect all terms from top-20 retrieved keyterm strings
+        all_retrieved_terms_20 = []
+        for kt_string in retrieved_keyterm_strings:
+            if kt_string:  # Handle empty strings
+                terms = [t.strip() for t in kt_string.split(",") if t.strip()]
+                all_retrieved_terms_20.extend(terms)
+        
         # Collect all terms from top-10 retrieved keyterm strings
         all_retrieved_terms_10 = []
-        for kt_string in retrieved_keyterm_strings:
+        for kt_string in retrieved_keyterm_strings_10:
             if kt_string:  # Handle empty strings
                 terms = [t.strip() for t in kt_string.split(",") if t.strip()]
                 all_retrieved_terms_10.extend(terms)
@@ -136,6 +151,16 @@ def _eval_keyterm_retrieval(
             if kt_string:  # Handle empty strings
                 terms = [t.strip() for t in kt_string.split(",") if t.strip()]
                 all_retrieved_terms_5.extend(terms)
+        
+        # Classify as keyword (single word) or keyterm (multi-word) for @20
+        pred_keywords_20 = set()
+        pred_keyterms_20 = set()
+        for term in all_retrieved_terms_20:
+            words = term.split()
+            if len(words) == 1:
+                pred_keywords_20.add(term.lower())
+            elif len(words) >= 2:  # Multi-word phrases are keyterms
+                pred_keyterms_20.add(term.lower())
         
         # Classify as keyword (single word) or keyterm (multi-word) for @10
         pred_keywords_10 = set()
@@ -186,7 +211,7 @@ def _eval_keyterm_retrieval(
         else:
             keyterm_recalls_5.append(0.0)
         
-        # @10 metrics (all retrieved)
+        # @10 metrics
         if pred_keywords_10:
             keyword_prec_10 = len(gt_keywords & pred_keywords_10) / len(pred_keywords_10)
             keyword_precisions_10.append(keyword_prec_10)
@@ -210,6 +235,31 @@ def _eval_keyterm_retrieval(
             keyterm_recalls_10.append(keyterm_rec_10)
         else:
             keyterm_recalls_10.append(0.0)
+        
+        # @20 metrics
+        if pred_keywords_20:
+            keyword_prec_20 = len(gt_keywords & pred_keywords_20) / len(pred_keywords_20)
+            keyword_precisions_20.append(keyword_prec_20)
+        else:
+            keyword_precisions_20.append(0.0)
+        
+        if gt_keywords:
+            keyword_rec_20 = len(gt_keywords & pred_keywords_20) / len(gt_keywords)
+            keyword_recalls_20.append(keyword_rec_20)
+        else:
+            keyword_recalls_20.append(0.0)
+        
+        if pred_keyterms_20:
+            keyterm_prec_20 = len(gt_keyterms & pred_keyterms_20) / len(pred_keyterms_20)
+            keyterm_precisions_20.append(keyterm_prec_20)
+        else:
+            keyterm_precisions_20.append(0.0)
+        
+        if gt_keyterms:
+            keyterm_rec_20 = len(gt_keyterms & pred_keyterms_20) / len(gt_keyterms)
+            keyterm_recalls_20.append(keyterm_rec_20)
+        else:
+            keyterm_recalls_20.append(0.0)
     
     return {
         "keyword_precision@5": sum(keyword_precisions_5) / len(keyword_precisions_5) if keyword_precisions_5 else 0.0,
@@ -220,6 +270,10 @@ def _eval_keyterm_retrieval(
         "keyword_recall@10": sum(keyword_recalls_10) / len(keyword_recalls_10) if keyword_recalls_10 else 0.0,
         "keyterm_precision@10": sum(keyterm_precisions_10) / len(keyterm_precisions_10) if keyterm_precisions_10 else 0.0,
         "keyterm_recall@10": sum(keyterm_recalls_10) / len(keyterm_recalls_10) if keyterm_recalls_10 else 0.0,
+        "keyword_precision@20": sum(keyword_precisions_20) / len(keyword_precisions_20) if keyword_precisions_20 else 0.0,
+        "keyword_recall@20": sum(keyword_recalls_20) / len(keyword_recalls_20) if keyword_recalls_20 else 0.0,
+        "keyterm_precision@20": sum(keyterm_precisions_20) / len(keyterm_precisions_20) if keyterm_precisions_20 else 0.0,
+        "keyterm_recall@20": sum(keyterm_recalls_20) / len(keyterm_recalls_20) if keyterm_recalls_20 else 0.0,
     }
 
 
@@ -367,7 +421,7 @@ def main() -> None:
         optimizer, num_warmup_steps=warmup_steps, num_training_steps=total_steps
     )
 
-    best = {"epoch": 0, "keyterm_f1@10": float("-inf"), "metrics": {}}
+    best = {"epoch": 0, "keyword_recall@20": float("-inf"), "metrics": {}}
     history: List[Dict] = []
     start_ts = time.time()
 
@@ -396,6 +450,8 @@ def main() -> None:
           f"Keyterm F1@10: {test_keyterm_f1_10:.6f}")
     print(f"  Test Set - Keyword Precision@10: {test_metrics.get('keyword_precision@10', 0.0):.6f}, "
           f"Keyword Recall@10: {test_metrics.get('keyword_recall@10', 0.0):.6f}")
+    print(f"  Test Set - Keyword Precision@20: {test_metrics.get('keyword_precision@20', 0.0):.6f}, "
+          f"Keyword Recall@20: {test_metrics.get('keyword_recall@20', 0.0):.6f} ⭐ (selection metric)")
     if val_metrics:
         val_keyterm_f1_5 = 0.0
         if val_metrics.get('keyterm_precision@5', 0.0) + val_metrics.get('keyterm_recall@5', 0.0) > 0:
@@ -467,9 +523,13 @@ def main() -> None:
         print(f"  Keyterm Precision@10: {test_metrics.get('keyterm_precision@10', 0.0):.6f}")
         print(f"  Keyterm Recall@10:    {test_metrics.get('keyterm_recall@10', 0.0):.6f}")
         print(f"  Keyterm F1@10:        {keyterm_f1_10:.6f}")
+        print(f"  Keyterm Precision@20: {test_metrics.get('keyterm_precision@20', 0.0):.6f}")
+        print(f"  Keyterm Recall@20:    {test_metrics.get('keyterm_recall@20', 0.0):.6f}")
         print(f"  Keyword Precision@10: {test_metrics.get('keyword_precision@10', 0.0):.6f}")
         print(f"  Keyword Recall@10:   {test_metrics.get('keyword_recall@10', 0.0):.6f}")
         print(f"  Keyword F1@10:        {keyword_f1_10:.6f}")
+        print(f"  Keyword Precision@20: {test_metrics.get('keyword_precision@20', 0.0):.6f}")
+        print(f"  Keyword Recall@20:   {test_metrics.get('keyword_recall@20', 0.0):.6f} ⭐ (selection metric)")
         if val_metrics:
             print(f"\n  Validation Set Performance:")
             val_keyterm_f1_5 = 0.0
@@ -494,14 +554,15 @@ def main() -> None:
         history.append(record)
         write_json(os.path.join(output_dir, "eval_history.json"), {"history": history})
 
-        score = keyterm_f1_10  # Still use F1@10 for model selection
-        best_score = float(best["keyterm_f1@10"])
+        score = test_metrics.get('keyword_recall@20', 0.0)  # Use Keyword Recall@20 for model selection
+        best_score = float(best["keyword_recall@20"])
         if score > best_score:
-            print(f"🎉 NEW BEST MODEL! (Keyterm F1@10 improved from {best_score:.6f} to {score:.6f})")
+            print(f"🎉 NEW BEST MODEL! (Keyword Recall@20 improved from {best_score:.6f} to {score:.6f})")
             best = {
                 "epoch": epoch,
                 "keyterm_f1@5": keyterm_f1_5,
-                "keyterm_f1@10": score,
+                "keyterm_f1@10": keyterm_f1_10,
+                "keyword_recall@20": score,
                 "metrics": test_metrics,
                 "model_name": args.model_name,
                 "model_type": "SentenceTransformer",
@@ -545,10 +606,14 @@ def main() -> None:
                 f"  Keyterm F1@5:         {keyterm_f1_5:.6f}",
                 f"  Keyterm Precision@10: {test_metrics.get('keyterm_precision@10', 0.0):.6f}",
                 f"  Keyterm Recall@10:    {test_metrics.get('keyterm_recall@10', 0.0):.6f}",
-                f"  Keyterm F1@10:        {score:.6f} ⭐ (selection metric)",
+                f"  Keyterm F1@10:        {keyterm_f1_10:.6f}",
+                f"  Keyterm Precision@20: {test_metrics.get('keyterm_precision@20', 0.0):.6f}",
+                f"  Keyterm Recall@20:    {test_metrics.get('keyterm_recall@20', 0.0):.6f}",
                 f"  Keyword Precision@10: {test_metrics.get('keyword_precision@10', 0.0):.6f}",
                 f"  Keyword Recall@10:   {test_metrics.get('keyword_recall@10', 0.0):.6f}",
                 f"  Keyword F1@10:        {keyword_f1_10:.6f}",
+                f"  Keyword Precision@20: {test_metrics.get('keyword_precision@20', 0.0):.6f}",
+                f"  Keyword Recall@20:   {score:.6f} ⭐ (selection metric)",
             ]
             if val_metrics:
                 val_keyterm_f1 = 0.0
@@ -581,7 +646,7 @@ def main() -> None:
                 f.write("\n".join(note_lines) + "\n")
             write_json(os.path.join(output_dir, "best_eval.json"), best)
         else:
-            print(f"  (No improvement - best Keyterm F1@10 remains {best_score:.6f} from epoch {best['epoch']})")
+            print(f"  (No improvement - best Keyword Recall@20 remains {best_score:.6f} from epoch {best['epoch']})")
 
         # Always save an epoch checkpoint (useful in case best is earlier).
         model.save(os.path.join(output_dir, f"encoder_epoch_{epoch:02d}"))
@@ -615,12 +680,18 @@ def main() -> None:
     print(f"  Model:                {best.get('model_name', args.model_name)}")
     print(f"  Optimization Goal:   Keyterm Prediction")
     print(f"  Test Keyterm F1@5:    {best.get('keyterm_f1@5', 0.0):.6f}")
-    print(f"  Test Keyterm F1@10:   {best['keyterm_f1@10']:.6f} ⭐ (selection metric)")
+    print(f"  Test Keyterm F1@10:   {best.get('keyterm_f1@10', 0.0):.6f}")
     print(f"  Test Keyterm Precision@5:  {best['metrics'].get('keyterm_precision@5', 0.0):.6f}")
     print(f"  Test Keyterm Recall@5:     {best['metrics'].get('keyterm_recall@5', 0.0):.6f}")
     print(f"  Test Keyterm Precision@10: {best['metrics'].get('keyterm_precision@10', 0.0):.6f}")
     print(f"  Test Keyterm Recall@10:    {best['metrics'].get('keyterm_recall@10', 0.0):.6f}")
-    print(f"  Test Keyword F1@10:   {best['metrics'].get('keyword_f1@10', 0.0):.6f}")
+    print(f"  Test Keyterm Precision@20: {best['metrics'].get('keyterm_precision@20', 0.0):.6f}")
+    print(f"  Test Keyterm Recall@20:    {best['metrics'].get('keyterm_recall@20', 0.0):.6f}")
+    print(f"  Test Keyword Precision@10: {best['metrics'].get('keyword_precision@10', 0.0):.6f}")
+    print(f"  Test Keyword Recall@10:    {best['metrics'].get('keyword_recall@10', 0.0):.6f}")
+    print(f"  Test Keyword F1@10:        {best['metrics'].get('keyword_f1@10', 0.0):.6f}")
+    print(f"  Test Keyword Precision@20: {best['metrics'].get('keyword_precision@20', 0.0):.6f}")
+    print(f"  Test Keyword Recall@20:    {best.get('keyword_recall@20', 0.0):.6f} ⭐ (selection metric)")
     print(f"\nOutput Directory: {output_dir}")
     print(f"Best Model Saved:  {os.path.join(output_dir, 'encoder_best')}")
     print(f"Best Eval JSON:    {os.path.join(output_dir, 'best_eval.json')}")
