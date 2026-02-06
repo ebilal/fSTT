@@ -1,0 +1,3448 @@
+{
+  "_meta": {
+    "generated_at": "2026-01-17T16:29:57.885279+00:00",
+    "business_name": "Shokudo Development",
+    "source": "+18886669999",
+    "original_item_count": 118,
+    "original_category_count": 12,
+    "token_savings": {
+      "original_chars": 52371,
+      "transformed_chars": 10678,
+      "savings_chars": 41693,
+      "savings_percent": 79.6,
+      "estimated_original_tokens": 13093,
+      "estimated_transformed_tokens": 2670,
+      "estimated_token_savings": 10423
+    },
+    "business_id": "737cb840-63b5-4161-adef-42676a9c10af",
+    "business_phone": "+18886669999"
+  },
+  "transformed_menu": {
+    "Beverage": {
+      "coke": [
+        2.0
+      ],
+      "diet coke": [
+        2.0
+      ],
+      "ginger ale": [
+        2.0
+      ],
+      "sprite": [
+        2.0
+      ],
+      "sparkling water": [
+        3.5
+      ],
+      "apple juice": [
+        3.5
+      ],
+      "orange juice": [
+        3.5
+      ],
+      "unsweet green tea": [
+        3.5
+      ],
+      "japanese soda": [
+        "Lychee, strawberry",
+        4.0
+      ],
+      "ice tea": [
+        2.0
+      ],
+      "coral sea": [
+        3.5
+      ],
+      "sunrise": [
+        3.5
+      ],
+      "sunset": [
+        3.5
+      ]
+    },
+    "Chef's Special Roll": {
+      "shokudo roll": [
+        "alias: shokudo sushi roll",
+        "Shrimp tempura,Avocado inside,Top with Seared filet mignon,served with Eel Sauce,white truffle oil,grated black summer truffles",
+        15.95
+      ],
+      "hackettstown roll": [
+        "alias: hackettstown sushi roll",
+        "Shrimp tempura inside,top spicy tuna,salmon,avocado, served with eel sauce,miso sauce",
+        15.95
+      ],
+      "yummy roll": [
+        "alias: yummy sushi roll",
+        "Shrimp tempura,cheese inside,top with kani stick,serve with eel sauce,Sweet chili sauce",
+        15.95
+      ],
+      "salmon lover roll": [
+        "alias: salmon lover sushi roll",
+        "Spicy crunch salmon,cucumber,fuji apple inside,top salmon,avocado,serve with eel sauce,miso sauce, candied pistachios",
+        14.95
+      ],
+      "angry dragon roll": [
+        "alias: angry dragon sushi roll",
+        "Spicy tuna,kani stick,avocado inside,top with shrimp tempura,Served with eel sauce,honey wasabi",
+        15.95
+      ],
+      "crazy tuna roll": [
+        "alias: crazy tuna sushi roll",
+        "Spicy crunch tuna inside,top with paper tuna,avocado, serve with spicy mayo,honey wasabi,candied pistachio",
+        14.95
+      ],
+      "tiger roll": [
+        "alias: tiger sushi roll",
+        "Spicy tuna crunch inside,top with tuna,salmon,eel,avocado,served with eel Sauce,spicy mayo,fry garlic,masago",
+        15.95
+      ],
+      "hollywood roll": [
+        "alias: hollywood sushi roll",
+        "Shrimp tempura,Avocado inside,top with spicy crab, Serve with Eel sauce,Spicy mayo,Crunch",
+        14.95
+      ],
+      "pink lady roll": [
+        "alias: pink lady sushi roll",
+        "Tuna,salmon,yellowtail,avocado inside,with soybeen paper",
+        14.95
+      ],
+      "n j fifty seven roll": [
+        "alias: n j fifty seven sushi roll, nj fifty seven roll",
+        "Spicy salmon,cucumber inside,top with tuna,yellowtail,scallion,masago",
+        14.95
+      ],
+      "mango tango roll": [
+        "alias: mango tango sushi roll",
+        "Shrimp tempura,avocado inside,top with sliced mango,coconut flake.Served with mango sauce",
+        14.95
+      ],
+      "new jersey roll": [
+        "alias: nj roll, new jersey sushi roll",
+        "Spicy yellowtail inside,top with yellowtail and jalapeño with sriracha!",
+        15.95
+      ],
+      "spider roll": [
+        "alias: spider sushi roll",
+        "Tempura shell crab,spicy crab meat,avocado,soy paper,serve with eel sauce",
+        16.95
+      ],
+      "summer kiss roll": [
+        "alias: summer kiss sushi roll",
+        "Shrimp tempura and mango inside,seared salmon on topped w.mango sauce",
+        15.95
+      ],
+      "black dragon roll": [
+        "alias: black dragon sushi roll",
+        "Tempura shrimp,cucumber,top with eel,avacado and served with eel sauce",
+        14.95
+      ],
+      "fuji mountain roll": [
+        "alias: fuji mountain sushi roll",
+        "Salmon cream cheese,jalapeno,avocado deep fry,served with eel sauce,volcano sauce,fry onion",
+        12.95
+      ],
+      "cowboy roll": [
+        "alias: cowboy sushi roll",
+        "Spicy tuna,avocado inside,top with seard filet,mignon,served with eel sauce,white truffles oil,grated black summer truffles",
+        16.95
+      ],
+      "godzilla roll": [
+        "alias: godzilla sushi roll",
+        "Spicy salmon,avocado,inside deep fry,served with eel sauce,spicy mayo,scallion,masago",
+        12.95
+      ]
+    },
+    "Desert": {
+      "fried ice cream": [
+        5.0
+      ],
+      "white profiteroles": [
+        "Cream puffs filled with chocolate cream and coated with vanilla cream",
+        3.5
+      ],
+      "mochi": [
+        "Mango, passion fruit, strawberry, cookie cream",
+        4.0
+      ],
+      "tempura oreo four pieces": [
+        "alias: tempura oreo",
+        5.0
+      ]
+    },
+    "Kitchen Appetizers": {
+      "steam bun two pieces pork or chicken": [
+        "alias: steam bun, steam bun pork, steam bun chicken",
+        "ASK: Ask customer they want Pork or Chicken",
+        [
+          "promotion"
+        ],
+        "Pork or Chicken, each order comes with 2 buns.",
+        8.0
+      ],
+      "gyoza six pieces": [
+        "alias: gyoza, jyoza",
+        [
+          "popular"
+        ],
+        "6 pieces",
+        6.0
+      ],
+      "edamame": [
+        5.0
+      ],
+      "shumai six pieces": [
+        "alias: shumai, siu mai",
+        6.0
+      ],
+      "kim chi": [
+        "alias: kimchi",
+        6.0
+      ],
+      "takoyaki": [
+        8.0
+      ],
+      "spicy edamame": [
+        6.0
+      ],
+      "fried spring roll": [
+        2.0
+      ],
+      "shrimp tempura appetizer": [
+        "alias: shrimp tempura app",
+        6.95
+      ],
+      "tempura vegetable appetizer": [
+        "alias: vegetable tempura app",
+        "Broccoli, asparagus, sweet potatoes with tempura sauce",
+        6.95
+      ],
+      "golden bun four pieces": [
+        "alias: golden bun",
+        6.0
+      ],
+      "tempura crab meat": [
+        "alias: tempura crab",
+        8.0
+      ]
+    },
+    "Omakase Platters Sushi/Sashimi (come with soup or salad)": {
+      "seven pieces nigiri and one sushi maki": [
+        "alias: seven nigiri and one maki, seven piece nigiri with sushi maki",
+        "ASK: This comes with miso soup or salad. Which would you like?",
+        19.95
+      ],
+      "twelve pieces sashimi": [
+        "alias: twelve sashimi, twelve piece sashimi",
+        "ASK: This comes with miso soup or salad. Which would you like?",
+        25.95
+      ],
+      "ten pieces nigiri and one sushi maki": [
+        "alias: ten piece nigiri with sushi maki, ten nigiri and one maki, ten nigiri one sushi maki",
+        "ASK: This comes with miso soup or salad. Which would you like?",
+        28.95
+      ],
+      "salmon dinner": [
+        "alias: salmon set, salmon entree",
+        "ASK: This comes with miso soup or salad. Which would you like?",
+        "4 Pcs salmon sushi/6Pcs salmon sashimi/1 salmon roll",
+        28.95
+      ],
+      "tuna dinner": [
+        "alias: tuna set, tuna entree",
+        "ASK: This comes with miso soup or salad. Which would you like?",
+        "4 Pcs tuna sushi/6Pcs tuna sashimi/1 Tuna roll",
+        28.95
+      ]
+    },
+    "Poke Bowl": {
+      "vegan of the sea bowl": [
+        "alias: vegan sea bowl, vegan ocean bowl",
+        "Cucumber,avocado,mango,edamame,seaweed salad,sweet corn,fry onion",
+        14.95
+      ],
+      "eel poke bowl": [
+        "alias: eel poke, eel bowl",
+        "Eel,cucumber,avocado,edamame,sweet com,sesame seed,fry onion",
+        15.95
+      ],
+      "salmon poke bowl": [
+        "alias: salmon poke, salmon bowl",
+        "Salmon,cucumber,avocado,asparagus,edamame,sweet corn,fry onion",
+        15.95
+      ],
+      "tuna poke bowl": [
+        "alias: tuna poke, tuna bowl",
+        "Tuna,cucumber,avocado,asparagus,edamame,sweet corn,fry onion",
+        15.95
+      ],
+      "house poke bowl": [
+        "alias: house poke, house bowl",
+        "Tuna,Salmon,yelloytail cucumber,seaweed salad,masago,fry onion,served with spicy poke sauce",
+        16.95
+      ]
+    },
+    "Ramen": {
+      "shokudo ramen": [
+        "alias: shokudo noodle soup",
+        "Pork broth with black garlic oil flavor.Topped with fish cake,scallions,bean sprouts,sweet corn,bamboo,soft-egg,served with staight noodles",
+        18.0
+      ],
+      "tonkotsu ramen": [
+        "alias: pork bone ramen",
+        "Pork broth,topped with fish cake,bamboo,bean sprouts,scallions,soft-egg,served with staight noodles",
+        17.0
+      ],
+      "miso ramen": [
+        "alias: miso noodle soup",
+        "Pork broth with Japanese soybean paste,topped with bamboo,black fungus,fish cake,scallions,soft-egg,served with egg noodles",
+        17.0
+      ],
+      "miso veggie ramen": [
+        "alias: vegetable miso ramen, veggie miso ramen",
+        "Veg miso broth,with bean sprouts,sweet corn,mushroom,tofu,scallions,served with vegetable noodle",
+        15.0
+      ],
+      "shio beef ramen": [
+        "alias: salted beef ramen, shio beef noodle soup",
+        "Chicken broth with garlic oil,top with,bean sprouts,mushrooms,scallions,fish cake,half soft egg,with egg noodle",
+        17.0
+      ],
+      "spicy ramen": [
+        "alias: hot ramen",
+        "Chicken broth with spicy oil,black fungus,sweet corn,fish cake,soft-egg,served with egg noodles",
+        17.0
+      ],
+      "tan tan spicy ramen": [
+        "alias: tan tan ramen, spicy tan tan ramen",
+        [
+          "promotion"
+        ],
+        "Chicken broth topped with Japanese minced pork,fish cake,bean sprouts,sweet corn,scallions,and soft-egg,served with egg noodles",
+        17.0
+      ],
+      "seafood udon ramen": [
+        "alias: seafood udon, seafood udon soup",
+        "Chicken broth topped with shrimp,fish cake,black fungus,seaweed,and half soft-egg,served with udon noodles",
+        18.0
+      ],
+      "shio garlic ramen": [
+        "alias: garlic shio ramen",
+        "Chicken broth with gaelic oil,topped with fish cake,scallions,bean sprouts,black fungus and half softegg served with egg noodles",
+        17.0
+      ],
+      "spicy kim chi ramen": [
+        "alias: kim chi spicy ramen",
+        "Chicken broth with spicy oil,sweet corn,Kimchi,scallions,fish cake,soft-egg,served with egg noodle",
+        17.0
+      ]
+    },
+    "Rice Platter": {
+      "curry tonkotsu": [
+        "alias: curry pork bone ramen",
+        "Tempura pork cutlet with Japanese curry over steam white rice",
+        16.0
+      ],
+      "curry chicken katsu": [
+        "alias: curry chicken cutlet, chicken katsu curry",
+        "Tempura chicken cutlet served with Japanese curry over steamed white rice",
+        16.0
+      ],
+      "teriyaki chicken": [
+        "alias: chicken teriyaki",
+        "Teriyaki chicken served with teriyaki sauce and broccoli mushrooms asparagus white rice",
+        16.0
+      ],
+      "teriyaki shrimp": [
+        "alias: shrimp teriyaki, teriyaki shrimp dish",
+        "Teriyaki shrimp served with teriyaki sauce and broccoli mushrooms asparagus white rice",
+        18.0
+      ],
+      "teriyaki beef": [
+        "alias: beef teriyaki, teriyaki beef dish",
+        "ASK: Ask customer to specify their preferred doneness level of the beef: medium, medium-well, or well-done.",
+        "Teriyaki Beef served with teriyaki sauce and broccoli mushrooms asparagus white rice",
+        21.95
+      ]
+    },
+    "Soup & Salad": {
+      "kani salad": [
+        "alias: crab salad",
+        7.0
+      ],
+      "seaweed salad": [
+        8.0
+      ],
+      "miso soup": [
+        3.0
+      ],
+      "avocado salad": [
+        7.0
+      ]
+    },
+    "Sushi & Sashimi": {
+      "ahi tuna": [
+        "alias: yellowfin tuna",
+        "Maguro",
+        7.5
+      ],
+      "fresh water eel": [
+        "alias: freshwater eel",
+        "Bbq Unagi(2)",
+        7.0
+      ],
+      "salmon": [
+        "Sake",
+        7.0
+      ],
+      "yellowtail": [
+        "Buri Hamachi",
+        7.5
+      ],
+      "crab meat": [
+        5.0
+      ],
+      "scallop": [
+        "Hotate",
+        8.5
+      ],
+      "smoked salmon": [
+        "alias: smoke salmon",
+        7.5
+      ],
+      "salmon roe": [
+        8.5
+      ],
+      "masago": [
+        7.0
+      ]
+    },
+    "Sushi Appetizers": {
+      "beef tataki appetizer": [
+        "alias: beef tataki app, beef tataki",
+        13.95
+      ],
+      "yellowtail jalapeno appetizer": [
+        "alias: yellowtail jalapeno app, yellowtail jalapeno",
+        13.95
+      ],
+      "sushi appetizer": [
+        "alias: sushi app",
+        "Five pieces nigiri",
+        12.95
+      ],
+      "sashimi appetizer": [
+        "alias: sashimi app",
+        "Seven pieces sashimi",
+        13.95
+      ],
+      "sake tamaki for two": [
+        "alias: sake tamaki two, sake tamaki duo",
+        "Spicy salmon/avocado/salmon roe",
+        14.95
+      ],
+      "maguro tamaki for two": [
+        "alias: maguro tamaki two",
+        "Miso tuna/avocado/candied pistachios",
+        14.95
+      ],
+      "turtle wagy tamaki for two": [
+        "alias: turtle wagyu tamaki two",
+        "Flash seared filet/avocado/white truffle oil/grated/black summer truffles/eel sauce",
+        14.95
+      ],
+      "fire bomb four pieces": [
+        "alias: fire bomb, fire bomb roll",
+        "Deep fried jalapeno stuffed with cheese and spicy tuna",
+        12.0
+      ]
+    },
+    "Sushi Roll": {
+      "tuna roll": [
+        6.5
+      ],
+      "salmon roll": [
+        6.5
+      ],
+      "yellowtail roll": [
+        7.0
+      ],
+      "tuna avocado roll": [
+        7.5
+      ],
+      "tuna cucumber roll": [
+        7.5
+      ],
+      "salmon avocado roll": [
+        7.0
+      ],
+      "salmon cucumber roll": [
+        7.0
+      ],
+      "eel avocado roll": [
+        "alias: eel avocado",
+        7.5
+      ],
+      "eel cucumber roll": [
+        7.5
+      ],
+      "california roll": [
+        "Crabstick/cucumber/avocado",
+        6.0
+      ],
+      "spicy roll": [
+        "Choice of Tuna/Salmon/Yellowtail/Crab",
+        7.0
+      ],
+      "tempura shrimp roll": [
+        "Shrimp tempura cucumber/avocado/masago/sweet sauce",
+        6.95
+      ],
+      "alaska roll": [
+        "alias: alaska sushi roll",
+        "Salmon/avocado/cucumber/masago",
+        8.0
+      ],
+      "cucumber roll": [
+        5.0
+      ],
+      "avocado roll": [
+        5.0
+      ],
+      "cucumber avocado roll": [
+        5.5
+      ],
+      "mango avocado roll": [
+        6.0
+      ],
+      "a a c roll": [
+        "Asparagus/avocado/cucumber",
+        6.5
+      ],
+      "eel dragon roll": [
+        "alias: eel dragon sushi roll",
+        "Eel,cucumber inside,top with avocado,serve with eel sauce,masago",
+        13.95
+      ],
+      "rainbow roll": [
+        "alias: rainbow sushi roll",
+        "Crab meat stick,cucumber,avocado inside,top with tuna,salmon,yellowtail,avocado",
+        13.95
+      ],
+      "philly roll": [
+        "alias: philly sushi roll",
+        8.0
+      ],
+      "spicy scallop roll": [
+        "alias: spicy scallop sushi roll",
+        8.0
+      ],
+      "chicken roll": [
+        "Shrimp/Crab meat/Chicken tempura Cucumber/Avocado/Masago/Sweet Sauce",
+        6.95
+      ],
+      "sweet potato roll": [
+        6.0
+      ],
+      "peanut avocado roll": [
+        6.0
+      ]
+    }
+  },
+  "original_menu": {
+    "items": [
+      {
+        "id": "steam_bun(2)",
+        "name": "Steam Bun",
+        "tags": [
+          "promotion"
+        ],
+        "price": 8.0,
+        "sizes": null,
+        "aliases": [
+          "steam bun",
+          "steam bun pork",
+          "steam bun chicken"
+        ],
+        "category": "Kitchen Appetizers",
+        "keyterms": [
+          "Steam Bun"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Pork or Chicken, each order comes with 2 buns.",
+        "reviewed_at": "2025-09-22T18:19:07.941Z",
+        "reviewed_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+        "spoken_name": "steam bun two pieces pork or chicken",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": "Ask customer they want Pork or Chicken"
+      },
+      {
+        "id": "gyoza(Pork or Vegetable)(6)",
+        "name": "Gyoza(6)",
+        "tags": [
+          "popular"
+        ],
+        "price": 6.0,
+        "sizes": null,
+        "aliases": [
+          "gyoza",
+          "jyoza"
+        ],
+        "category": "Kitchen Appetizers",
+        "keyterms": [
+          "Gyoza"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "6 pieces",
+        "reviewed_at": "2025-09-19T15:43:53.253Z",
+        "reviewed_by": null,
+        "spoken_name": "gyoza six pieces",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "edamame",
+        "name": "Edamame",
+        "tags": [],
+        "price": 5.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Kitchen Appetizers",
+        "keyterms": [
+          "Edamame"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "edamame",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "shumai(6)",
+        "name": "Shumai(6)",
+        "tags": [],
+        "price": 6.0,
+        "sizes": null,
+        "aliases": [
+          "shumai",
+          "siu mai"
+        ],
+        "category": "Kitchen Appetizers",
+        "keyterms": [
+          "Shumai"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "shumai six pieces",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "kim_chi",
+        "name": "Kim Chi",
+        "tags": [],
+        "price": 6.0,
+        "sizes": null,
+        "aliases": [
+          "kimchi"
+        ],
+        "category": "Kitchen Appetizers",
+        "keyterms": [
+          "Kim Chi"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "kim chi",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "takoyaki",
+        "name": "Takoyaki",
+        "tags": [],
+        "price": 8.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Kitchen Appetizers",
+        "keyterms": [
+          "Takoyaki"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "takoyaki",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "spicy_edamame",
+        "name": "Spicy Edamame",
+        "tags": [],
+        "price": 6.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Kitchen Appetizers",
+        "keyterms": [
+          "Spicy Edamame"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "spicy edamame",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "fried_spring_roll",
+        "name": "Fried Spring Roll",
+        "tags": [],
+        "price": 2.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Kitchen Appetizers",
+        "keyterms": [
+          "Fried Spring Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "fried spring roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "shrimp_tempura_app",
+        "name": "Shrimp Tempura App",
+        "tags": [],
+        "price": 6.95,
+        "sizes": null,
+        "aliases": [
+          "shrimp tempura app"
+        ],
+        "category": "Kitchen Appetizers",
+        "keyterms": [
+          "Shrimp Tempura",
+          "App"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "shrimp tempura appetizer",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "tempura_vegetable_app",
+        "name": "Tempura Vegetable App",
+        "tags": [],
+        "price": 6.95,
+        "sizes": null,
+        "aliases": [
+          "vegetable tempura app"
+        ],
+        "category": "Kitchen Appetizers",
+        "keyterms": [
+          "Tempura Vegetable",
+          "App"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Broccoli, asparagus, sweet potatoes with tempura sauce",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "tempura vegetable appetizer",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "beef_tataki_app",
+        "name": "Beef Tataki App",
+        "tags": [],
+        "price": 13.95,
+        "sizes": null,
+        "aliases": [
+          "beef tataki app",
+          "beef tataki"
+        ],
+        "category": "Sushi Appetizers",
+        "keyterms": [
+          "Beef Tataki",
+          "App"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": "2025-09-19T15:53:31.573Z",
+        "reviewed_by": null,
+        "spoken_name": "beef tataki appetizer",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "yellowtail_jalapeno_app",
+        "name": "Yellowtail Jalapeno App",
+        "tags": [],
+        "price": 13.95,
+        "sizes": null,
+        "aliases": [
+          "yellowtail jalapeno app",
+          "yellowtail jalapeno"
+        ],
+        "category": "Sushi Appetizers",
+        "keyterms": [
+          "Yellowtail",
+          "Jalapeno"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "yellowtail jalapeno appetizer",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "sushi_app",
+        "name": "Sushi App",
+        "tags": [],
+        "price": 12.95,
+        "sizes": null,
+        "aliases": [
+          "sushi app"
+        ],
+        "category": "Sushi Appetizers",
+        "keyterms": [
+          "Sushi",
+          "App"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Five pieces nigiri",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "sushi appetizer",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "sashimi_app",
+        "name": "Sashimi App",
+        "tags": [],
+        "price": 13.95,
+        "sizes": null,
+        "aliases": [
+          "sashimi app"
+        ],
+        "category": "Sushi Appetizers",
+        "keyterms": [
+          "Sashimi",
+          "App"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Seven pieces sashimi",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "sashimi appetizer",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "sake_tamaki_for_2",
+        "name": "Sake Tamaki For 2",
+        "tags": [],
+        "price": 14.95,
+        "sizes": null,
+        "aliases": [
+          "sake tamaki two",
+          "sake tamaki duo"
+        ],
+        "category": "Sushi Appetizers",
+        "keyterms": [
+          "Sake Tamaki",
+          "For 2"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Spicy salmon/avocado/salmon roe",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "sake tamaki for two",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "maguro_tamaki_for_2",
+        "name": "Maguro Tamaki For 2",
+        "tags": [],
+        "price": 14.95,
+        "sizes": null,
+        "aliases": [
+          "maguro tamaki two"
+        ],
+        "category": "Sushi Appetizers",
+        "keyterms": [
+          "Maguro Tamaki",
+          "For 2"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Miso tuna/avocado/candied pistachios",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "maguro tamaki for two",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "turtle_wagy_tamaki_for_2",
+        "name": "Turtle Wagy Tamaki For 2",
+        "tags": [],
+        "price": 14.95,
+        "sizes": null,
+        "aliases": [
+          "turtle wagyu tamaki two"
+        ],
+        "category": "Sushi Appetizers",
+        "keyterms": [
+          "Turtle Wagy Tamaki",
+          "For 2"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Flash seared filet/avocado/white truffle oil/grated/black summer truffles/eel sauce",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "turtle wagy tamaki for two",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "kani_salad",
+        "name": "Kani Salad",
+        "tags": [],
+        "price": 7.0,
+        "sizes": null,
+        "aliases": [
+          "crab salad"
+        ],
+        "category": "Soup & Salad",
+        "keyterms": [
+          "Kani Salad"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "kani salad",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "seaweed_salad",
+        "name": "Seaweed Salad",
+        "tags": [],
+        "price": 8.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Soup & Salad",
+        "keyterms": [
+          "Seaweed Salad"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "seaweed salad",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "miso_soup",
+        "name": "Miso Soup",
+        "tags": [],
+        "price": 3.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Soup & Salad",
+        "keyterms": [
+          "Miso Soup"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "miso soup",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "shokudo_ramen",
+        "name": "Shokudo Ramen",
+        "tags": [],
+        "price": 18.0,
+        "sizes": null,
+        "aliases": [
+          "shokudo noodle soup"
+        ],
+        "category": "Ramen",
+        "keyterms": [
+          "Shokudo Ramen"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Pork broth with black garlic oil flavor.Topped with fish cake,scallions,bean sprouts,sweet corn,bamboo,soft-egg,served with staight noodles",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "shokudo ramen",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "tonkotsu_ramen",
+        "name": "Tonkotsu Ramen",
+        "tags": [],
+        "price": 17.0,
+        "sizes": null,
+        "aliases": [
+          "pork bone ramen"
+        ],
+        "category": "Ramen",
+        "keyterms": [
+          "Tonkotsu Ramen"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Pork broth,topped with fish cake,bamboo,bean sprouts,scallions,soft-egg,served with staight noodles",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "tonkotsu ramen",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "miso_ramen",
+        "name": "Miso Ramen",
+        "tags": [],
+        "price": 17.0,
+        "sizes": null,
+        "aliases": [
+          "miso noodle soup"
+        ],
+        "category": "Ramen",
+        "keyterms": [
+          "Miso Ramen"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Pork broth with Japanese soybean paste,topped with bamboo,black fungus,fish cake,scallions,soft-egg,served with egg noodles",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "miso ramen",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "miso_veggie_ramen",
+        "name": "Miso Veggie Ramen",
+        "tags": [],
+        "price": 15.0,
+        "sizes": null,
+        "aliases": [
+          "vegetable miso ramen",
+          "veggie miso ramen"
+        ],
+        "category": "Ramen",
+        "keyterms": [
+          "Miso Veggie",
+          "Ramen"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Veg miso broth,with bean sprouts,sweet corn,mushroom,tofu,scallions,served with vegetable noodle",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "miso veggie ramen",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "shio_beef_ramen_corrected",
+        "name": "Shio Beef Ramen",
+        "tags": [],
+        "price": 17.0,
+        "sizes": null,
+        "aliases": [
+          "salted beef ramen",
+          "shio beef noodle soup"
+        ],
+        "category": "Ramen",
+        "keyterms": [
+          "Shio Beef",
+          "Ramen"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Chicken broth with garlic oil,top with,bean sprouts,mushrooms,scallions,fish cake,half soft egg,with egg noodle",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "shio beef ramen",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "spicy_ramen",
+        "name": "Spicy Ramen",
+        "tags": [],
+        "price": 17.0,
+        "sizes": null,
+        "aliases": [
+          "hot ramen"
+        ],
+        "category": "Ramen",
+        "keyterms": [
+          "Spicy Ramen"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Chicken broth with spicy oil,black fungus,sweet corn,fish cake,soft-egg,served with egg noodles",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "spicy ramen",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "tan_tan_spicy_ramen",
+        "name": "Tan Tan Spicy Ramen",
+        "tags": [
+          "promotion"
+        ],
+        "price": 17.0,
+        "sizes": null,
+        "aliases": [
+          "tan tan ramen",
+          "spicy tan tan ramen"
+        ],
+        "category": "Ramen",
+        "keyterms": [
+          "Tan Tan",
+          "Spicy Ramen"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Chicken broth topped with Japanese minced pork,fish cake,bean sprouts,sweet corn,scallions,and soft-egg,served with egg noodles",
+        "reviewed_at": "2025-09-19T02:03:13.982Z",
+        "reviewed_by": null,
+        "spoken_name": "tan tan spicy ramen",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "seafood_udon_ramen",
+        "name": "Seafood Udon Ramen",
+        "tags": [],
+        "price": 18.0,
+        "sizes": null,
+        "aliases": [
+          "seafood udon",
+          "seafood udon soup"
+        ],
+        "category": "Ramen",
+        "keyterms": [
+          "Seafood Udon",
+          "Ramen"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Chicken broth topped with shrimp,fish cake,black fungus,seaweed,and half soft-egg,served with udon noodles",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "seafood udon ramen",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "shio_garlic_ramen",
+        "name": "Shio Garlic Ramen",
+        "tags": [],
+        "price": 17.0,
+        "sizes": null,
+        "aliases": [
+          "garlic shio ramen"
+        ],
+        "category": "Ramen",
+        "keyterms": [
+          "Shio Garlic",
+          "Ramen"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Chicken broth with gaelic oil,topped with fish cake,scallions,bean sprouts,black fungus and half softegg served with egg noodles",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "shio garlic ramen",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "spicy_kim_chi_ramen_corrected",
+        "name": "Spicy Kim Chi Ramen",
+        "tags": [],
+        "price": 17.0,
+        "sizes": null,
+        "aliases": [
+          "kim chi spicy ramen"
+        ],
+        "category": "Ramen",
+        "keyterms": [
+          "Spicy Kim Chi",
+          "Ramen"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Chicken broth with spicy oil,sweet corn,Kimchi,scallions,fish cake,soft-egg,served with egg noodle",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "spicy kim chi ramen",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "tuna_roll",
+        "name": "Tuna Roll",
+        "tags": [],
+        "price": 6.5,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Tuna Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "tuna roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "salmon_roll",
+        "name": "Salmon Roll",
+        "tags": [],
+        "price": 6.5,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Salmon Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "salmon roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "yellowtail_roll",
+        "name": "Yellowtail Roll",
+        "tags": [],
+        "price": 7.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Yellowtail Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "yellowtail roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "tuna_avocado_roll",
+        "name": "Tuna Avocado Roll",
+        "tags": [],
+        "price": 7.5,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Tuna Avocado",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "tuna avocado roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "tuna_cucumber_roll",
+        "name": "Tuna Cucumber Roll",
+        "tags": [],
+        "price": 7.5,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Tuna Cucumber",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "tuna cucumber roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "salmon_avocado_roll",
+        "name": "Salmon Avocado Roll",
+        "tags": [],
+        "price": 7.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Salmon Avocado",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "salmon avocado roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "salmon_cucumber_roll",
+        "name": "Salmon Cucumber Roll",
+        "tags": [],
+        "price": 7.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Salmon Cucumber",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "salmon cucumber roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "eel_avocado_roll",
+        "name": "Eel Avocado Roll",
+        "tags": [],
+        "price": 7.5,
+        "sizes": null,
+        "aliases": [
+          "eel avocado"
+        ],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Eel Avocado",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": "2025-09-18T15:47:30.673Z",
+        "reviewed_by": null,
+        "spoken_name": "eel avocado roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "eel_cucumber_roll",
+        "name": "Eel Cucumber Roll",
+        "tags": [],
+        "price": 7.5,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Eel Cucumber",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "eel cucumber roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "california_roll",
+        "name": "California Roll",
+        "tags": [],
+        "price": 6.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "California Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Crabstick/cucumber/avocado",
+        "reviewed_at": "2025-09-19T15:57:06.851Z",
+        "reviewed_by": null,
+        "spoken_name": "california roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "spicy_roll",
+        "name": "Spicy Roll",
+        "tags": [],
+        "price": 7.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Spicy Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Choice of Tuna/Salmon/Yellowtail/Crab",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "spicy roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "tempura_shrimp_roll",
+        "name": "Tempura Shrimp Roll",
+        "tags": [],
+        "price": 6.95,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Tempura Shrimp",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Shrimp tempura cucumber/avocado/masago/sweet sauce",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "tempura shrimp roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "alaska_roll",
+        "name": "Alaska Roll",
+        "tags": [],
+        "price": 8.0,
+        "sizes": null,
+        "aliases": [
+          "alaska sushi roll"
+        ],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Alaska Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Salmon/avocado/cucumber/masago",
+        "reviewed_at": "2025-09-23T05:01:33.820Z",
+        "reviewed_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+        "spoken_name": "alaska roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "cucumber_roll",
+        "name": "Cucumber Roll",
+        "tags": [],
+        "price": 5.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Cucumber Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": "2025-09-19T15:43:31.819Z",
+        "reviewed_by": null,
+        "spoken_name": "cucumber roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "avocado_roll",
+        "name": "Avocado Roll",
+        "tags": [],
+        "price": 5.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Avocado Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": "2025-09-19T16:06:31.277Z",
+        "reviewed_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+        "spoken_name": "avocado roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "cucumber_avocado_roll",
+        "name": "Cucumber Avocado Roll",
+        "tags": [],
+        "price": 5.5,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Cucumber Avocado",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "cucumber avocado roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "mango_avocado_roll",
+        "name": "Mango Avocado Roll",
+        "tags": [],
+        "price": 6.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Mango Avocado",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "mango avocado roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "a_a_c_roll",
+        "name": "A A C Roll",
+        "tags": [],
+        "price": 6.5,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "A A C Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Asparagus/avocado/cucumber",
+        "reviewed_at": "2025-09-23T05:01:50.452Z",
+        "reviewed_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+        "spoken_name": "a a c roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "shokudo_roll",
+        "name": "Shokudo Roll",
+        "tags": [],
+        "price": 15.95,
+        "sizes": null,
+        "aliases": [
+          "shokudo sushi roll"
+        ],
+        "category": "Chef's Special Roll",
+        "keyterms": [
+          "Shokudo Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Shrimp tempura,Avocado inside,Top with Seared filet mignon,served with Eel Sauce,white truffle oil,grated black summer truffles",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "shokudo roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "hackettstown_roll",
+        "name": "Hackettstown Roll",
+        "tags": [],
+        "price": 15.95,
+        "sizes": null,
+        "aliases": [
+          "hackettstown sushi roll"
+        ],
+        "category": "Chef's Special Roll",
+        "keyterms": [
+          "Hackettstown Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Shrimp tempura inside,top spicy tuna,salmon,avocado, served with eel sauce,miso sauce",
+        "reviewed_at": "2025-09-19T15:43:55.825Z",
+        "reviewed_by": null,
+        "spoken_name": "hackettstown roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "yummy_roll",
+        "name": "Yummy Roll",
+        "tags": [],
+        "price": 15.95,
+        "sizes": null,
+        "aliases": [
+          "yummy sushi roll"
+        ],
+        "category": "Chef's Special Roll",
+        "keyterms": [
+          "Yummy Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Shrimp tempura,cheese inside,top with kani stick,serve with eel sauce,Sweet chili sauce",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "yummy roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "salmon_lover_roll",
+        "name": "Salmon Lover Roll",
+        "tags": [],
+        "price": 14.95,
+        "sizes": null,
+        "aliases": [
+          "salmon lover sushi roll"
+        ],
+        "category": "Chef's Special Roll",
+        "keyterms": [
+          "Salmon Lover",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Spicy crunch salmon,cucumber,fuji apple inside,top salmon,avocado,serve with eel sauce,miso sauce, candied pistachios",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "salmon lover roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "angry_dragon_roll",
+        "name": "Angry Dragon Roll",
+        "tags": [],
+        "price": 15.95,
+        "sizes": null,
+        "aliases": [
+          "angry dragon sushi roll"
+        ],
+        "category": "Chef's Special Roll",
+        "keyterms": [
+          "Angry Dragon",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Spicy tuna,kani stick,avocado inside,top with shrimp tempura,Served with eel sauce,honey wasabi",
+        "reviewed_at": "2025-09-23T05:01:42.815Z",
+        "reviewed_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+        "spoken_name": "angry dragon roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "crazy_tuna_roll",
+        "name": "Crazy Tuna Roll",
+        "tags": [],
+        "price": 14.95,
+        "sizes": null,
+        "aliases": [
+          "crazy tuna sushi roll"
+        ],
+        "category": "Chef's Special Roll",
+        "keyterms": [
+          "Crazy Tuna",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Spicy crunch tuna inside,top with paper tuna,avocado, serve with spicy mayo,honey wasabi,candied pistachio",
+        "reviewed_at": "2025-09-19T15:58:29.075Z",
+        "reviewed_by": null,
+        "spoken_name": "crazy tuna roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "tiger_roll",
+        "name": "Tiger Roll",
+        "tags": [],
+        "price": 15.95,
+        "sizes": null,
+        "aliases": [
+          "tiger sushi roll"
+        ],
+        "category": "Chef's Special Roll",
+        "keyterms": [
+          "Tiger Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Spicy tuna crunch inside,top with tuna,salmon,eel,avocado,served with eel Sauce,spicy mayo,fry garlic,masago",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "tiger roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "hollywood_roll",
+        "name": "Hollywood Roll",
+        "tags": [],
+        "price": 14.95,
+        "sizes": null,
+        "aliases": [
+          "hollywood sushi roll"
+        ],
+        "category": "Chef's Special Roll",
+        "keyterms": [
+          "Hollywood Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Shrimp tempura,Avocado inside,top with spicy crab, Serve with Eel sauce,Spicy mayo,Crunch",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "hollywood roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "pink_lady_roll",
+        "name": "Pink Lady Roll",
+        "tags": [],
+        "price": 14.95,
+        "sizes": null,
+        "aliases": [
+          "pink lady sushi roll"
+        ],
+        "category": "Chef's Special Roll",
+        "keyterms": [
+          "Pink Lady",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Tuna,salmon,yellowtail,avocado inside,with soybeen paper",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "pink lady roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "nj-57_roll",
+        "name": "NJ-57 Roll",
+        "tags": [],
+        "price": 14.95,
+        "sizes": null,
+        "aliases": [
+          "n j fifty seven sushi roll",
+          "nj fifty seven roll"
+        ],
+        "category": "Chef's Special Roll",
+        "keyterms": [
+          "NJ-57",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Spicy salmon,cucumber inside,top with tuna,yellowtail,scallion,masago",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "n j fifty seven roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "mango_tango_roll",
+        "name": "Mango Tango Roll",
+        "tags": [],
+        "price": 14.95,
+        "sizes": null,
+        "aliases": [
+          "mango tango sushi roll"
+        ],
+        "category": "Chef's Special Roll",
+        "keyterms": [
+          "Mango Tango",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Shrimp tempura,avocado inside,top with sliced mango,coconut flake.Served with mango sauce",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "mango tango roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "new_jersey_roll",
+        "name": "New Jersey Roll",
+        "tags": [],
+        "price": 15.95,
+        "sizes": null,
+        "aliases": [
+          "nj roll",
+          "new jersey sushi roll"
+        ],
+        "category": "Chef's Special Roll",
+        "keyterms": [
+          "New Jersey",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Spicy yellowtail inside,top with yellowtail and jalapeño with sriracha!",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "new jersey roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "spider_roll",
+        "name": "Spider Roll",
+        "tags": [],
+        "price": 16.95,
+        "sizes": null,
+        "aliases": [
+          "spider sushi roll"
+        ],
+        "category": "Chef's Special Roll",
+        "keyterms": [
+          "Spider Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Tempura shell crab,spicy crab meat,avocado,soy paper,serve with eel sauce",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "spider roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "summer_kiss_roll",
+        "name": "Summer Kiss Roll",
+        "tags": [],
+        "price": 15.95,
+        "sizes": null,
+        "aliases": [
+          "summer kiss sushi roll"
+        ],
+        "category": "Chef's Special Roll",
+        "keyterms": [
+          "Summer Kiss",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Shrimp tempura and mango inside,seared salmon on topped w.mango sauce",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "summer kiss roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "black_dragon_roll",
+        "name": "Black Dragon Roll",
+        "tags": [],
+        "price": 14.95,
+        "sizes": null,
+        "aliases": [
+          "black dragon sushi roll"
+        ],
+        "category": "Chef's Special Roll",
+        "keyterms": [
+          "Black Dragon",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Tempura shrimp,cucumber,top with eel,avacado and served with eel sauce",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "black dragon roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "fuji_mountain_roll",
+        "name": "Fuji Mountain Roll",
+        "tags": [],
+        "price": 12.95,
+        "sizes": null,
+        "aliases": [
+          "fuji mountain sushi roll"
+        ],
+        "category": "Chef's Special Roll",
+        "keyterms": [
+          "Fuji Mountain",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Salmon cream cheese,jalapeno,avocado deep fry,served with eel sauce,volcano sauce,fry onion",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "fuji mountain roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "cowboy_roll",
+        "name": "Cowboy Roll",
+        "tags": [],
+        "price": 16.95,
+        "sizes": null,
+        "aliases": [
+          "cowboy sushi roll"
+        ],
+        "category": "Chef's Special Roll",
+        "keyterms": [
+          "Cowboy Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Spicy tuna,avocado inside,top with seard filet,mignon,served with eel sauce,white truffles oil,grated black summer truffles",
+        "reviewed_at": "2026-01-15T03:21:27.621Z",
+        "reviewed_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+        "spoken_name": "cowboy roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "godzilla_roll",
+        "name": "Godzilla Roll",
+        "tags": [],
+        "price": 12.95,
+        "sizes": null,
+        "aliases": [
+          "godzilla sushi roll"
+        ],
+        "category": "Chef's Special Roll",
+        "keyterms": [
+          "Godzilla Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Spicy salmon,avocado,inside deep fry,served with eel sauce,spicy mayo,scallion,masago",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "godzilla roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "eel_dragon_roll",
+        "name": "Eel Dragon Roll",
+        "tags": [],
+        "price": 13.95,
+        "sizes": null,
+        "aliases": [
+          "eel dragon sushi roll"
+        ],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Eel Dragon",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Eel,cucumber inside,top with avocado,serve with eel sauce,masago",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "eel dragon roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "rainbow_roll",
+        "name": "Rainbow Roll",
+        "tags": [],
+        "price": 13.95,
+        "sizes": null,
+        "aliases": [
+          "rainbow sushi roll"
+        ],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Rainbow Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Crab meat stick,cucumber,avocado inside,top with tuna,salmon,yellowtail,avocado",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "rainbow roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "ahi_tuna",
+        "name": "Ahi Tuna",
+        "tags": [],
+        "price": 7.5,
+        "sizes": null,
+        "aliases": [
+          "yellowfin tuna"
+        ],
+        "category": "Sushi & Sashimi",
+        "keyterms": [
+          "Ahi Tuna"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Maguro",
+        "reviewed_at": "2025-09-23T05:01:35.051Z",
+        "reviewed_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+        "spoken_name": "ahi tuna",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "fresh_water_eel",
+        "name": "Fresh Water Eel",
+        "tags": [],
+        "price": 7.0,
+        "sizes": null,
+        "aliases": [
+          "freshwater eel"
+        ],
+        "category": "Sushi & Sashimi",
+        "keyterms": [
+          "Fresh Water Eel"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Bbq Unagi(2)",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "fresh water eel",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "salmon",
+        "name": "Salmon",
+        "tags": [],
+        "price": 7.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi & Sashimi",
+        "keyterms": [
+          "Salmon"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Sake",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "salmon",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "yellowtail",
+        "name": "Yellowtail",
+        "tags": [],
+        "price": 7.5,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi & Sashimi",
+        "keyterms": [
+          "Yellowtail"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Buri Hamachi",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "yellowtail",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "crab_meat",
+        "name": "Crab Meat",
+        "tags": [],
+        "price": 5.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi & Sashimi",
+        "keyterms": [
+          "Crab Meat"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": "2025-09-19T15:57:44.426Z",
+        "reviewed_by": null,
+        "spoken_name": "crab meat",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "scallop",
+        "name": "Scallop",
+        "tags": [],
+        "price": 8.5,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi & Sashimi",
+        "keyterms": [
+          "Scallop"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Hotate",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "scallop",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "7pcs_nigiri/1_sushi_maki",
+        "name": "7Pcs Nigiri/1 Sushi Maki",
+        "tags": [],
+        "price": 19.95,
+        "sizes": null,
+        "aliases": [
+          "seven nigiri and one maki",
+          "seven piece nigiri with sushi maki"
+        ],
+        "category": "Omakase Platters Sushi/Sashimi (come with soup or salad)",
+        "keyterms": [
+          "Nigiri",
+          "Sushi Maki"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": "2025-09-23T04:02:18.493Z",
+        "reviewed_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+        "spoken_name": "seven pieces nigiri and one sushi maki",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": "This comes with miso soup or salad. Which would you like?"
+      },
+      {
+        "id": "12pcs_sashimi",
+        "name": "12Pcs Sashimi",
+        "tags": [],
+        "price": 25.95,
+        "sizes": null,
+        "aliases": [
+          "twelve sashimi",
+          "twelve piece sashimi"
+        ],
+        "category": "Omakase Platters Sushi/Sashimi (come with soup or salad)",
+        "keyterms": [
+          "Sashimi"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": "2025-09-23T04:02:16.884Z",
+        "reviewed_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+        "spoken_name": "twelve pieces sashimi",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": "This comes with miso soup or salad. Which would you like?"
+      },
+      {
+        "id": "10pce_nigiri/1_sushi_maki",
+        "name": "10Pce Nigiri/1 Sushi Maki",
+        "tags": [],
+        "price": 28.95,
+        "sizes": null,
+        "aliases": [
+          "ten piece nigiri with sushi maki",
+          "ten nigiri and one maki",
+          "ten nigiri one sushi maki"
+        ],
+        "category": "Omakase Platters Sushi/Sashimi (come with soup or salad)",
+        "keyterms": [
+          "Nigiri",
+          "Sushi Maki"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": "2025-09-23T18:20:54.125Z",
+        "reviewed_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+        "spoken_name": "ten pieces nigiri and one sushi maki",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": "This comes with miso soup or salad. Which would you like?"
+      },
+      {
+        "id": "salmon_dinner",
+        "name": "Salmon Dinner",
+        "tags": [],
+        "price": 28.95,
+        "sizes": null,
+        "aliases": [
+          "salmon set",
+          "salmon entree"
+        ],
+        "category": "Omakase Platters Sushi/Sashimi (come with soup or salad)",
+        "keyterms": [
+          "Salmon Dinner"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "4 Pcs salmon sushi/6Pcs salmon sashimi/1 salmon roll",
+        "reviewed_at": "2025-09-22T19:51:28.705Z",
+        "reviewed_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+        "spoken_name": "salmon dinner",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": "This comes with miso soup or salad. Which would you like?"
+      },
+      {
+        "id": "tuna_dinner",
+        "name": "Tuna Dinner",
+        "tags": [],
+        "price": 28.95,
+        "sizes": null,
+        "aliases": [
+          "tuna set",
+          "tuna entree"
+        ],
+        "category": "Omakase Platters Sushi/Sashimi (come with soup or salad)",
+        "keyterms": [
+          "Tuna Dinner"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "4 Pcs tuna sushi/6Pcs tuna sashimi/1 Tuna roll",
+        "reviewed_at": "2025-09-22T19:51:43.766Z",
+        "reviewed_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+        "spoken_name": "tuna dinner",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": "This comes with miso soup or salad. Which would you like?"
+      },
+      {
+        "id": "vegan_of_the_sea_bowl",
+        "name": "Vegan Of The Sea Bowl",
+        "tags": [],
+        "price": 14.95,
+        "sizes": null,
+        "aliases": [
+          "vegan sea bowl",
+          "vegan ocean bowl"
+        ],
+        "category": "Poke Bowl",
+        "keyterms": [
+          "Vegan Of The Sea",
+          "Bowl"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Cucumber,avocado,mango,edamame,seaweed salad,sweet corn,fry onion",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "vegan of the sea bowl",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "eel_poke_bowl",
+        "name": "Eel Poke Bowl",
+        "tags": [],
+        "price": 15.95,
+        "sizes": null,
+        "aliases": [
+          "eel poke",
+          "eel bowl"
+        ],
+        "category": "Poke Bowl",
+        "keyterms": [
+          "Eel Poke",
+          "Bowl"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Eel,cucumber,avocado,edamame,sweet com,sesame seed,fry onion",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "eel poke bowl",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "salmon_poke_bowl",
+        "name": "Salmon Poke Bowl",
+        "tags": [],
+        "price": 15.95,
+        "sizes": null,
+        "aliases": [
+          "salmon poke",
+          "salmon bowl"
+        ],
+        "category": "Poke Bowl",
+        "keyterms": [
+          "Salmon Poke",
+          "Bowl"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Salmon,cucumber,avocado,asparagus,edamame,sweet corn,fry onion",
+        "reviewed_at": "2025-09-22T23:38:06.121Z",
+        "reviewed_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+        "spoken_name": "salmon poke bowl",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "tuna_poke_bowl",
+        "name": "Tuna Poke Bowl",
+        "tags": [],
+        "price": 15.95,
+        "sizes": null,
+        "aliases": [
+          "tuna poke",
+          "tuna bowl"
+        ],
+        "category": "Poke Bowl",
+        "keyterms": [
+          "Tuna Poke",
+          "Bowl"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Tuna,cucumber,avocado,asparagus,edamame,sweet corn,fry onion",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "tuna poke bowl",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "house_poke_bowl",
+        "name": "House Poke Bowl",
+        "tags": [],
+        "price": 16.95,
+        "sizes": null,
+        "aliases": [
+          "house poke",
+          "house bowl"
+        ],
+        "category": "Poke Bowl",
+        "keyterms": [
+          "House Poke",
+          "Bowl"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Tuna,Salmon,yelloytail cucumber,seaweed salad,masago,fry onion,served with spicy poke sauce",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "house poke bowl",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "curry_tonkotsu",
+        "name": "Curry Tonkotsu",
+        "tags": [],
+        "price": 16.0,
+        "sizes": null,
+        "aliases": [
+          "curry pork bone ramen"
+        ],
+        "category": "Rice Platter",
+        "keyterms": [
+          "Curry",
+          "Tonkotsu"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Tempura pork cutlet with Japanese curry over steam white rice",
+        "reviewed_at": "2025-09-19T16:06:52.847Z",
+        "reviewed_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+        "spoken_name": "curry tonkotsu",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "curry_chicken_kastu",
+        "name": "Curry Chicken Kastu",
+        "tags": [],
+        "price": 16.0,
+        "sizes": null,
+        "aliases": [
+          "curry chicken cutlet",
+          "chicken katsu curry"
+        ],
+        "category": "Rice Platter",
+        "keyterms": [
+          "Curry Chicken",
+          "Katsu"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Tempura chicken cutlet served with Japanese curry over steamed white rice",
+        "reviewed_at": "2025-09-19T16:06:54.143Z",
+        "reviewed_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+        "spoken_name": "curry chicken katsu",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "teriyaki_chicken",
+        "name": "Teriyaki Chicken",
+        "tags": [],
+        "price": 16.0,
+        "sizes": null,
+        "aliases": [
+          "chicken teriyaki"
+        ],
+        "category": "Rice Platter",
+        "keyterms": [
+          "Teriyaki Chicken"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Teriyaki chicken served with teriyaki sauce and broccoli mushrooms asparagus white rice",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "teriyaki chicken",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "teriyaki_shrimp",
+        "name": "Teriyaki Shrimp",
+        "tags": [],
+        "price": 18.0,
+        "sizes": null,
+        "aliases": [
+          "shrimp teriyaki",
+          "teriyaki shrimp dish"
+        ],
+        "category": "Rice Platter",
+        "keyterms": [
+          "Teriyaki Shrimp"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Teriyaki shrimp served with teriyaki sauce and broccoli mushrooms asparagus white rice",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "teriyaki shrimp",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "teriyaki_beef",
+        "name": "Teriyaki Beef",
+        "tags": [],
+        "price": 21.95,
+        "sizes": null,
+        "aliases": [
+          "beef teriyaki",
+          "teriyaki beef dish"
+        ],
+        "category": "Rice Platter",
+        "keyterms": [
+          "Teriyaki Beef"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Teriyaki Beef served with teriyaki sauce and broccoli mushrooms asparagus white rice",
+        "reviewed_at": "2025-09-22T16:31:18.909Z",
+        "reviewed_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+        "spoken_name": "teriyaki beef",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": "Ask customer to specify their preferred doneness level of the beef: medium, medium-well, or well-done."
+      },
+      {
+        "id": "coke",
+        "name": "Coke",
+        "tags": [],
+        "price": 2.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Beverage",
+        "keyterms": [
+          "Coke"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": "2025-09-19T15:56:49.375Z",
+        "reviewed_by": null,
+        "spoken_name": "coke",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "diet_coke",
+        "name": "Diet Coke",
+        "tags": [],
+        "price": 2.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Beverage",
+        "keyterms": [
+          "Diet Coke"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "diet coke",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "ginger_ale",
+        "name": "Ginger Ale",
+        "tags": [],
+        "price": 2.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Beverage",
+        "keyterms": [
+          "Ginger Ale"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "ginger ale",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "sprite",
+        "name": "Sprite",
+        "tags": [],
+        "price": 2.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Beverage",
+        "keyterms": [
+          "Sprite"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "sprite",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "sparkling_water",
+        "name": "Sparkling Water",
+        "tags": [],
+        "price": 3.5,
+        "sizes": null,
+        "aliases": [],
+        "category": "Beverage",
+        "keyterms": [
+          "Sparkling Water"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "sparkling water",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "apple_juice",
+        "name": "Apple Juice",
+        "tags": [],
+        "price": 3.5,
+        "sizes": null,
+        "aliases": [],
+        "category": "Beverage",
+        "keyterms": [
+          "Apple Juice"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": "2025-09-23T04:57:26.243Z",
+        "reviewed_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+        "spoken_name": "apple juice",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "orange_juice",
+        "name": "Orange Juice",
+        "tags": [],
+        "price": 3.5,
+        "sizes": null,
+        "aliases": [],
+        "category": "Beverage",
+        "keyterms": [
+          "Orange Juice"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "orange juice",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "unsweet_green_tea",
+        "name": "Unsweet Green Tea",
+        "tags": [],
+        "price": 3.5,
+        "sizes": null,
+        "aliases": [],
+        "category": "Beverage",
+        "keyterms": [
+          "Unsweet Green Tea"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "unsweet green tea",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "japanese_soda",
+        "name": "Japanese Soda",
+        "tags": [],
+        "price": 4.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Beverage",
+        "keyterms": [
+          "Japanese Soda"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Lychee, strawberry",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "japanese soda",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "fried_ice_cream",
+        "name": "Fried Ice Cream",
+        "tags": [],
+        "price": 5.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Desert",
+        "keyterms": [
+          "Fried Ice Cream"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "fried ice cream",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "profiteroles_white",
+        "name": "Profiteroles White",
+        "tags": [],
+        "price": 3.5,
+        "sizes": null,
+        "aliases": [],
+        "category": "Desert",
+        "keyterms": [
+          "Profiteroles White"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Cream puffs filled with chocolate cream and coated with vanilla cream",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "white profiteroles",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "golden_bun(4)",
+        "name": "Golden Bun (4)",
+        "tags": [],
+        "price": 6.0,
+        "sizes": null,
+        "aliases": [
+          "golden bun"
+        ],
+        "category": "Kitchen Appetizers",
+        "keyterms": [
+          "Golden Bun"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": "2025-09-19T21:12:27.714Z",
+        "reviewed_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+        "spoken_name": "golden bun four pieces",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "tempura_crab_meat",
+        "name": "Tempura Crab Meat",
+        "tags": [],
+        "price": 8.0,
+        "sizes": null,
+        "aliases": [
+          "tempura crab"
+        ],
+        "category": "Kitchen Appetizers",
+        "keyterms": [
+          "Tempura Crab",
+          "Meat"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "tempura crab meat",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "fire_bomb_4pcs",
+        "name": "Fire Bomb(4 pcs)",
+        "tags": [],
+        "price": 12.0,
+        "sizes": null,
+        "aliases": [
+          "fire bomb",
+          "fire bomb roll"
+        ],
+        "category": "Sushi Appetizers",
+        "keyterms": [
+          "Fire Bomb"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Deep fried jalapeno stuffed with cheese and spicy tuna",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "fire bomb four pieces",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "avocado_salad",
+        "name": "Avocado Salad",
+        "tags": [],
+        "price": 7.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Soup & Salad",
+        "keyterms": [
+          "Avocado Salad"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": "2025-09-19T15:43:06.987Z",
+        "reviewed_by": null,
+        "spoken_name": "avocado salad",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "philly_roll",
+        "name": "Philly Roll",
+        "tags": [],
+        "price": 8.0,
+        "sizes": null,
+        "aliases": [
+          "philly sushi roll"
+        ],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Philly Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "philly roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "spicy_scallop_roll",
+        "name": "Spicy Scallop Roll",
+        "tags": [],
+        "price": 8.0,
+        "sizes": null,
+        "aliases": [
+          "spicy scallop sushi roll"
+        ],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Spicy Scallop",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "spicy scallop roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "chicken_roll",
+        "name": "Chicken Roll",
+        "tags": [],
+        "price": 6.95,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Chicken Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Shrimp/Crab meat/Chicken tempura Cucumber/Avocado/Masago/Sweet Sauce",
+        "reviewed_at": "2025-09-19T15:57:08.806Z",
+        "reviewed_by": null,
+        "spoken_name": "chicken roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "sweet_potato_roll",
+        "name": "Sweet Potato Roll",
+        "tags": [],
+        "price": 6.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Sweet Potato",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "sweet potato roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "peanut_avocado_roll",
+        "name": "Peanut Avocado Roll",
+        "tags": [],
+        "price": 6.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi Roll",
+        "keyterms": [
+          "Peanut Avocado",
+          "Roll"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "peanut avocado roll",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "smoke_salmon",
+        "name": "Smoke Salmon",
+        "tags": [],
+        "price": 7.5,
+        "sizes": null,
+        "aliases": [
+          "smoke salmon"
+        ],
+        "category": "Sushi & Sashimi",
+        "keyterms": [
+          "Smoke Salmon"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "smoked salmon",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "salmon_roe",
+        "name": "Salmon Roe",
+        "tags": [],
+        "price": 8.5,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi & Sashimi",
+        "keyterms": [
+          "Salmon Roe"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "salmon roe",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "masago",
+        "name": "Masago",
+        "tags": [],
+        "price": 7.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Sushi & Sashimi",
+        "keyterms": [
+          "Masago"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "masago",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "ice_tea",
+        "name": "Ice Tea",
+        "tags": [],
+        "price": 2.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Beverage",
+        "keyterms": [
+          "Ice Tea"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "ice tea",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "coral_sea",
+        "name": "Coral Sea",
+        "tags": [],
+        "price": 3.5,
+        "sizes": null,
+        "aliases": [],
+        "category": "Beverage",
+        "keyterms": [
+          "Coral Sea"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": "2025-09-19T16:06:37.896Z",
+        "reviewed_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+        "spoken_name": "coral sea",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "sunrise",
+        "name": "Sunrise",
+        "tags": [],
+        "price": 3.5,
+        "sizes": null,
+        "aliases": [],
+        "category": "Beverage",
+        "keyterms": [
+          "Sunrise"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "sunrise",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "sunset",
+        "name": "Sunset",
+        "tags": [],
+        "price": 3.5,
+        "sizes": null,
+        "aliases": [],
+        "category": "Beverage",
+        "keyterms": [
+          "Sunset"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "sunset",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "mochi",
+        "name": "Mochi",
+        "tags": [],
+        "price": 4.0,
+        "sizes": null,
+        "aliases": [],
+        "category": "Desert",
+        "keyterms": [
+          "Mochi"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": "Mango, passion fruit, strawberry, cookie cream",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "mochi",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      },
+      {
+        "id": "tempura_oreo_4",
+        "name": "Tempura Oreo(4)",
+        "tags": [],
+        "price": 5.0,
+        "sizes": null,
+        "aliases": [
+          "tempura oreo"
+        ],
+        "category": "Desert",
+        "keyterms": [
+          "Tempura Oreo"
+        ],
+        "available": true,
+        "image_url": null,
+        "modifiers": [],
+        "description": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "spoken_name": "tempura oreo four pieces",
+        "subcategory": null,
+        "review_status": "pending",
+        "ordering_instructions": null
+      }
+    ],
+    "version": 21,
+    "categories": [
+      {
+        "name": "Beverage",
+        "description": null,
+        "display_order": 1
+      },
+      {
+        "name": "Chef's Special Roll",
+        "description": null,
+        "display_order": 2
+      },
+      {
+        "name": "Desert",
+        "description": null,
+        "display_order": 3
+      },
+      {
+        "name": "Kitchen Appetizers",
+        "description": null,
+        "display_order": 4
+      },
+      {
+        "name": "Omakase Platters Sushi/Sashimi (come with soup or salad)",
+        "description": null,
+        "display_order": 5
+      },
+      {
+        "name": "Poke Bowl",
+        "description": null,
+        "display_order": 6
+      },
+      {
+        "name": "Ramen",
+        "description": null,
+        "display_order": 7
+      },
+      {
+        "name": "Rice Platter",
+        "description": null,
+        "display_order": 8
+      },
+      {
+        "name": "Soup & Salad",
+        "description": null,
+        "display_order": 9
+      },
+      {
+        "name": "Sushi & Sashimi",
+        "description": null,
+        "display_order": 10
+      },
+      {
+        "name": "Sushi Appetizers",
+        "description": null,
+        "display_order": 11
+      },
+      {
+        "name": "Sushi Roll",
+        "description": null,
+        "display_order": 12
+      }
+    ],
+    "updated_by": "5c85e840-7e5a-45d0-88e4-7c1000c96bd2",
+    "last_updated": "2026-01-15T03:23:27.415965+00:00",
+    "pronunciations": {
+      "kani": "<<k|ɑ|n|i>>",
+      "maki": "<<m|ɑ|k|i>>",
+      "maguro": "<<m|ɑ|ɡ|u|ɹ|o>>",
+      "shumai": "<<ʃ|u|m|aj>>",
+      "edamame": "<<e|d|ɑ|m|ɑ|m|ej>>",
+      "kim chi": "<<k|ɪ|m|tʃ|i>>",
+      "shokudo": "<<ʃ|o|k|u|d|o>>"
+    },
+    "schema_version": "v2"
+  }
+}
