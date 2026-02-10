@@ -112,6 +112,37 @@ def flatten_candidate_terms(candidates: Iterable[str]) -> List[str]:
     return _dedupe_preserve(terms)
 
 
+def _parse_structured_candidate(candidate: str) -> Tuple[List[str], List[str]]:
+    """
+    Parse candidates saved as:
+      keyterms: a; b; c
+      keywords: x; y; z
+    Returns (keywords, keyterms).
+    """
+    if not isinstance(candidate, str):
+        return [], []
+    text = candidate.strip()
+    if not text:
+        return [], []
+
+    lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+    if not any(ln.lower().startswith("keyterms:") or ln.lower().startswith("keywords:") for ln in lines):
+        return [], []
+
+    keywords: List[str] = []
+    keyterms: List[str] = []
+    for line in lines:
+        lower = line.lower()
+        if lower.startswith("keyterms:"):
+            rhs = line.split(":", 1)[1]
+            keyterms.extend([t.strip() for t in rhs.split(";") if t.strip()])
+        elif lower.startswith("keywords:"):
+            rhs = line.split(":", 1)[1]
+            keywords.extend([t.strip() for t in rhs.split(";") if t.strip()])
+
+    return _dedupe_preserve(keywords), _dedupe_preserve(keyterms)
+
+
 def split_keywords_keyterms(terms: Iterable[str]) -> Tuple[List[str], List[str]]:
     keywords: List[str] = []
     keyterms: List[str] = []
@@ -133,8 +164,25 @@ def pad_terms(terms: List[str], size: int) -> List[str]:
 
 
 def prepare_predictions(candidates: Iterable[str], max_keywords: int = 30, max_keyterms: int = 30) -> Dict[str, List[str]]:
-    terms = flatten_candidate_terms(candidates)
-    keywords, keyterms = split_keywords_keyterms(terms)
+    agg_keywords: List[str] = []
+    agg_keyterms: List[str] = []
+    fallback_terms: List[str] = []
+
+    for candidate in candidates:
+        parsed_keywords, parsed_keyterms = _parse_structured_candidate(str(candidate) if candidate is not None else "")
+        if parsed_keywords or parsed_keyterms:
+            agg_keywords.extend(parsed_keywords)
+            agg_keyterms.extend(parsed_keyterms)
+        else:
+            fallback_terms.extend(flatten_candidate_terms([str(candidate) if candidate is not None else ""]))
+
+    if fallback_terms:
+        fallback_keywords, fallback_keyterms = split_keywords_keyterms(fallback_terms)
+        agg_keywords.extend(fallback_keywords)
+        agg_keyterms.extend(fallback_keyterms)
+
+    keywords = _dedupe_preserve(agg_keywords)
+    keyterms = _dedupe_preserve(agg_keyterms)
     return {
         "keywords": pad_terms(keywords, max_keywords),
         "keyterms": pad_terms(keyterms, max_keyterms),

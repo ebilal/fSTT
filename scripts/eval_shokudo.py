@@ -25,6 +25,11 @@ from src.shokudo_eval import (
 )
 from src.utils import ensure_dir, get_device, resolve_run_dir, write_json
 
+try:
+    import faiss
+except Exception:
+    faiss = None
+
 
 def _safe_sort_key(value: str, tie_breaker: int) -> Tuple[int, object, int]:
     try:
@@ -116,6 +121,7 @@ def _looks_like_encoder_dir(path: str) -> bool:
 
 def resolve_encoder_dir(run_dir: str) -> str:
     candidates = [
+        "best_model",
         "encoder_best",
         "encoder",
         "model",
@@ -142,8 +148,26 @@ def resolve_encoder_dir(run_dir: str) -> str:
     raise FileNotFoundError(f"No encoder directory found under {run_dir}")
 
 
+def _is_legacy_index_dir(path: str) -> bool:
+    return (
+        os.path.isdir(path)
+        and os.path.exists(os.path.join(path, "index_meta.json"))
+        and os.path.exists(os.path.join(path, "targets.jsonl"))
+    )
+
+
+def _is_shared_index_dir(path: str) -> bool:
+    return (
+        os.path.isdir(path)
+        and os.path.exists(os.path.join(path, "meta.json"))
+        and os.path.exists(os.path.join(path, "candidates.json"))
+        and os.path.exists(os.path.join(path, "index.faiss"))
+    )
+
+
 def resolve_index_dir(run_dir: str) -> str:
     candidates = [
+        "shared_index",
         "index",
         "index_best",
         "index_eval",
@@ -151,7 +175,7 @@ def resolve_index_dir(run_dir: str) -> str:
     ]
     for name in candidates:
         path = os.path.join(run_dir, name)
-        if os.path.isdir(path) and os.path.exists(os.path.join(path, "index_meta.json")):
+        if _is_legacy_index_dir(path) or _is_shared_index_dir(path):
             return path
     for root, dirs, files in os.walk(run_dir):
         depth = os.path.relpath(root, run_dir).count(os.sep)
@@ -159,6 +183,8 @@ def resolve_index_dir(run_dir: str) -> str:
             dirs[:] = []
             continue
         if "index_meta.json" in files:
+            return root
+        if {"meta.json", "candidates.json", "index.faiss"}.issubset(set(files)):
             return root
     raise FileNotFoundError(f"No index directory found under {run_dir}")
 
@@ -178,21 +204,135 @@ def _read_targets_jsonl(path: str) -> List[str]:
 
 
 def load_index_with_fallback(index_dir: str, encoder) -> VectorIndex:
-    try:
-        return VectorIndex.load(index_dir)
-    except AttributeError:
-        if faiss_available():
-            raise
-        meta_path = os.path.join(index_dir, "index_meta.json")
-        with open(meta_path, "r", encoding="utf-8") as f:
-            meta = json.load(f)
-        if meta.get("index_type") != "faiss":
-            raise
+    if os.path.exists(os.path.join(index_dir, "index_meta.json")):
+        try:
+            return VectorIndex.load(index_dir)
+        except AttributeError:
+            if faiss_available():
+                raise
+            meta_path = os.path.join(index_dir, "index_meta.json")
+            with open(meta_path, "r", encoding="utf-8") as f:
+                meta = json.load(f)
+            if meta.get("index_type") != "faiss":
+                raise
 
-        print(f"Warning: FAISS index found but faiss is unavailable; rebuilding sklearn index from targets in {index_dir}")
-        targets = _read_targets_jsonl(os.path.join(index_dir, "targets.jsonl"))
-        target_emb = encode_texts(encoder, targets, batch_size=256)
-        return VectorIndex.build(target_emb, targets, prefer_faiss=False)
+            print(f"Warning: FAISS index found but faiss is unavailable; rebuilding sklearn index from targets in {index_dir}")
+            targets = _read_targets_jsonl(os.path.join(index_dir, "targets.jsonl"))
+            target_emb = encode_texts(encoder, targets, batch_size=256)
+            return VectorIndex.build(target_emb, targets, prefer_faiss=False)
+
+    if os.path.exists(os.path.join(index_dir, "meta.json")) and os.path.exists(os.path.join(index_dir, "candidates.json")):
+        with open(os.path.join(index_dir, "candidates.json"), "r", encoding="utf-8") as f:
+            loaded = json.load(f)
+        if isinstance(loaded, dict):
+            target_texts = loaded.get("candidates", [])
+        else:
+            target_texts = loaded
+        if not isinstance(target_texts, list):
+            raise ValueError(f"Unexpected candidates.json structure in {index_dir}")
+        target_texts = [str(item) for item in target_texts]
+
+        faiss_path = os.path.join(index_dir, "index.faiss")
+        if os.path.exists(faiss_path):
+            if faiss is None:
+                print(
+                    f"Warning: shared_index has FAISS index but faiss is unavailable; rebuilding sklearn index from candidates in {index_dir}"
+                )
+                target_emb = encode_texts(encoder, target_texts, batch_size=256)
+                return VectorIndex.build(target_emb, target_texts, prefer_faiss=False)
+            dim = encoder.get_sentence_embedding_dimension()
+            index = VectorIndex(index_type="faiss", target_texts=target_texts, dim=dim)
+            index.faiss_index = faiss.read_index(faiss_path)
+            return index
+
+        target_emb = encode_texts(encoder, target_texts, batch_size=256)
+        return VectorIndex.build(target_emb, target_texts, prefer_faiss=False)
+
+    raise FileNotFoundError(f"No supported index format found in {index_dir}")
+
+
+def discover_run_dirs(models_dir: str) -> List[str]:
+    if not os.path.isdir(models_dir):
+        return []
+    discovered: List[str] = []
+    for name in sorted(os.listdir(models_dir)):
+        run_path = os.path.join(models_dir, name)
+        if not os.path.isdir(run_path):
+            continue
+        try:
+            resolve_encoder_dir(run_path)
+            resolve_index_dir(run_path)
+            discovered.append(run_path)
+        except FileNotFoundError:
+            continue
+    return discovered
+
+
+def dedupe_preserve_order(items: Iterable[str]) -> List[str]:
+    seen = set()
+    deduped: List[str] = []
+    for item in items:
+        if item in seen:
+            continue
+        seen.add(item)
+        deduped.append(item)
+    return deduped
+
+
+def write_aggregate_results(out_dir: str, results: List[Dict[str, object]]) -> None:
+    ensure_dir(out_dir)
+    sorted_rows = sorted(
+        results,
+        key=lambda row: (
+            float(row.get("keyterm_recall_avg", 0.0)),
+            float(row.get("keyword_recall_avg", 0.0)),
+        ),
+        reverse=True,
+    )
+    all_csv_path = os.path.join(out_dir, "shokudo_eval_summary_all_runs.csv")
+    all_json_path = os.path.join(out_dir, "shokudo_eval_summary_all_runs.json")
+
+    with open(all_csv_path, "w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=[
+                "run_name",
+                "run_dir",
+                "resolved_encoder_path",
+                "resolved_index_path",
+                "num_examples",
+                "keyword_recall_avg",
+                "keyterm_recall_avg",
+                "latency_ms_avg",
+                "latency_ms_p50",
+                "latency_ms_p95",
+            ],
+        )
+        writer.writeheader()
+        writer.writerows(sorted_rows)
+    write_json(all_json_path, {"results": sorted_rows})
+
+    print(f"All-run summary CSV: {all_csv_path}")
+    print(f"All-run summary JSON: {all_json_path}")
+
+
+def print_leaderboard(results: List[Dict[str, object]]) -> None:
+    sorted_rows = sorted(
+        results,
+        key=lambda row: (
+            float(row.get("keyterm_recall_avg", 0.0)),
+            float(row.get("keyword_recall_avg", 0.0)),
+        ),
+        reverse=True,
+    )
+    print("\n=== Leaderboard (sorted by keyterm recall, then keyword recall) ===")
+    for rank, row in enumerate(sorted_rows, start=1):
+        print(
+            f"{rank:2d}. {row.get('run_name', '<unknown>')} | "
+            f"keyterm={float(row.get('keyterm_recall_avg', 0.0)):.4f} | "
+            f"keyword={float(row.get('keyword_recall_avg', 0.0)):.4f} | "
+            f"lat(ms)={float(row.get('latency_ms_avg', 0.0)):.2f}"
+        )
 
 
 def configure_runtime_threads(threads: int) -> None:
@@ -242,7 +382,7 @@ def evaluate_run(
     device: str,
     topk: int,
     index_source: str,
-) -> None:
+) -> Dict[str, object]:
     resolved_run = resolve_run_dir(run_dir)
     encoder_path = resolve_encoder_dir(resolved_run)
     index_path = resolve_index_dir(resolved_run)
@@ -353,7 +493,8 @@ def evaluate_run(
         writer.writeheader()
         writer.writerows(rows)
 
-    summary = {
+    summary: Dict[str, object] = {
+        "run_name": run_name,
         "run_dir": resolved_run,
         "resolved_encoder_path": encoder_path,
         "resolved_index_path": index_path,
@@ -376,11 +517,13 @@ def evaluate_run(
     print(f"Latency ms avg/p50/p95: {latency_ms_avg:.2f} / {latency_ms_p50:.2f} / {latency_ms_p95:.2f}")
     print(f"Predictions CSV: {preds_path}")
     print(f"Summary JSON: {summary_path}")
+    return summary
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate Shokudo next-utterance keyterms/keywords predictor")
-    parser.add_argument("--run_dir", action="append", required=True, help="Run directory (repeatable)")
+    parser.add_argument("--run_dir", action="append", help="Run directory (repeatable)")
+    parser.add_argument("--models_dir", type=str, default=None, help="Auto-discover run directories under this root")
     parser.add_argument("--dataset_csv", type=str, required=True)
     parser.add_argument("--menu_json", type=str, required=True)
     parser.add_argument(
@@ -436,11 +579,22 @@ def main() -> None:
     if not examples:
         raise ValueError("No evaluation examples produced from dataset.")
 
-    for run_idx, run_dir in enumerate(args.run_dir):
+    discovered_runs = discover_run_dirs(args.models_dir) if args.models_dir else []
+    explicit_runs = list(args.run_dir or [])
+    run_dirs = dedupe_preserve_order(explicit_runs + discovered_runs)
+    if not run_dirs:
+        raise ValueError("No runs to evaluate. Provide --run_dir and/or --models_dir.")
+
+    print(f"Evaluating {len(run_dirs)} run(s).", flush=True)
+    if args.models_dir:
+        print(f"Discovered {len(discovered_runs)} run(s) from models dir: {args.models_dir}", flush=True)
+
+    all_results: List[Dict[str, object]] = []
+    for run_idx, run_dir in enumerate(run_dirs):
         print(f"\n{'='*60}", flush=True)
-        print(f"Evaluating run {run_idx + 1}/{len(args.run_dir)}: {run_dir}", flush=True)
+        print(f"Evaluating run {run_idx + 1}/{len(run_dirs)}: {run_dir}", flush=True)
         print(f"{'='*60}\n", flush=True)
-        evaluate_run(
+        result = evaluate_run(
             run_dir=run_dir,
             examples=examples,
             out_dir=args.out_dir,
@@ -448,6 +602,10 @@ def main() -> None:
             topk=args.topk,
             index_source=args.index_source,
         )
+        all_results.append(result)
+
+    write_aggregate_results(args.out_dir, all_results)
+    print_leaderboard(all_results)
 
 
 if __name__ == "__main__":

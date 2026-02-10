@@ -1,1802 +1,1802 @@
 dialog_id,utterance_id,speaker,text
-0,0,agent,"Hi, this is Shokudo."
-0,1,customer,"Hi, I’d like to place an order."
-0,2,customer,I’ll take one white profiteroles.
-0,3,agent,Sounds good.
-0,4,agent,Anything else today?
-0,5,customer,I’ll take one tuna cucumber roll.
-0,6,agent,No problem.
-0,7,agent,Anything else today?
+0,0,agent,Hi hi! Shokudo on the line - Riley speaking!
+0,1,customer,"Hi - I want to order, but I have a couple questions."
+0,2,customer,I'll take one white profiteroles.
+0,3,agent,Got it.
+0,4,agent,Anything else for you?
+0,5,customer,I'll take one tuna cucumber roll.
+0,6,agent,Adding that now.
+0,7,agent,Any other items?
 0,8,customer,"Actually, hang on."
-0,9,customer,I’ll take one shrimp tempura appetizer.
-0,10,agent,No problem.
-0,11,agent,What else can I get for you?
-0,12,customer,I’ll take one mango tango roll.
-0,13,agent,No problem.
-0,14,customer,"Yep, that’s it."
-0,15,agent,Pickup or delivery?
-0,16,customer,Pickup.
-0,17,agent,That should be ready shortly.
-0,18,customer,Thank you.
+0,9,customer,I'll take one shrimp tempura appetizer.
+0,10,agent,Okay - adding it.
+0,11,agent,Anything more today?
+0,12,customer,I'll take one mango tango roll.
+0,13,agent,You got it.
+0,14,customer,"Yep, that's it."
+0,15,agent,Is that for pickup or delivery?
+0,16,customer,"Pickup, please."
+0,17,agent,"Great choice - Hi - I want to order, but I have a couple questions.; I'll take one white profiteroles.; I'll take one tuna cucumber roll.. We'll have it ready!"
+0,18,customer,"Great, thanks."
 1,0,agent,Thank you for calling Shokudo.
-1,1,customer,"Hi, I’d like to place an order."
-1,2,customer,I’ll take one hackettstown roll.
-1,3,agent,Added.
-1,4,customer,I’ll take one new jersey roll.
-1,5,agent,Keep going.
+1,1,customer,"Hi... I'm still deciding, but can I start an order?"
+1,2,customer,I'll take one hackettstown roll.
+1,3,agent,Adding that now.
+1,4,customer,I'll take one new jersey roll.
+1,5,agent,Want to add anything else?
 1,6,customer,"Uh, let me think."
-1,7,customer,I’ll take one turtle wagy tamaki for two.
-1,8,agent,Next item?
-1,9,customer,Sorry—
-1,10,customer,I’ll take one n j fifty seven roll.
-1,11,agent,Sounds good.
-1,12,customer,I’ll take one seaweed salad.
-1,13,agent,Sounds good.
-1,14,agent,What else can I get for you?
-1,15,customer,I’ll take one kani salad.
-1,16,agent,No problem.
+1,7,customer,I'll take one turtle wagy tamaki for two.
+1,8,agent,Anything else for you?
+1,9,customer,My bad -
+1,10,customer,I'll take one n j fifty seven roll.
+1,11,agent,"Okay, no problem."
+1,12,customer,I'll take one seaweed salad.
+1,13,agent,You got it.
+1,14,agent,Anything more today?
+1,15,customer,I'll take one kani salad.
+1,16,agent,Got it.
 1,17,customer,That should do it.
-1,18,agent,Pickup or delivery?
-1,19,customer,Delivery.
-1,20,agent,That should be ready shortly.
-1,21,customer,Thank you.
+1,18,agent,Will this be pickup or delivery?
+1,19,customer,Can you do delivery?
+1,20,agent,Awesome - I'll take one hackettstown roll.; I'll take one new jersey roll.; I'll take one turtle wagy tamaki for two.. We'll have that ready. Thank you!
+1,21,customer,"Great, thanks."
 2,0,agent,Thank you for calling Shokudo.
-2,1,customer,"Hi, I’d like to place an order."
+2,1,customer,"Hi there, I'd like to order if you're taking orders."
 2,2,customer,"Uh, let me think."
-2,3,customer,I’ll take one yellowtail jalapeno appetizer.
-2,4,agent,Gotcha.
-2,5,agent,What else can I get for you?
-2,6,customer,I’ll take one shrimp tempura appetizer.
-2,7,agent,I’ve got that.
-2,8,agent,Keep going.
-2,9,customer,I’ll take one pink lady roll.
-2,10,agent,I’ve got that.
-2,11,customer,I’ll take one twelve pieces sashimi.
-2,12,agent,No problem.
+2,3,customer,I'll take one yellowtail jalapeno appetizer.
+2,4,agent,Perfect.
+2,5,agent,Any other items?
+2,6,customer,I'll take one shrimp tempura appetizer.
+2,7,agent,Sounds good.
+2,8,agent,What else can I get you?
+2,9,customer,I'll take one pink lady roll.
+2,10,agent,Adding that now.
+2,11,customer,I'll take one twelve pieces sashimi.
+2,12,agent,"Okay, no problem."
 2,13,agent,Soup or salad with that?
 2,14,customer,Miso soup.
-2,15,agent,What else can I get for you?
-2,16,customer,I’ll take one yummy roll.
-2,17,agent,Okay.
+2,15,agent,Anything more today?
+2,16,customer,I'll take one yummy roll.
+2,17,agent,Sure thing.
 2,18,customer,That should do it.
-2,19,agent,Pickup or delivery?
-2,20,customer,Delivery.
-2,21,agent,We’ll get started on that.
+2,19,agent,Will this be pickup or delivery?
+2,20,customer,Can you do delivery?
+2,21,agent,We'll get started on that.
 2,22,customer,Thank you.
-3,0,agent,"Shokudo, how can I help you today?"
-3,1,customer,"Hi, I’d like to place an order."
-3,2,customer,I’ll take one tempura crab meat.
-3,3,agent,Added.
-3,4,agent,Anything else today?
-3,5,customer,I’ll take one salmon cucumber roll.
-3,6,agent,Gotcha.
-3,7,agent,Keep going.
-3,8,customer,I’ll take one crab meat.
-3,9,agent,I’ve got that.
-3,10,customer,"Yep, that’s it."
-3,11,agent,Pickup or delivery?
-3,12,customer,Pickup.
-3,13,agent,"Thanks, we’ll take care of it."
-3,14,customer,Thank you.
+3,0,agent,Hi! You've reached Shokudo. This is Mina - how can I help?
+3,1,customer,"Hi, I want to order but I'm not sure what to pick."
+3,2,customer,I'll take one tempura crab meat.
+3,3,agent,You got it.
+3,4,agent,Any other items?
+3,5,customer,I'll take one salmon cucumber roll.
+3,6,agent,"Okay, no problem."
+3,7,agent,Anything more today?
+3,8,customer,I'll take one crab meat.
+3,9,agent,"Great, I'll put that in."
+3,10,customer,"Yep, that's it."
+3,11,agent,Is that for pickup or delivery?
+3,12,customer,I'll pick it up.
+3,13,agent,"Awesome - Hi, I want to order but I'm not sure what to pick.; I'll take one tempura crab meat.; I'll take one salmon cucumber roll.. We'll have that ready. Thank you!"
+3,14,customer,Thanks!
 4,0,agent,Thank you for calling Shokudo.
-4,1,customer,"Hello, I need to order dinner."
+4,1,customer,Hello - I'm new to your menu. Can you help me order?
 4,2,customer,"Uh, let me think."
-4,3,customer,I’ll take one yummy roll.
-4,4,agent,No problem.
-4,5,agent,Anything else today?
-4,6,customer,I’ll take one kani salad.
-4,7,agent,Added.
-4,8,agent,Anything else today?
-4,9,customer,I’ll take one sake tamaki for two.
-4,10,agent,Sure.
-4,11,agent,Keep going.
-4,12,customer,I’ll take one fresh water eel.
-4,13,agent,Gotcha.
-4,14,agent,Next item?
-4,15,customer,I’ll take one tempura crab meat.
-4,16,agent,No problem.
-4,17,customer,"Yep, that’s it."
-4,18,agent,Pickup or delivery?
+4,3,customer,I'll take one yummy roll.
+4,4,agent,All set.
+4,5,agent,Want to add anything else?
+4,6,customer,I'll take one kani salad.
+4,7,agent,Okay - adding it.
+4,8,agent,Any other items?
+4,9,customer,I'll take one sake tamaki for two.
+4,10,agent,Sure thing.
+4,11,agent,What else can I get you?
+4,12,customer,I'll take one fresh water eel.
+4,13,agent,Perfect.
+4,14,agent,Anything else for you?
+4,15,customer,I'll take one tempura crab meat.
+4,16,agent,Adding that now.
+4,17,customer,"Yep, that's it."
+4,18,agent,Pickup or delivery today?
 4,19,customer,Pickup.
-4,20,agent,We’ll get started on that.
-4,21,customer,Thank you.
+4,20,agent,We'll get started on that.
+4,21,customer,"Great, thanks."
 5,0,agent,Shokudo Japanese Kitchen.
-5,1,customer,"Hi, I’m calling in an order."
-5,2,customer,I’ll take one sprite.
-5,3,agent,Anything else today?
-5,4,customer,I’ll take one a a c roll.
-5,5,agent,Okay.
-5,6,agent,What else can I get for you?
-5,7,customer,I’ll take one mochi.
-5,8,agent,Sounds good.
-5,9,agent,Anything else today?
-5,10,customer,I’ll take one tuna cucumber roll.
-5,11,agent,Added.
-5,12,customer,I’ll take one sushi appetizer.
-5,13,agent,Gotcha.
+5,1,customer,"Hi, it's my first time ordering. Can I place an order?"
+5,2,customer,I'll take one sprite.
+5,3,agent,Anything else for you?
+5,4,customer,I'll take one a a c roll.
+5,5,agent,Adding that now.
+5,6,agent,Want to add anything else?
+5,7,customer,I'll take one mochi.
+5,8,agent,Perfect.
+5,9,agent,Any other items?
+5,10,customer,I'll take one tuna cucumber roll.
+5,11,agent,I'll add that.
+5,12,customer,I'll take one sushi appetizer.
+5,13,agent,Sounds good.
 5,14,customer,That should do it.
-5,15,agent,Pickup or delivery?
-5,16,customer,Pickup.
-5,17,agent,That should be ready shortly.
-5,18,customer,Thank you.
-6,0,agent,"Hi, this is Shokudo."
-6,1,customer,"Hello, I need to order dinner."
+5,15,agent,Is that for pickup or delivery?
+5,16,customer,I'll pick it up.
+5,17,agent,Great choice - I'll take one sprite.; I'll take one a a c roll.; I'll take one mochi.. We'll have it ready!
+5,18,customer,Thanks!
+6,0,agent,Hello! Shokudo - Riley here. What sounds good today?
+6,1,customer,Hi! Calling in an order like last time.
 6,2,customer,One second.
-6,3,customer,I’ll take one alaska roll.
-6,4,customer,I’ll take one eel poke bowl.
-6,5,agent,Sure.
-6,6,agent,Go ahead.
-6,7,customer,I’ll take one takoyaki.
-6,8,agent,Gotcha.
-6,9,agent,Go ahead.
+6,3,customer,I'll take one alaska roll.
+6,4,customer,I'll take one eel poke bowl.
+6,5,agent,Okay - adding it.
+6,6,agent,Want to add anything else?
+6,7,customer,I'll take one takoyaki.
+6,8,agent,"Okay, no problem."
+6,9,agent,Anything else for you?
 6,10,customer,One second.
-6,11,customer,I’ll take one rainbow roll.
-6,12,agent,Go ahead.
-6,13,customer,I’ll take one shio garlic ramen.
-6,14,agent,Okay.
+6,11,customer,I'll take one rainbow roll.
+6,12,agent,Any other items?
+6,13,customer,I'll take one shio garlic ramen.
+6,14,agent,I'll add that.
 6,15,customer,"Actually, hang on."
-6,16,customer,I’ll take one eel dragon roll.
-6,17,agent,Added.
-6,18,customer,I think that’s all.
-6,19,agent,Pickup or delivery?
-6,20,customer,Pickup.
-6,21,agent,That should be ready shortly.
-6,22,customer,Thank you.
-7,0,agent,"Shokudo, how can I help you today?"
+6,16,customer,I'll take one eel dragon roll.
+6,17,agent,"Great, I'll put that in."
+6,18,customer,I think that's all.
+6,19,agent,Will this be pickup or delivery?
+6,20,customer,"Pickup, please."
+6,21,agent,Great choice - One second.; I'll take one alaska roll.; I'll take one eel poke bowl.. We'll have it ready!
+6,22,customer,Thanks!
+7,0,agent,"Hi, Shokudo - Jay. What can I get for you?"
 7,1,customer,"Hey, can I order some food?"
-7,2,customer,Sorry—
-7,3,customer,I’ll take one sparkling water.
-7,4,agent,Added.
-7,5,agent,What else can I get for you?
+7,2,customer,My bad -
+7,3,customer,I'll take one sparkling water.
+7,4,agent,Sounds good.
+7,5,agent,Any other items?
 7,6,customer,"Actually, hang on."
-7,7,customer,I’ll take one salmon lover roll.
-7,8,agent,Sounds good.
-7,9,agent,What else can I get for you?
-7,10,customer,Sorry—
-7,11,customer,I’ll take one shumai six pieces.
-7,12,agent,Sure.
-7,13,agent,Go ahead.
-7,14,customer,Sorry—
-7,15,customer,I’ll take one white profiteroles.
-7,16,agent,Okay.
-7,17,customer,I think that’s all.
-7,18,agent,Pickup or delivery?
-7,19,customer,Delivery.
-7,20,agent,We’ll get started on that.
-7,21,customer,Thank you.
+7,7,customer,I'll take one salmon lover roll.
+7,8,agent,Got it.
+7,9,agent,Want to add anything else?
+7,10,customer,Oh sorry -
+7,11,customer,I'll take one shumai six pieces.
+7,12,agent,Perfect.
+7,13,agent,Anything more today?
+7,14,customer,Sorry about that -
+7,15,customer,I'll take one white profiteroles.
+7,16,agent,I'll add that.
+7,17,customer,I think that's all.
+7,18,agent,Is that for pickup or delivery?
+7,19,customer,"Pickup, please."
+7,20,agent,We'll get started on that.
+7,21,customer,Appreciate it.
 8,0,agent,Shokudo Japanese Kitchen.
-8,1,customer,"Hi, I’m calling in an order."
-8,2,customer,I’ll take one masago.
-8,3,agent,I’ve got that.
+8,1,customer,"Hey, can you help me with an order? I'm kind of on the fence."
+8,2,customer,I'll take one masago.
+8,3,agent,Sounds good.
 8,4,customer,"Actually, hang on."
-8,5,customer,I’ll take one unsweet green tea.
-8,6,agent,Sounds good.
-8,7,agent,What else can I get for you?
-8,8,customer,I’ll take one salmon dinner.
-8,9,agent,Sure.
+8,5,customer,I'll take one unsweet green tea.
+8,6,agent,I'll add that.
+8,7,agent,Anything else for you?
+8,8,customer,I'll take one salmon dinner.
+8,9,agent,Perfect.
 8,10,agent,Soup or salad with that?
 8,11,customer,Salad.
-8,12,agent,Keep going.
-8,13,customer,I’ll take one mango avocado roll.
-8,14,agent,I’ve got that.
-8,15,agent,Go ahead.
-8,16,customer,I’ll take one tiger roll.
-8,17,agent,Sure.
-8,18,customer,That’s everything.
-8,19,agent,Pickup or delivery?
+8,12,agent,Want to add anything else?
+8,13,customer,I'll take one mango avocado roll.
+8,14,agent,Adding that now.
+8,15,agent,Any other items?
+8,16,customer,I'll take one tiger roll.
+8,17,agent,Sure thing.
+8,18,customer,That's everything.
+8,19,agent,Will this be pickup or delivery?
 8,20,customer,Delivery.
-8,21,agent,You’re all set.
-8,22,customer,Thank you.
-9,0,agent,"Hi, this is Shokudo."
-9,1,customer,"Hi, I’d like to place an order."
-9,2,customer,I’ll take one ginger ale.
-9,3,agent,All right.
-9,4,agent,Keep going.
-9,5,customer,I’ll take one shokudo roll.
-9,6,agent,Sounds good.
-9,7,agent,Go ahead.
-9,8,customer,Sorry—
-9,9,customer,I’ll take one n j fifty seven roll.
-9,10,agent,I’ve got that.
+8,21,agent,Confirmed: I'll take one masago.; I'll take one unsweet green tea.; I'll take one salmon dinner.. Thanks.
+8,22,customer,Appreciate it.
+9,0,agent,"Shokudo, Ken speaking. Pickup or delivery?"
+9,1,customer,"Hi... I'm still deciding, but can I start an order?"
+9,2,customer,I'll take one ginger ale.
+9,3,agent,Perfect.
+9,4,agent,What else can I get you?
+9,5,customer,I'll take one shokudo roll.
+9,6,agent,"Noted, adding it."
+9,7,agent,Anything else for you?
+9,8,customer,Oh sorry -
+9,9,customer,I'll take one n j fifty seven roll.
+9,10,agent,Okay - adding it.
 9,11,customer,"Actually, hang on."
-9,12,customer,I’ll take one rainbow roll.
-9,13,agent,Gotcha.
-9,14,agent,What else can I get for you?
+9,12,customer,I'll take one rainbow roll.
+9,13,agent,Sure thing.
+9,14,agent,Any other items?
 9,15,customer,"Uh, let me think."
-9,16,customer,I’ll take one spicy kim chi ramen.
-9,17,agent,All right.
-9,18,agent,Go ahead.
-9,19,customer,I’ll take one tempura shrimp roll.
-9,20,agent,Added.
-9,21,customer,I think that’s all.
-9,22,agent,Pickup or delivery?
-9,23,customer,Delivery.
-9,24,agent,That should be ready shortly.
-9,25,customer,Thank you.
+9,16,customer,I'll take one spicy kim chi ramen.
+9,17,agent,Got it.
+9,18,agent,Want to add anything else?
+9,19,customer,I'll take one tempura shrimp roll.
+9,20,agent,Adding that now.
+9,21,customer,I think that's all.
+9,22,agent,Pickup or delivery today?
+9,23,customer,Can you do delivery?
+9,24,agent,Confirmed: I'll take one ginger ale.; I'll take one shokudo roll.; I'll take one n j fifty seven roll.. Thanks.
+9,25,customer,Thanks so much.
 10,0,agent,Thank you for calling Shokudo.
 10,1,customer,"Hey, can I order some food?"
 10,2,customer,One second.
-10,3,customer,I’ll take one hollywood roll.
-10,4,agent,Okay.
-10,5,agent,Keep going.
-10,6,customer,Sorry—
-10,7,customer,I’ll take one masago.
-10,8,customer,That’s everything.
-10,9,agent,Pickup or delivery?
-10,10,customer,Pickup.
-10,11,agent,You’re all set.
-10,12,customer,Thank you.
-11,0,agent,"Shokudo, how can I help you today?"
-11,1,customer,"Hello, I need to order dinner."
-11,2,customer,I’ll take one teriyaki chicken.
-11,3,agent,No problem.
-11,4,agent,Go ahead.
-11,5,customer,I’ll take one coral sea.
-11,6,agent,What else can I get for you?
-11,7,customer,I’ll take one spicy scallop roll.
-11,8,agent,Sounds good.
-11,9,customer,I’ll take one tuna roll.
-11,10,agent,Okay.
-11,11,customer,That’s everything.
-11,12,agent,Pickup or delivery?
-11,13,customer,Pickup.
-11,14,agent,That should be ready shortly.
+10,3,customer,I'll take one hollywood roll.
+10,4,agent,Okay - adding it.
+10,5,agent,Anything else for you?
+10,6,customer,Oh sorry -
+10,7,customer,I'll take one masago.
+10,8,customer,That's everything.
+10,9,agent,Will this be pickup or delivery?
+10,10,customer,I'll pick it up.
+10,11,agent,Confirmed: One second.; I'll take one hollywood roll.; I'll take one masago.. Thanks.
+10,12,customer,"Great, thanks."
+11,0,agent,"Hello, Shokudo. This is Sofia. Take your time - what would you like?"
+11,1,customer,Hey - I need to place a fast order for pickup.
+11,2,customer,I'll take one teriyaki chicken.
+11,3,agent,"Noted, adding it."
+11,4,agent,Want to add anything else?
+11,5,customer,I'll take one coral sea.
+11,6,agent,Anything else for you?
+11,7,customer,I'll take one spicy scallop roll.
+11,8,agent,You got it.
+11,9,customer,I'll take one tuna roll.
+11,10,agent,"Okay, no problem."
+11,11,customer,That's everything.
+11,12,agent,Is that for pickup or delivery?
+11,13,customer,Pickup - as soon as possible.
+11,14,agent,Perfect - Hey - I need to place a fast order for pickup.; I'll take one teriyaki chicken.; I'll take one coral sea.. We'll take care of it. Thank you!
 11,15,customer,Thank you.
-12,0,agent,"Hi, this is Shokudo."
-12,1,customer,"Hi, I’d like to place an order."
-12,2,customer,I’ll take one salmon lover roll.
-12,3,agent,Added.
-12,4,agent,What else can I get for you?
-12,5,customer,I’ll take one rainbow roll.
-12,6,agent,Sounds good.
-12,7,customer,I’ll take one n j fifty seven roll.
-12,8,agent,Sure.
+12,0,agent,"Hey! Thanks for calling Shokudo, this is Riley!"
+12,1,customer,"Hi, it's my first time ordering. Can I place an order?"
+12,2,customer,I'll take one salmon lover roll.
+12,3,agent,Got it.
+12,4,agent,Anything more today?
+12,5,customer,I'll take one rainbow roll.
+12,6,agent,Perfect.
+12,7,customer,I'll take one n j fifty seven roll.
+12,8,agent,Adding that now.
 12,9,customer,That should do it.
-12,10,agent,Pickup or delivery?
+12,10,agent,Is that for pickup or delivery?
 12,11,customer,Delivery.
-12,12,agent,That should be ready shortly.
-12,13,customer,Thank you.
+12,12,agent,Sweet - I'll take one salmon lover roll.; I'll take one rainbow roll.; I'll take one n j fifty seven roll.! We'll get it going. See you soon!
+12,13,customer,Thanks so much.
 13,0,agent,Shokudo Japanese Kitchen.
-13,1,customer,"Hi, I’d like to place an order."
-13,2,customer,I’ll take one takoyaki.
-13,3,agent,Okay.
-13,4,customer,Sorry—
-13,5,customer,I’ll take one curry chicken katsu.
-13,6,agent,All right.
-13,7,agent,Go ahead.
-13,8,customer,I’ll take one masago.
-13,9,agent,What else can I get for you?
+13,1,customer,"Hi - I want to order, but I have a couple questions."
+13,2,customer,I'll take one takoyaki.
+13,3,agent,Sounds good.
+13,4,customer,Sorry about that -
+13,5,customer,I'll take one curry chicken katsu.
+13,6,agent,"Noted, adding it."
+13,7,agent,Any other items?
+13,8,customer,I'll take one masago.
+13,9,agent,Anything more today?
 13,10,customer,"Actually, hang on."
-13,11,customer,I’ll take one salmon avocado roll.
-13,12,agent,Gotcha.
-13,13,agent,Keep going.
-13,14,customer,I’ll take one black dragon roll.
-13,15,agent,Okay.
-13,16,customer,That’s everything.
-13,17,agent,Pickup or delivery?
+13,11,customer,I'll take one salmon avocado roll.
+13,12,agent,All set.
+13,13,agent,Want to add anything else?
+13,14,customer,I'll take one black dragon roll.
+13,15,agent,"Okay, no problem."
+13,16,customer,That's everything.
+13,17,agent,Is that for pickup or delivery?
 13,18,customer,Delivery.
-13,19,agent,That should be ready shortly.
-13,20,customer,Thank you.
+13,19,agent,"Great - Hi - I want to order, but I have a couple questions.; I'll take one takoyaki.; I'll take one curry chicken katsu.. We'll see you soon. Thanks for calling!"
+13,20,customer,"Great, thanks."
 14,0,agent,Shokudo Japanese Kitchen.
-14,1,customer,"Hi, I’d like to place an order."
-14,2,customer,I’ll take one seven pieces nigiri and one sushi maki.
-14,3,agent,Gotcha.
+14,1,customer,"Hey, it's me again - can I do my usual order?"
+14,2,customer,I'll take one seven pieces nigiri and one sushi maki.
+14,3,agent,Perfect.
 14,4,agent,Soup or salad with that?
 14,5,customer,Salad.
-14,6,agent,What else can I get for you?
-14,7,customer,I’ll take one twelve pieces sashimi.
-14,8,agent,Added.
+14,6,agent,Anything else for you?
+14,7,customer,I'll take one twelve pieces sashimi.
+14,8,agent,"Great, I'll put that in."
 14,9,agent,Soup or salad with that?
 14,10,customer,Salad.
 14,11,customer,That should do it.
-14,12,agent,Pickup or delivery?
-14,13,customer,Delivery.
-14,14,agent,You’re all set.
-14,15,customer,Thank you.
-15,0,agent,"Shokudo, how can I help you today?"
-15,1,customer,"Hello, I need to order dinner."
-15,2,customer,I’ll take one tuna dinner.
+14,12,agent,Pickup or delivery today?
+14,13,customer,Pickup like usual.
+14,14,agent,No worries - I'll take one seven pieces nigiri and one sushi maki.; I'll take one twelve pieces sashimi.. We'll have it ready for you.
+14,15,customer,Appreciate it.
+15,0,agent,"Shokudo, Ken speaking. Pickup or delivery?"
+15,1,customer,"Hi, it's my first time ordering. Can I place an order?"
+15,2,customer,I'll take one tuna dinner.
 15,3,agent,Soup or salad with that?
 15,4,customer,Miso soup.
-15,5,agent,Anything else today?
-15,6,customer,Sorry—
-15,7,customer,I’ll take one seafood udon ramen.
-15,8,agent,I’ve got that.
-15,9,agent,Next item?
-15,10,customer,I’ll take one spicy kim chi ramen.
-15,11,agent,Okay.
-15,12,agent,Keep going.
-15,13,customer,I’ll take one kim chi.
-15,14,agent,I’ve got that.
-15,15,agent,Keep going.
-15,16,customer,I’ll take one steam bun two pieces pork or chicken.
+15,5,agent,Anything more today?
+15,6,customer,Oh sorry -
+15,7,customer,I'll take one seafood udon ramen.
+15,8,agent,Perfect.
+15,9,agent,Anything else for you?
+15,10,customer,I'll take one spicy kim chi ramen.
+15,11,agent,Adding that now.
+15,12,agent,Any other items?
+15,13,customer,I'll take one kim chi.
+15,14,agent,"Noted, adding it."
+15,15,agent,What else can I get you?
+15,16,customer,I'll take one steam bun two pieces pork or chicken.
 15,17,agent,Pork or chicken for that?
 15,18,customer,Pork.
 15,19,customer,That should do it.
-15,20,agent,Pickup or delivery?
-15,21,customer,Pickup.
-15,22,agent,That should be ready shortly.
-15,23,customer,Thank you.
+15,20,agent,Pickup or delivery today?
+15,21,customer,"Pickup, please."
+15,22,agent,Confirmed: I'll take one tuna dinner.; I'll take one seafood udon ramen.; I'll take one spicy kim chi ramen.. Thanks.
+15,23,customer,Thanks so much.
 16,0,agent,Thank you for calling Shokudo.
-16,1,customer,"Hello, I need to order dinner."
-16,2,customer,I’ll take one pink lady roll.
-16,3,agent,Go ahead.
-16,4,customer,I’ll take one apple juice.
-16,5,agent,Added.
-16,6,agent,Next item?
-16,7,customer,I’ll take one spicy ramen.
-16,8,agent,No problem.
+16,1,customer,"Hi, it's my first time ordering. Can I place an order?"
+16,2,customer,I'll take one pink lady roll.
+16,3,agent,What else can I get you?
+16,4,customer,I'll take one apple juice.
+16,5,agent,Sounds good.
+16,6,agent,Anything more today?
+16,7,customer,I'll take one spicy ramen.
+16,8,agent,I'll add that.
 16,9,customer,"Actually, hang on."
-16,10,customer,I’ll take one fuji mountain roll.
-16,11,agent,No problem.
-16,12,customer,I’ll take one godzilla roll.
-16,13,agent,Sure.
-16,14,agent,Anything else today?
-16,15,customer,I’ll take one salmon poke bowl.
-16,16,agent,No problem.
-16,17,customer,That’s everything.
-16,18,agent,Pickup or delivery?
+16,10,customer,I'll take one fuji mountain roll.
+16,11,agent,All set.
+16,12,customer,I'll take one godzilla roll.
+16,13,agent,"Great, I'll put that in."
+16,14,agent,Anything else for you?
+16,15,customer,I'll take one salmon poke bowl.
+16,16,agent,Got it.
+16,17,customer,That's everything.
+16,18,agent,Pickup or delivery today?
 16,19,customer,Pickup.
-16,20,agent,We’ll get started on that.
-16,21,customer,Thank you.
-17,0,agent,"Shokudo, how can I help you today?"
-17,1,customer,"Hi, I’d like to place an order."
-17,2,customer,I’ll take one coral sea.
-17,3,agent,Gotcha.
-17,4,agent,What else can I get for you?
-17,5,customer,I’ll take one white profiteroles.
-17,6,agent,Added.
-17,7,agent,Go ahead.
-17,8,customer,I’ll take one ice tea.
-17,9,agent,No problem.
-17,10,agent,Anything else today?
-17,11,customer,I’ll take one salmon dinner.
-17,12,agent,Gotcha.
+16,20,agent,We'll get started on that.
+16,21,customer,Appreciate it.
+17,0,agent,Shokudo - Ken. What can I get started for you?
+17,1,customer,Hello - I'm new to your menu. Can you help me order?
+17,2,customer,I'll take one coral sea.
+17,3,agent,"Great, I'll put that in."
+17,4,agent,Any other items?
+17,5,customer,I'll take one white profiteroles.
+17,6,agent,All set.
+17,7,agent,Anything else for you?
+17,8,customer,I'll take one ice tea.
+17,9,agent,You got it.
+17,10,agent,What else can I get you?
+17,11,customer,I'll take one salmon dinner.
+17,12,agent,I'll add that.
 17,13,agent,Soup or salad with that?
 17,14,customer,Miso soup.
-17,15,customer,"Yep, that’s it."
-17,16,agent,Pickup or delivery?
+17,15,customer,"Yep, that's it."
+17,16,agent,Is that for pickup or delivery?
 17,17,customer,Delivery.
-17,18,agent,We’ll get started on that.
+17,18,agent,We'll get started on that.
 17,19,customer,Thank you.
 18,0,agent,Shokudo Japanese Kitchen.
-18,1,customer,"Hello, I need to order dinner."
-18,2,customer,I’ll take one miso veggie ramen.
-18,3,agent,Keep going.
+18,1,customer,"Hi, I want to order but I'm not sure what to pick."
+18,2,customer,I'll take one miso veggie ramen.
+18,3,agent,Anything else for you?
 18,4,customer,"Uh, let me think."
-18,5,customer,I’ll take one ten pieces nigiri and one sushi maki.
-18,6,agent,All right.
+18,5,customer,I'll take one ten pieces nigiri and one sushi maki.
+18,6,agent,I'll add that.
 18,7,agent,Soup or salad with that?
 18,8,customer,Salad.
-18,9,agent,Anything else today?
-18,10,customer,I’ll take one crab meat.
-18,11,agent,All right.
-18,12,customer,I’ll take one fuji mountain roll.
-18,13,agent,Okay.
-18,14,agent,Go ahead.
-18,15,customer,I’ll take one tuna roll.
-18,16,agent,All right.
-18,17,customer,"Yep, that’s it."
-18,18,agent,Pickup or delivery?
+18,9,agent,Any other items?
+18,10,customer,I'll take one crab meat.
+18,11,agent,"Noted, adding it."
+18,12,customer,I'll take one fuji mountain roll.
+18,13,agent,"Okay, no problem."
+18,14,agent,Want to add anything else?
+18,15,customer,I'll take one tuna roll.
+18,16,agent,"Great, I'll put that in."
+18,17,customer,"Yep, that's it."
+18,18,agent,Is that for pickup or delivery?
 18,19,customer,Delivery.
-18,20,agent,That should be ready shortly.
+18,20,agent,"No worries - Hi, I want to order but I'm not sure what to pick.; I'll take one miso veggie ramen.; I'll take one ten pieces nigiri and one sushi maki.. We'll have it ready for you."
 18,21,customer,Thank you.
-19,0,agent,"Shokudo, how can I help you today?"
-19,1,customer,"Hi, I’m calling in an order."
-19,2,customer,I’ll take one white profiteroles.
-19,3,agent,Next item?
-19,4,customer,Sorry—
-19,5,customer,I’ll take one beef tataki appetizer.
-19,6,agent,All right.
-19,7,customer,I think that’s all.
-19,8,agent,Pickup or delivery?
-19,9,customer,Pickup.
-19,10,agent,We’ll get started on that.
+19,0,agent,Hello! Shokudo - Riley here. What sounds good today?
+19,1,customer,Hello - can I put in an order?
+19,2,customer,I'll take one white profiteroles.
+19,3,agent,Want to add anything else?
+19,4,customer,Oh sorry -
+19,5,customer,I'll take one beef tataki appetizer.
+19,6,agent,"Great, I'll put that in."
+19,7,customer,I think that's all.
+19,8,agent,Is that for pickup or delivery?
+19,9,customer,I'll pick it up.
+19,10,agent,We'll get started on that.
 19,11,customer,Thank you.
 20,0,agent,Thank you for calling Shokudo.
-20,1,customer,"Hi, I’d like to place an order."
-20,2,customer,I’ll take one new jersey roll.
-20,3,agent,I’ve got that.
-20,4,agent,Next item?
-20,5,customer,I’ll take one fuji mountain roll.
+20,1,customer,"Hi... I'm still deciding, but can I start an order?"
+20,2,customer,I'll take one new jersey roll.
+20,3,agent,Perfect.
+20,4,agent,Anything more today?
+20,5,customer,I'll take one fuji mountain roll.
 20,6,customer,"Actually, hang on."
-20,7,customer,I’ll take one peanut avocado roll.
-20,8,agent,No problem.
-20,9,customer,That’s everything.
-20,10,agent,Pickup or delivery?
-20,11,customer,Pickup.
-20,12,agent,We’ll get started on that.
-20,13,customer,Thank you.
-21,0,agent,"Hi, this is Shokudo."
-21,1,customer,"Hi, I’m calling in an order."
-21,2,customer,I’ll take one california roll.
-21,3,agent,No problem.
-21,4,customer,I’ll take one spider roll.
-21,5,agent,Gotcha.
-21,6,agent,Keep going.
-21,7,customer,I’ll take one spicy ramen.
-21,8,agent,Okay.
-21,9,customer,"Yep, that’s it."
-21,10,agent,Pickup or delivery?
-21,11,customer,Pickup.
-21,12,agent,We’ll get started on that.
-21,13,customer,Thank you.
-22,0,agent,"Hi, this is Shokudo."
-22,1,customer,"Hello, I need to order dinner."
-22,2,customer,I’ll take one fried ice cream.
-22,3,agent,No problem.
-22,4,agent,Keep going.
-22,5,customer,I’ll take one sweet potato roll.
-22,6,agent,All right.
-22,7,agent,Next item?
-22,8,customer,I’ll take one godzilla roll.
-22,9,agent,Sure.
-22,10,agent,Next item?
+20,7,customer,I'll take one peanut avocado roll.
+20,8,agent,I'll add that.
+20,9,customer,That's everything.
+20,10,agent,Will this be pickup or delivery?
+20,11,customer,"Pickup, please."
+20,12,agent,We'll get started on that.
+20,13,customer,Thanks so much.
+21,0,agent,"Shokudo, Jay speaking. Let's do it - pickup or delivery?"
+21,1,customer,Hey - I need to place a fast order for pickup.
+21,2,customer,I'll take one california roll.
+21,3,agent,Perfect.
+21,4,customer,I'll take one spider roll.
+21,5,agent,Adding that now.
+21,6,agent,Anything more today?
+21,7,customer,I'll take one spicy ramen.
+21,8,agent,Got it.
+21,9,customer,"Yep, that's it."
+21,10,agent,Is that for pickup or delivery?
+21,11,customer,Pickup. I'll be there shortly.
+21,12,agent,We'll get started on that.
+21,13,customer,Thanks!
+22,0,agent,"Hi, Shokudo - Jay. What can I get for you?"
+22,1,customer,"Hi... I'm still deciding, but can I start an order?"
+22,2,customer,I'll take one fried ice cream.
+22,3,agent,You got it.
+22,4,agent,Anything else for you?
+22,5,customer,I'll take one sweet potato roll.
+22,6,agent,Sure thing.
+22,7,agent,What else can I get you?
+22,8,customer,I'll take one godzilla roll.
+22,9,agent,Adding that now.
+22,10,agent,Anything more today?
 22,11,customer,One second.
-22,12,customer,I’ll take one salmon poke bowl.
-22,13,agent,No problem.
-22,14,customer,That’s everything.
-22,15,agent,Pickup or delivery?
-22,16,customer,Pickup.
-22,17,agent,That should be ready shortly.
-22,18,customer,Thank you.
+22,12,customer,I'll take one salmon poke bowl.
+22,13,agent,All set.
+22,14,customer,That's everything.
+22,15,agent,Pickup or delivery today?
+22,16,customer,I'll pick it up.
+22,17,agent,Okay. I'll take one fried ice cream.; I'll take one sweet potato roll.; I'll take one godzilla roll.. You'll be all set. Thanks.
+22,18,customer,"Great, thanks."
 23,0,agent,Thank you for calling Shokudo.
-23,1,customer,"Hello, I need to order dinner."
+23,1,customer,Hi! Calling in an order like last time.
 23,2,customer,"Uh, let me think."
-23,3,customer,I’ll take one spicy ramen.
-23,4,agent,Sounds good.
-23,5,agent,What else can I get for you?
+23,3,customer,I'll take one spicy ramen.
+23,4,agent,"Noted, adding it."
+23,5,agent,Anything more today?
 23,6,customer,One second.
-23,7,customer,I’ll take one eel dragon roll.
-23,8,agent,Next item?
+23,7,customer,I'll take one eel dragon roll.
+23,8,agent,Want to add anything else?
 23,9,customer,"Actually, hang on."
-23,10,customer,I’ll take one teriyaki shrimp.
-23,11,agent,Added.
-23,12,agent,Keep going.
-23,13,customer,I’ll take one miso soup.
-23,14,agent,No problem.
-23,15,customer,"Yep, that’s it."
-23,16,agent,Pickup or delivery?
-23,17,customer,Delivery.
-23,18,agent,You’re all set.
-23,19,customer,Thank you.
+23,10,customer,I'll take one teriyaki shrimp.
+23,11,agent,Adding that now.
+23,12,agent,What else can I get you?
+23,13,customer,I'll take one miso soup.
+23,14,agent,Perfect.
+23,15,customer,"Yep, that's it."
+23,16,agent,Will this be pickup or delivery?
+23,17,customer,Pickup like usual.
+23,18,agent,Great - I'll take one spicy ramen.; One second.; I'll take one eel dragon roll.. We'll see you soon. Thanks for calling!
+23,19,customer,Thanks!
 24,0,agent,Shokudo Japanese Kitchen.
-24,1,customer,"Hi, I’d like to place an order."
-24,2,customer,I’ll take one scallop.
-24,3,agent,Anything else today?
-24,4,customer,I’ll take one tiger roll.
-24,5,agent,Added.
-24,6,agent,Anything else today?
+24,1,customer,"Hi, it's my first time ordering. Can I place an order?"
+24,2,customer,I'll take one scallop.
+24,3,agent,What else can I get you?
+24,4,customer,I'll take one tiger roll.
+24,5,agent,Perfect.
+24,6,agent,Want to add anything else?
 24,7,customer,"Uh, let me think."
-24,8,customer,I’ll take one cucumber roll.
-24,9,agent,No problem.
-24,10,customer,I think that’s all.
-24,11,agent,Pickup or delivery?
-24,12,customer,Delivery.
-24,13,agent,That should be ready shortly.
-24,14,customer,Thank you.
-25,0,agent,"Shokudo, how can I help you today?"
-25,1,customer,"Hi, I’m calling in an order."
-25,2,customer,I’ll take one salmon poke bowl.
-25,3,agent,Gotcha.
-25,4,agent,Go ahead.
-25,5,customer,I’ll take one shumai six pieces.
-25,6,agent,Okay.
-25,7,agent,Go ahead.
+24,8,customer,I'll take one cucumber roll.
+24,9,agent,Okay - adding it.
+24,10,customer,I think that's all.
+24,11,agent,Will this be pickup or delivery?
+24,12,customer,"Delivery, please."
+24,13,agent,All set: I'll take one scallop.; I'll take one tiger roll.; I'll take one cucumber roll.. We'll have it ready. Thank you.
+24,14,customer,Thanks so much.
+25,0,agent,Hello! Shokudo - Riley here. What sounds good today?
+25,1,customer,"Hi, I want to order but I'm not sure what to pick."
+25,2,customer,I'll take one salmon poke bowl.
+25,3,agent,I'll add that.
+25,4,agent,Anything else for you?
+25,5,customer,I'll take one shumai six pieces.
+25,6,agent,Adding that now.
+25,7,agent,What else can I get you?
 25,8,customer,One second.
-25,9,customer,I’ll take one twelve pieces sashimi.
-25,10,agent,No problem.
+25,9,customer,I'll take one twelve pieces sashimi.
+25,10,agent,You got it.
 25,11,agent,Soup or salad with that?
 25,12,customer,Miso soup.
-25,13,agent,What else can I get for you?
-25,14,customer,I’ll take one tuna poke bowl.
-25,15,agent,Added.
+25,13,agent,Any other items?
+25,14,customer,I'll take one tuna poke bowl.
+25,15,agent,Got it.
 25,16,customer,One second.
-25,17,customer,I’ll take one sunset.
-25,18,agent,Okay.
-25,19,customer,That’s everything.
-25,20,agent,Pickup or delivery?
+25,17,customer,I'll take one sunset.
+25,18,agent,"Okay, no problem."
+25,19,customer,That's everything.
+25,20,agent,Will this be pickup or delivery?
 25,21,customer,Delivery.
-25,22,agent,That should be ready shortly.
-25,23,customer,Thank you.
-26,0,agent,"Hi, this is Shokudo."
-26,1,customer,"Hi, I’m calling in an order."
-26,2,customer,Sorry—
-26,3,customer,I’ll take one masago.
-26,4,agent,Okay.
-26,5,agent,Go ahead.
-26,6,customer,I’ll take one white profiteroles.
-26,7,agent,All right.
-26,8,agent,Keep going.
-26,9,customer,I’ll take one seven pieces nigiri and one sushi maki.
-26,10,agent,All right.
+25,22,agent,"Sweet - Hi, I want to order but I'm not sure what to pick.; I'll take one salmon poke bowl.; I'll take one shumai six pieces.! We'll get it going. See you soon!"
+25,23,customer,Thanks so much.
+26,0,agent,"Hello! Shokudo Sushi & Ramen, Mina speaking."
+26,1,customer,"Hi, can I place an order ASAP?"
+26,2,customer,My bad -
+26,3,customer,I'll take one masago.
+26,4,agent,Okay - adding it.
+26,5,agent,Anything more today?
+26,6,customer,I'll take one white profiteroles.
+26,7,agent,You got it.
+26,8,agent,Any other items?
+26,9,customer,I'll take one seven pieces nigiri and one sushi maki.
+26,10,agent,I'll add that.
 26,11,agent,Soup or salad with that?
 26,12,customer,Salad.
-26,13,agent,Keep going.
-26,14,customer,I’ll take one salmon.
-26,15,agent,Added.
-26,16,customer,"Yep, that’s it."
-26,17,agent,Pickup or delivery?
-26,18,customer,Delivery.
-26,19,agent,You’re all set.
-26,20,customer,Thank you.
-27,0,agent,"Shokudo, how can I help you today?"
-27,1,customer,"Hello, I need to order dinner."
+26,13,agent,Want to add anything else?
+26,14,customer,I'll take one salmon.
+26,15,agent,Adding that now.
+26,16,customer,"Yep, that's it."
+26,17,agent,Is that for pickup or delivery?
+26,18,customer,Pickup. I'll be there shortly.
+26,19,agent,Great - I'll take one masago.; I'll take one white profiteroles.; I'll take one seven pieces nigiri and one sushi maki.. We'll see you soon. Thanks for calling!
+26,20,customer,Thanks so much.
+27,0,agent,"Hi, Shokudo - Jay. What can I get for you?"
+27,1,customer,"Hi... I'm still deciding, but can I start an order?"
 27,2,customer,One second.
-27,3,customer,I’ll take one salmon dinner.
-27,4,agent,Added.
+27,3,customer,I'll take one salmon dinner.
+27,4,agent,Sounds good.
 27,5,agent,Soup or salad with that?
 27,6,customer,Miso soup.
-27,7,customer,I’ll take one spicy edamame.
-27,8,agent,Next item?
-27,9,customer,I’ll take one twelve pieces sashimi.
-27,10,agent,Sure.
+27,7,customer,I'll take one spicy edamame.
+27,8,agent,Anything else for you?
+27,9,customer,I'll take one twelve pieces sashimi.
+27,10,agent,I'll add that.
 27,11,agent,Soup or salad with that?
 27,12,customer,Salad.
-27,13,agent,Next item?
-27,14,customer,I’ll take one avocado roll.
-27,15,agent,No problem.
-27,16,agent,Anything else today?
-27,17,customer,I’ll take one tonkotsu ramen.
-27,18,customer,"Yep, that’s it."
-27,19,agent,Pickup or delivery?
-27,20,customer,Delivery.
-27,21,agent,"Thanks, we’ll take care of it."
+27,13,agent,Any other items?
+27,14,customer,I'll take one avocado roll.
+27,15,agent,"Okay, no problem."
+27,16,agent,What else can I get you?
+27,17,customer,I'll take one tonkotsu ramen.
+27,18,customer,"Yep, that's it."
+27,19,agent,Pickup or delivery today?
+27,20,customer,"Delivery, please."
+27,21,agent,Alright - One second.; I'll take one salmon dinner.; I'll take one spicy edamame.. We'll start it now.
 27,22,customer,Thank you.
 28,0,agent,Shokudo Japanese Kitchen.
 28,1,customer,"Hey, can I order some food?"
-28,2,customer,I’ll take one shokudo roll.
-28,3,agent,Added.
-28,4,agent,Keep going.
-28,5,customer,I’ll take one fried spring roll.
+28,2,customer,I'll take one shokudo roll.
+28,3,agent,"Great, I'll put that in."
+28,4,agent,Any other items?
+28,5,customer,I'll take one fried spring roll.
 28,6,customer,"Actually, hang on."
-28,7,customer,I’ll take one curry chicken katsu.
-28,8,agent,Gotcha.
-28,9,agent,Keep going.
-28,10,customer,I’ll take one ice tea.
-28,11,agent,All right.
-28,12,agent,Next item?
-28,13,customer,I’ll take one summer kiss roll.
+28,7,customer,I'll take one curry chicken katsu.
+28,8,agent,Perfect.
+28,9,agent,What else can I get you?
+28,10,customer,I'll take one ice tea.
+28,11,agent,I'll add that.
+28,12,agent,Anything else for you?
+28,13,customer,I'll take one summer kiss roll.
 28,14,agent,Sounds good.
 28,15,customer,That should do it.
-28,16,agent,Pickup or delivery?
-28,17,customer,Pickup.
-28,18,agent,"Thanks, we’ll take care of it."
+28,16,agent,Pickup or delivery today?
+28,17,customer,"Pickup, please."
+28,18,agent,Awesome - I'll take one shokudo roll.; I'll take one fried spring roll.; I'll take one curry chicken katsu.. We'll have that ready. Thank you!
 28,19,customer,Thank you.
 29,0,agent,Thank you for calling Shokudo.
 29,1,customer,"Hey, can I order some food?"
-29,2,customer,I’ll take one teriyaki beef.
-29,3,agent,Sure.
+29,2,customer,I'll take one teriyaki beef.
+29,3,agent,Sounds good.
 29,4,agent,How would you like the beef cooked?
 29,5,customer,Medium well.
-29,6,agent,Anything else today?
+29,6,agent,Any other items?
 29,7,customer,One second.
-29,8,customer,I’ll take one curry tonkotsu.
+29,8,customer,I'll take one curry tonkotsu.
 29,9,customer,"Uh, let me think."
-29,10,customer,I’ll take one n j fifty seven roll.
-29,11,agent,Okay.
-29,12,agent,What else can I get for you?
-29,13,customer,I’ll take one tempura shrimp roll.
-29,14,agent,I’ve got that.
-29,15,agent,Keep going.
-29,16,customer,Sorry—
-29,17,customer,I’ll take one summer kiss roll.
-29,18,agent,Added.
-29,19,agent,Keep going.
-29,20,customer,I’ll take one hollywood roll.
-29,21,customer,That’s everything.
-29,22,agent,Pickup or delivery?
-29,23,customer,Pickup.
-29,24,agent,You’re all set.
-29,25,customer,Thank you.
+29,10,customer,I'll take one n j fifty seven roll.
+29,11,agent,You got it.
+29,12,agent,Anything else for you?
+29,13,customer,I'll take one tempura shrimp roll.
+29,14,agent,"Great, I'll put that in."
+29,15,agent,Anything more today?
+29,16,customer,Oh sorry -
+29,17,customer,I'll take one summer kiss roll.
+29,18,agent,I'll add that.
+29,19,agent,Want to add anything else?
+29,20,customer,I'll take one hollywood roll.
+29,21,customer,That's everything.
+29,22,agent,Pickup or delivery today?
+29,23,customer,I'll pick it up.
+29,24,agent,No worries - I'll take one teriyaki beef.; One second.; I'll take one curry tonkotsu.. We'll have it ready for you.
+29,25,customer,Thanks so much.
 30,0,agent,Thank you for calling Shokudo.
-30,1,customer,"Hello, I need to order dinner."
+30,1,customer,"Hi! I'd like to place an order, please."
 30,2,customer,One second.
-30,3,customer,I’ll take one eel poke bowl.
-30,4,agent,Okay.
-30,5,agent,Next item?
-30,6,customer,I’ll take one kim chi.
-30,7,agent,Added.
-30,8,customer,"Yep, that’s it."
-30,9,agent,Pickup or delivery?
+30,3,customer,I'll take one eel poke bowl.
+30,4,agent,You got it.
+30,5,agent,Anything else for you?
+30,6,customer,I'll take one kim chi.
+30,7,agent,"Okay, no problem."
+30,8,customer,"Yep, that's it."
+30,9,agent,Pickup or delivery today?
 30,10,customer,Pickup.
-30,11,agent,That should be ready shortly.
-30,12,customer,Thank you.
+30,11,agent,Okay. One second.; I'll take one eel poke bowl.; I'll take one kim chi.. You'll be all set. Thanks.
+30,12,customer,Thanks!
 31,0,agent,Shokudo Japanese Kitchen.
-31,1,customer,"Hi, I’m calling in an order."
-31,2,customer,Sorry—
-31,3,customer,I’ll take one mochi.
-31,4,agent,Added.
-31,5,agent,What else can I get for you?
-31,6,customer,I’ll take one diet coke.
-31,7,agent,Added.
+31,1,customer,"Hey, can you help me with an order? I'm kind of on the fence."
+31,2,customer,My bad -
+31,3,customer,I'll take one mochi.
+31,4,agent,Sure thing.
+31,5,agent,Want to add anything else?
+31,6,customer,I'll take one diet coke.
+31,7,agent,Perfect.
 31,8,customer,That should do it.
-31,9,agent,Pickup or delivery?
-31,10,customer,Delivery.
-31,11,agent,"Thanks, we’ll take care of it."
-31,12,customer,Thank you.
-32,0,agent,"Shokudo, how can I help you today?"
-32,1,customer,"Hello, I need to order dinner."
-32,2,customer,I’ll take one hackettstown roll.
-32,3,agent,What else can I get for you?
-32,4,customer,I’ll take one tuna roll.
-32,5,agent,Gotcha.
-32,6,customer,I’ll take one shumai six pieces.
-32,7,agent,All right.
-32,8,agent,Keep going.
+31,9,agent,Will this be pickup or delivery?
+31,10,customer,Can you do delivery?
+31,11,agent,Great choice - I'll take one mochi.; I'll take one diet coke.. We'll have it ready!
+31,12,customer,Thanks so much.
+32,0,agent,Hi hi! Shokudo on the line - Riley speaking!
+32,1,customer,"Hi! I'd like to place an order, please."
+32,2,customer,I'll take one hackettstown roll.
+32,3,agent,What else can I get you?
+32,4,customer,I'll take one tuna roll.
+32,5,agent,Sounds good.
+32,6,customer,I'll take one shumai six pieces.
+32,7,agent,"Okay, no problem."
+32,8,agent,Any other items?
 32,9,customer,One second.
-32,10,customer,I’ll take one philly roll.
-32,11,agent,No problem.
-32,12,customer,That’s everything.
-32,13,agent,Pickup or delivery?
-32,14,customer,Delivery.
-32,15,agent,You’re all set.
-32,16,customer,Thank you.
+32,10,customer,I'll take one philly roll.
+32,11,agent,Got it.
+32,12,customer,That's everything.
+32,13,agent,Will this be pickup or delivery?
+32,14,customer,"Delivery, please."
+32,15,agent,Sweet - I'll take one hackettstown roll.; I'll take one tuna roll.; I'll take one shumai six pieces.! We'll get it going. See you soon!
+32,16,customer,Appreciate it.
 33,0,agent,Shokudo Japanese Kitchen.
-33,1,customer,"Hi, I’d like to place an order."
-33,2,customer,I’ll take one angry dragon roll.
-33,3,agent,I’ve got that.
-33,4,agent,Go ahead.
-33,5,customer,I’ll take one ginger ale.
-33,6,agent,All right.
-33,7,agent,Go ahead.
-33,8,customer,I’ll take one spicy edamame.
-33,9,agent,Sounds good.
-33,10,agent,Anything else today?
-33,11,customer,I’ll take one coral sea.
-33,12,customer,That’s everything.
-33,13,agent,Pickup or delivery?
-33,14,customer,Pickup.
-33,15,agent,You’re all set.
+33,1,customer,"Hi... I'm still deciding, but can I start an order?"
+33,2,customer,I'll take one angry dragon roll.
+33,3,agent,Sure thing.
+33,4,agent,Anything else for you?
+33,5,customer,I'll take one ginger ale.
+33,6,agent,I'll add that.
+33,7,agent,Any other items?
+33,8,customer,I'll take one spicy edamame.
+33,9,agent,Adding that now.
+33,10,agent,Want to add anything else?
+33,11,customer,I'll take one coral sea.
+33,12,customer,That's everything.
+33,13,agent,Pickup or delivery today?
+33,14,customer,I'll pick it up.
+33,15,agent,Okay. I'll take one angry dragon roll.; I'll take one ginger ale.; I'll take one spicy edamame.. You'll be all set. Thanks.
 33,16,customer,Thank you.
-34,0,agent,"Shokudo, how can I help you today?"
+34,0,agent,"Shokudo, Jay. Go ahead with your order."
 34,1,customer,"Hey, can I order some food?"
-34,2,customer,I’ll take one new jersey roll.
-34,3,agent,All right.
-34,4,agent,Anything else today?
-34,5,customer,I’ll take one sweet potato roll.
-34,6,agent,Sure.
-34,7,agent,Go ahead.
-34,8,customer,I’ll take one hollywood roll.
-34,9,agent,Gotcha.
-34,10,agent,Keep going.
-34,11,customer,I’ll take one spicy scallop roll.
-34,12,agent,No problem.
-34,13,customer,"Yep, that’s it."
-34,14,agent,Pickup or delivery?
-34,15,customer,Pickup.
-34,16,agent,We’ll get started on that.
+34,2,customer,I'll take one new jersey roll.
+34,3,agent,Perfect.
+34,4,agent,Any other items?
+34,5,customer,I'll take one sweet potato roll.
+34,6,agent,Got it.
+34,7,agent,What else can I get you?
+34,8,customer,I'll take one hollywood roll.
+34,9,agent,You got it.
+34,10,agent,Anything more today?
+34,11,customer,I'll take one spicy scallop roll.
+34,12,agent,Sure thing.
+34,13,customer,"Yep, that's it."
+34,14,agent,Pickup or delivery today?
+34,15,customer,I'll pick it up.
+34,16,agent,We'll get started on that.
 34,17,customer,Thank you.
-35,0,agent,"Hi, this is Shokudo."
-35,1,customer,"Hi, I’d like to place an order."
+35,0,agent,"Hey! Thanks for calling Shokudo, this is Riley!"
+35,1,customer,Hi! Calling in an order like last time.
 35,2,customer,"Actually, hang on."
-35,3,customer,I’ll take one godzilla roll.
-35,4,agent,Added.
-35,5,customer,Sorry—
-35,6,customer,I’ll take one fried ice cream.
-35,7,agent,Sounds good.
-35,8,customer,That’s everything.
-35,9,agent,Pickup or delivery?
-35,10,customer,Delivery.
-35,11,agent,You’re all set.
+35,3,customer,I'll take one godzilla roll.
+35,4,agent,Got it.
+35,5,customer,Sorry about that -
+35,6,customer,I'll take one fried ice cream.
+35,7,agent,"Great, I'll put that in."
+35,8,customer,That's everything.
+35,9,agent,Will this be pickup or delivery?
+35,10,customer,Pickup like usual.
+35,11,agent,Great choice - I'll take one godzilla roll.; I'll take one fried ice cream.. We'll have it ready!
 35,12,customer,Thank you.
 36,0,agent,Thank you for calling Shokudo.
-36,1,customer,"Hello, I need to order dinner."
-36,2,customer,I’ll take one shio garlic ramen.
-36,3,agent,Sounds good.
-36,4,customer,I’ll take one takoyaki.
-36,5,customer,I’ll take one unsweet green tea.
-36,6,agent,Okay.
-36,7,agent,What else can I get for you?
-36,8,customer,I’ll take one salmon roll.
-36,9,agent,Sounds good.
+36,1,customer,"Hi, quick pickup order please."
+36,2,customer,I'll take one shio garlic ramen.
+36,3,agent,"Noted, adding it."
+36,4,customer,I'll take one takoyaki.
+36,5,customer,I'll take one unsweet green tea.
+36,6,agent,Sounds good.
+36,7,agent,Want to add anything else?
+36,8,customer,I'll take one salmon roll.
+36,9,agent,Adding that now.
 36,10,customer,That should do it.
-36,11,agent,Pickup or delivery?
-36,12,customer,Pickup.
-36,13,agent,"Thanks, we’ll take care of it."
-36,14,customer,Thank you.
-37,0,agent,"Shokudo, how can I help you today?"
-37,1,customer,"Hello, I need to order dinner."
+36,11,agent,Pickup or delivery today?
+36,12,customer,Pickup. I'll be there shortly.
+36,13,agent,All set: I'll take one shio garlic ramen.; I'll take one takoyaki.; I'll take one unsweet green tea.. We'll have it ready. Thank you.
+36,14,customer,Appreciate it.
+37,0,agent,"Shokudo, Ken speaking. Pickup or delivery?"
+37,1,customer,Hello - I'm placing a pickup order.
 37,2,customer,One second.
-37,3,customer,I’ll take one ten pieces nigiri and one sushi maki.
-37,4,agent,Okay.
+37,3,customer,I'll take one ten pieces nigiri and one sushi maki.
+37,4,agent,"Great, I'll put that in."
 37,5,agent,Soup or salad with that?
 37,6,customer,Salad.
-37,7,agent,What else can I get for you?
+37,7,agent,What else can I get you?
 37,8,customer,"Uh, let me think."
-37,9,customer,I’ll take one tan tan spicy ramen.
-37,10,agent,I’ve got that.
-37,11,customer,I’ll take one maguro tamaki for two.
-37,12,agent,All right.
-37,13,agent,What else can I get for you?
-37,14,customer,Sorry—
-37,15,customer,I’ll take one tempura crab meat.
-37,16,agent,Sure.
-37,17,customer,I think that’s all.
-37,18,agent,Pickup or delivery?
-37,19,customer,Pickup.
-37,20,agent,"Thanks, we’ll take care of it."
-37,21,customer,Thank you.
-38,0,agent,"Hi, this is Shokudo."
-38,1,customer,"Hi, I’d like to place an order."
-38,2,customer,I’ll take one edamame.
-38,3,agent,No problem.
-38,4,agent,Keep going.
+37,9,customer,I'll take one tan tan spicy ramen.
+37,10,agent,Sounds good.
+37,11,customer,I'll take one maguro tamaki for two.
+37,12,agent,All set.
+37,13,agent,Anything else for you?
+37,14,customer,Sorry about that -
+37,15,customer,I'll take one tempura crab meat.
+37,16,agent,Got it.
+37,17,customer,I think that's all.
+37,18,agent,Is that for pickup or delivery?
+37,19,customer,Pickup like usual.
+37,20,agent,Confirmed: One second.; I'll take one ten pieces nigiri and one sushi maki.; I'll take one tan tan spicy ramen.. Thanks.
+37,21,customer,Appreciate it.
+38,0,agent,"Shokudo, Ken speaking. Pickup or delivery?"
+38,1,customer,"Hi there, I'd like to order if you're taking orders."
+38,2,customer,I'll take one edamame.
+38,3,agent,Sounds good.
+38,4,agent,Anything more today?
 38,5,customer,"Uh, let me think."
-38,6,customer,I’ll take one salmon dinner.
-38,7,agent,No problem.
+38,6,customer,I'll take one salmon dinner.
+38,7,agent,"Noted, adding it."
 38,8,agent,Soup or salad with that?
 38,9,customer,Miso soup.
-38,10,customer,I think that’s all.
-38,11,agent,Pickup or delivery?
-38,12,customer,Pickup.
-38,13,agent,You’re all set.
+38,10,customer,I think that's all.
+38,11,agent,Pickup or delivery today?
+38,12,customer,I'll pick it up.
+38,13,agent,Confirmed: I'll take one edamame.; I'll take one salmon dinner.. Thanks.
 38,14,customer,Thank you.
 39,0,agent,Thank you for calling Shokudo.
-39,1,customer,"Hi, I’d like to place an order."
-39,2,customer,I’ll take one cowboy roll.
-39,3,agent,Sure.
-39,4,customer,I’ll take one pink lady roll.
-39,5,agent,No problem.
-39,6,customer,"Yep, that’s it."
-39,7,agent,Pickup or delivery?
-39,8,customer,Pickup.
-39,9,agent,That should be ready shortly.
-39,10,customer,Thank you.
-40,0,agent,"Hi, this is Shokudo."
+39,1,customer,"Hi, quick pickup order please."
+39,2,customer,I'll take one cowboy roll.
+39,3,agent,Perfect.
+39,4,customer,I'll take one pink lady roll.
+39,5,agent,Sure thing.
+39,6,customer,"Yep, that's it."
+39,7,agent,Pickup or delivery today?
+39,8,customer,"Pickup, please."
+39,9,agent,Great - I'll take one cowboy roll.; I'll take one pink lady roll.. We'll see you soon. Thanks for calling!
+39,10,customer,Appreciate it.
+40,0,agent,Hi hi! Shokudo on the line - Riley speaking!
 40,1,customer,"Hey, can I order some food?"
-40,2,customer,Sorry—
-40,3,customer,I’ll take one shio garlic ramen.
-40,4,agent,Okay.
+40,2,customer,Sorry about that -
+40,3,customer,I'll take one shio garlic ramen.
+40,4,agent,Got it.
 40,5,customer,"Uh, let me think."
-40,6,customer,I’ll take one yellowtail.
-40,7,agent,Gotcha.
-40,8,customer,I’ll take one kani salad.
-40,9,agent,Added.
+40,6,customer,I'll take one yellowtail.
+40,7,agent,Sure thing.
+40,8,customer,I'll take one kani salad.
+40,9,agent,You got it.
 40,10,customer,"Actually, hang on."
-40,11,customer,I’ll take one spicy edamame.
-40,12,agent,Added.
-40,13,customer,I think that’s all.
-40,14,agent,Pickup or delivery?
-40,15,customer,Delivery.
-40,16,agent,That should be ready shortly.
-40,17,customer,Thank you.
-41,0,agent,"Shokudo, how can I help you today?"
-41,1,customer,"Hi, I’d like to place an order."
-41,2,customer,I’ll take one ahi tuna.
-41,3,agent,Sure.
-41,4,agent,Keep going.
-41,5,customer,I’ll take one diet coke.
-41,6,agent,All right.
+40,11,customer,I'll take one spicy edamame.
+40,12,agent,All set.
+40,13,customer,I think that's all.
+40,14,agent,Is that for pickup or delivery?
+40,15,customer,"Delivery, please."
+40,16,agent,Great choice - I'll take one shio garlic ramen.; I'll take one yellowtail.; I'll take one kani salad.. We'll have it ready!
+40,17,customer,Appreciate it.
+41,0,agent,"Hello! Shokudo Sushi & Ramen, Mina speaking."
+41,1,customer,"Hi, can I place an order ASAP?"
+41,2,customer,I'll take one ahi tuna.
+41,3,agent,"Noted, adding it."
+41,4,agent,What else can I get you?
+41,5,customer,I'll take one diet coke.
+41,6,agent,You got it.
 41,7,customer,That should do it.
-41,8,agent,Pickup or delivery?
-41,9,customer,Delivery.
-41,10,agent,We’ll get started on that.
-41,11,customer,Thank you.
+41,8,agent,Will this be pickup or delivery?
+41,9,customer,"Pickup, please."
+41,10,agent,We'll get started on that.
+41,11,customer,Thanks!
 42,0,agent,Shokudo Japanese Kitchen.
-42,1,customer,"Hello, I need to order dinner."
-42,2,customer,I’ll take one seaweed salad.
-42,3,agent,Sure.
-42,4,agent,Keep going.
-42,5,customer,I’ll take one maguro tamaki for two.
-42,6,agent,What else can I get for you?
-42,7,customer,I’ll take one salmon avocado roll.
-42,8,agent,Okay.
-42,9,customer,I’ll take one gyoza six pieces.
-42,10,agent,All right.
+42,1,customer,"Hi! I'd like to place an order, please."
+42,2,customer,I'll take one seaweed salad.
+42,3,agent,Sounds good.
+42,4,agent,Anything more today?
+42,5,customer,I'll take one maguro tamaki for two.
+42,6,agent,Anything else for you?
+42,7,customer,I'll take one salmon avocado roll.
+42,8,agent,Got it.
+42,9,customer,I'll take one gyoza six pieces.
+42,10,agent,Sure thing.
 42,11,customer,That should do it.
-42,12,agent,Pickup or delivery?
-42,13,customer,Delivery.
-42,14,agent,You’re all set.
+42,12,agent,Pickup or delivery today?
+42,13,customer,Can you do delivery?
+42,14,agent,Sweet - I'll take one seaweed salad.; I'll take one maguro tamaki for two.; I'll take one salmon avocado roll.! We'll get it going. See you soon!
 42,15,customer,Thank you.
-43,0,agent,"Shokudo, how can I help you today?"
+43,0,agent,"Shokudo, Jay. Go ahead with your order."
 43,1,customer,"Hey, can I order some food?"
 43,2,customer,"Uh, let me think."
-43,3,customer,I’ll take one godzilla roll.
-43,4,agent,Sure.
-43,5,agent,Anything else today?
-43,6,customer,I’ll take one fried ice cream.
-43,7,agent,What else can I get for you?
+43,3,customer,I'll take one godzilla roll.
+43,4,agent,"Noted, adding it."
+43,5,agent,Anything more today?
+43,6,customer,I'll take one fried ice cream.
+43,7,agent,Want to add anything else?
 43,8,customer,"Actually, hang on."
-43,9,customer,I’ll take one black dragon roll.
-43,10,agent,All right.
-43,11,agent,Go ahead.
+43,9,customer,I'll take one black dragon roll.
+43,10,agent,All set.
+43,11,agent,What else can I get you?
 43,12,customer,One second.
-43,13,customer,I’ll take one apple juice.
-43,14,agent,No problem.
-43,15,customer,That’s everything.
-43,16,agent,Pickup or delivery?
-43,17,customer,Delivery.
-43,18,agent,We’ll get started on that.
+43,13,customer,I'll take one apple juice.
+43,14,agent,Sure thing.
+43,15,customer,That's everything.
+43,16,agent,Will this be pickup or delivery?
+43,17,customer,Can you do delivery?
+43,18,agent,We'll get started on that.
 43,19,customer,Thank you.
-44,0,agent,"Shokudo, how can I help you today?"
-44,1,customer,"Hello, I need to order dinner."
-44,2,customer,I’ll take one tiger roll.
-44,3,agent,No problem.
-44,4,agent,What else can I get for you?
-44,5,customer,I’ll take one spicy scallop roll.
-44,6,agent,I’ve got that.
-44,7,agent,Go ahead.
-44,8,customer,I’ll take one hackettstown roll.
-44,9,agent,Sounds good.
+44,0,agent,Hi! You've reached Shokudo. This is Mina - how can I help?
+44,1,customer,Hello - I'm new to your menu. Can you help me order?
+44,2,customer,I'll take one tiger roll.
+44,3,agent,"Great, I'll put that in."
+44,4,agent,Anything more today?
+44,5,customer,I'll take one spicy scallop roll.
+44,6,agent,Perfect.
+44,7,agent,Anything else for you?
+44,8,customer,I'll take one hackettstown roll.
+44,9,agent,"Noted, adding it."
 44,10,customer,One second.
-44,11,customer,I’ll take one golden bun four pieces.
-44,12,customer,I think that’s all.
-44,13,agent,Pickup or delivery?
-44,14,customer,Pickup.
-44,15,agent,We’ll get started on that.
+44,11,customer,I'll take one golden bun four pieces.
+44,12,customer,I think that's all.
+44,13,agent,Will this be pickup or delivery?
+44,14,customer,I'll pick it up.
+44,15,agent,We'll get started on that.
 44,16,customer,Thank you.
-45,0,agent,"Shokudo, how can I help you today?"
-45,1,customer,"Hello, I need to order dinner."
-45,2,customer,I’ll take one curry tonkotsu.
-45,3,agent,Gotcha.
-45,4,customer,I’ll take one apple juice.
-45,5,agent,No problem.
+45,0,agent,"Hi there, thanks for calling Shokudo - this is Mina."
+45,1,customer,"Hi! I'd like to place an order, please."
+45,2,customer,I'll take one curry tonkotsu.
+45,3,agent,"Noted, adding it."
+45,4,customer,I'll take one apple juice.
+45,5,agent,All set.
 45,6,customer,That should do it.
-45,7,agent,Pickup or delivery?
+45,7,agent,Is that for pickup or delivery?
 45,8,customer,Delivery.
-45,9,agent,We’ll get started on that.
-45,10,customer,Thank you.
-46,0,agent,"Hi, this is Shokudo."
-46,1,customer,"Hi, I’m calling in an order."
-46,2,customer,I’ll take one scallop.
-46,3,agent,I’ve got that.
-46,4,agent,Keep going.
-46,5,customer,I’ll take one miso ramen.
-46,6,agent,No problem.
-46,7,customer,"Yep, that’s it."
-46,8,agent,Pickup or delivery?
+45,9,agent,We'll get started on that.
+45,10,customer,"Great, thanks."
+46,0,agent,"Shokudo, Jay speaking. Let's do it - pickup or delivery?"
+46,1,customer,"Hi! I'd like to place an order, please."
+46,2,customer,I'll take one scallop.
+46,3,agent,"Noted, adding it."
+46,4,agent,Anything more today?
+46,5,customer,I'll take one miso ramen.
+46,6,agent,You got it.
+46,7,customer,"Yep, that's it."
+46,8,agent,Pickup or delivery today?
 46,9,customer,Pickup.
-46,10,agent,That should be ready shortly.
-46,11,customer,Thank you.
+46,10,agent,Alright - I'll take one scallop.; I'll take one miso ramen.. We'll start it now.
+46,11,customer,Thanks!
 47,0,agent,Shokudo Japanese Kitchen.
-47,1,customer,"Hi, I’m calling in an order."
-47,2,customer,I’ll take one summer kiss roll.
-47,3,agent,I’ve got that.
-47,4,agent,Next item?
-47,5,customer,I’ll take one spider roll.
-47,6,agent,Gotcha.
-47,7,agent,Next item?
-47,8,customer,I’ll take one cucumber roll.
-47,9,agent,Gotcha.
-47,10,agent,Next item?
-47,11,customer,Sorry—
-47,12,customer,I’ll take one mango tango roll.
-47,13,agent,Sounds good.
-47,14,agent,What else can I get for you?
-47,15,customer,I’ll take one ten pieces nigiri and one sushi maki.
-47,16,agent,Gotcha.
+47,1,customer,"Hi, I want to order but I'm not sure what to pick."
+47,2,customer,I'll take one summer kiss roll.
+47,3,agent,"Okay, no problem."
+47,4,agent,Anything more today?
+47,5,customer,I'll take one spider roll.
+47,6,agent,"Great, I'll put that in."
+47,7,agent,Want to add anything else?
+47,8,customer,I'll take one cucumber roll.
+47,9,agent,Sure thing.
+47,10,agent,Anything else for you?
+47,11,customer,Oh sorry -
+47,12,customer,I'll take one mango tango roll.
+47,13,agent,You got it.
+47,14,agent,What else can I get you?
+47,15,customer,I'll take one ten pieces nigiri and one sushi maki.
+47,16,agent,"Noted, adding it."
 47,17,agent,Soup or salad with that?
 47,18,customer,Miso soup.
-47,19,customer,"Yep, that’s it."
-47,20,agent,Pickup or delivery?
+47,19,customer,"Yep, that's it."
+47,20,agent,Pickup or delivery today?
 47,21,customer,Pickup.
-47,22,agent,You’re all set.
-47,23,customer,Thank you.
-48,0,agent,"Shokudo, how can I help you today?"
+47,22,agent,"Awesome - Hi, I want to order but I'm not sure what to pick.; I'll take one summer kiss roll.; I'll take one spider roll.. We'll have that ready. Thank you!"
+47,23,customer,"Great, thanks."
+48,0,agent,"Hello, Shokudo. This is Sofia. Take your time - what would you like?"
 48,1,customer,"Hey, can I order some food?"
-48,2,customer,I’ll take one coke.
-48,3,agent,Sure.
-48,4,agent,Keep going.
-48,5,customer,I’ll take one godzilla roll.
-48,6,agent,Sounds good.
-48,7,agent,Keep going.
-48,8,customer,Sorry—
-48,9,customer,I’ll take one hollywood roll.
-48,10,agent,All right.
-48,11,customer,That’s everything.
-48,12,agent,Pickup or delivery?
-48,13,customer,Delivery.
-48,14,agent,You’re all set.
-48,15,customer,Thank you.
+48,2,customer,I'll take one coke.
+48,3,agent,Okay - adding it.
+48,4,agent,What else can I get you?
+48,5,customer,I'll take one godzilla roll.
+48,6,agent,"Okay, no problem."
+48,7,agent,Anything more today?
+48,8,customer,Sorry about that -
+48,9,customer,I'll take one hollywood roll.
+48,10,agent,All set.
+48,11,customer,That's everything.
+48,12,agent,Pickup or delivery today?
+48,13,customer,Pickup like usual.
+48,14,agent,Perfect - I'll take one coke.; I'll take one godzilla roll.; I'll take one hollywood roll.. We'll take care of it. Thank you!
+48,15,customer,Appreciate it.
 49,0,agent,Thank you for calling Shokudo.
-49,1,customer,"Hi, I’m calling in an order."
-49,2,customer,I’ll take one edamame.
-49,3,agent,Sounds good.
-49,4,agent,Next item?
-49,5,customer,I’ll take one sunset.
-49,6,agent,Sure.
+49,1,customer,"Hi, quick pickup order please."
+49,2,customer,I'll take one edamame.
+49,3,agent,I'll add that.
+49,4,agent,Any other items?
+49,5,customer,I'll take one sunset.
+49,6,agent,"Noted, adding it."
 49,7,customer,That should do it.
-49,8,agent,Pickup or delivery?
-49,9,customer,Pickup.
-49,10,agent,We’ll get started on that.
+49,8,agent,Is that for pickup or delivery?
+49,9,customer,Pickup. I'll be there shortly.
+49,10,agent,We'll get started on that.
 49,11,customer,Thank you.
 50,0,agent,Shokudo Japanese Kitchen.
-50,1,customer,"Hi, I’d like to place an order."
-50,2,customer,I’ll take one scallop.
-50,3,agent,I’ve got that.
-50,4,agent,Next item?
-50,5,customer,I’ll take one n j fifty seven roll.
-50,6,agent,Sure.
+50,1,customer,Hello - I'm placing a pickup order.
+50,2,customer,I'll take one scallop.
+50,3,agent,Adding that now.
+50,4,agent,Any other items?
+50,5,customer,I'll take one n j fifty seven roll.
+50,6,agent,I'll add that.
 50,7,customer,That should do it.
-50,8,agent,Pickup or delivery?
+50,8,agent,Pickup or delivery today?
 50,9,customer,Pickup.
-50,10,agent,We’ll get started on that.
-50,11,customer,Thank you.
+50,10,agent,We'll get started on that.
+50,11,customer,Thanks!
 51,0,agent,Thank you for calling Shokudo.
-51,1,customer,"Hi, I’d like to place an order."
-51,2,customer,I’ll take one a a c roll.
-51,3,agent,Added.
-51,4,agent,What else can I get for you?
-51,5,customer,I’ll take one tempura vegetable appetizer.
-51,6,agent,Sure.
+51,1,customer,"Hey, can you help me with an order? I'm kind of on the fence."
+51,2,customer,I'll take one a a c roll.
+51,3,agent,"Okay, no problem."
+51,4,agent,Want to add anything else?
+51,5,customer,I'll take one tempura vegetable appetizer.
+51,6,agent,Got it.
 51,7,customer,One second.
-51,8,customer,I’ll take one tuna roll.
-51,9,agent,Okay.
-51,10,customer,I’ll take one mango tango roll.
-51,11,agent,Okay.
-51,12,customer,"Yep, that’s it."
-51,13,agent,Pickup or delivery?
-51,14,customer,Pickup.
-51,15,agent,That should be ready shortly.
-51,16,customer,Thank you.
-52,0,agent,"Shokudo, how can I help you today?"
+51,8,customer,I'll take one tuna roll.
+51,9,agent,Sure thing.
+51,10,customer,I'll take one mango tango roll.
+51,11,agent,I'll add that.
+51,12,customer,"Yep, that's it."
+51,13,agent,Is that for pickup or delivery?
+51,14,customer,I'll pick it up.
+51,15,agent,Alright - I'll take one a a c roll.; I'll take one tempura vegetable appetizer.; One second.. We'll start it now.
+51,16,customer,"Great, thanks."
+52,0,agent,"Hello, Shokudo. This is Sofia. Take your time - what would you like?"
 52,1,customer,"Hey, can I order some food?"
-52,2,customer,Sorry—
-52,3,customer,I’ll take one miso ramen.
-52,4,agent,Okay.
-52,5,agent,Keep going.
-52,6,customer,I’ll take one alaska roll.
-52,7,agent,Gotcha.
-52,8,agent,What else can I get for you?
-52,9,customer,I’ll take one fuji mountain roll.
-52,10,agent,Sure.
-52,11,agent,Next item?
-52,12,customer,I’ll take one spicy roll.
-52,13,agent,No problem.
-52,14,agent,Anything else today?
-52,15,customer,I’ll take one apple juice.
-52,16,agent,Sure.
-52,17,customer,I think that’s all.
-52,18,agent,Pickup or delivery?
+52,2,customer,Sorry about that -
+52,3,customer,I'll take one miso ramen.
+52,4,agent,Okay - adding it.
+52,5,agent,Anything else for you?
+52,6,customer,I'll take one alaska roll.
+52,7,agent,Perfect.
+52,8,agent,Anything more today?
+52,9,customer,I'll take one fuji mountain roll.
+52,10,agent,Sure thing.
+52,11,agent,Any other items?
+52,12,customer,I'll take one spicy roll.
+52,13,agent,"Noted, adding it."
+52,14,agent,What else can I get you?
+52,15,customer,I'll take one apple juice.
+52,16,agent,I'll add that.
+52,17,customer,I think that's all.
+52,18,agent,Pickup or delivery today?
 52,19,customer,Delivery.
-52,20,agent,That should be ready shortly.
-52,21,customer,Thank you.
+52,20,agent,Perfect - I'll take one miso ramen.; I'll take one alaska roll.; I'll take one fuji mountain roll.. We'll take care of it. Thank you!
+52,21,customer,Thanks!
 53,0,agent,Shokudo Japanese Kitchen.
-53,1,customer,"Hello, I need to order dinner."
-53,2,customer,I’ll take one yellowtail.
-53,3,agent,Sounds good.
-53,4,agent,Anything else today?
-53,5,customer,I’ll take one spider roll.
-53,6,agent,Sounds good.
-53,7,customer,I’ll take one chicken roll.
-53,8,agent,Gotcha.
-53,9,agent,What else can I get for you?
-53,10,customer,I’ll take one yellowtail jalapeno appetizer.
+53,1,customer,"Hi, can I place an order ASAP?"
+53,2,customer,I'll take one yellowtail.
+53,3,agent,I'll add that.
+53,4,agent,Want to add anything else?
+53,5,customer,I'll take one spider roll.
+53,6,agent,Sure thing.
+53,7,customer,I'll take one chicken roll.
+53,8,agent,"Great, I'll put that in."
+53,9,agent,What else can I get you?
+53,10,customer,I'll take one yellowtail jalapeno appetizer.
 53,11,agent,Sounds good.
 53,12,customer,That should do it.
-53,13,agent,Pickup or delivery?
-53,14,customer,Pickup.
-53,15,agent,You’re all set.
-53,16,customer,Thank you.
-54,0,agent,"Shokudo, how can I help you today?"
-54,1,customer,"Hi, I’m calling in an order."
-54,2,customer,I’ll take one crab meat.
-54,3,agent,No problem.
-54,4,agent,Go ahead.
-54,5,customer,I’ll take one shokudo roll.
-54,6,agent,Added.
-54,7,agent,Next item?
-54,8,customer,I’ll take one teriyaki chicken.
-54,9,agent,I’ve got that.
-54,10,customer,I’ll take one eel cucumber roll.
-54,11,agent,Added.
-54,12,customer,That’s everything.
-54,13,agent,Pickup or delivery?
+53,13,agent,Pickup or delivery today?
+53,14,customer,Pickup - as soon as possible.
+53,15,agent,Awesome - I'll take one yellowtail.; I'll take one spider roll.; I'll take one chicken roll.. We'll have that ready. Thank you!
+53,16,customer,Appreciate it.
+54,0,agent,Hi hi! Shokudo on the line - Riley speaking!
+54,1,customer,Hello - can I put in an order?
+54,2,customer,I'll take one crab meat.
+54,3,agent,Sounds good.
+54,4,agent,Anything else for you?
+54,5,customer,I'll take one shokudo roll.
+54,6,agent,You got it.
+54,7,agent,Any other items?
+54,8,customer,I'll take one teriyaki chicken.
+54,9,agent,Sure thing.
+54,10,customer,I'll take one eel cucumber roll.
+54,11,agent,All set.
+54,12,customer,That's everything.
+54,13,agent,Is that for pickup or delivery?
 54,14,customer,Delivery.
-54,15,agent,You’re all set.
-54,16,customer,Thank you.
+54,15,agent,Sweet - I'll take one crab meat.; I'll take one shokudo roll.; I'll take one teriyaki chicken.! We'll get it going. See you soon!
+54,16,customer,"Great, thanks."
 55,0,agent,Thank you for calling Shokudo.
-55,1,customer,"Hi, I’m calling in an order."
-55,2,customer,I’ll take one godzilla roll.
-55,3,agent,Anything else today?
-55,4,customer,Sorry—
-55,5,customer,I’ll take one summer kiss roll.
-55,6,agent,Next item?
-55,7,customer,I’ll take one japanese soda.
-55,8,agent,No problem.
-55,9,agent,Go ahead.
-55,10,customer,I’ll take one crab meat.
-55,11,agent,Sure.
-55,12,customer,That’s everything.
-55,13,agent,Pickup or delivery?
-55,14,customer,Pickup.
-55,15,agent,That should be ready shortly.
-55,16,customer,Thank you.
-56,0,agent,"Shokudo, how can I help you today?"
-56,1,customer,"Hi, I’d like to place an order."
-56,2,customer,I’ll take one fried ice cream.
-56,3,agent,No problem.
-56,4,agent,What else can I get for you?
+55,1,customer,Hey - I need to place a fast order for pickup.
+55,2,customer,I'll take one godzilla roll.
+55,3,agent,Anything else for you?
+55,4,customer,Oh sorry -
+55,5,customer,I'll take one summer kiss roll.
+55,6,agent,Any other items?
+55,7,customer,I'll take one japanese soda.
+55,8,agent,"Noted, adding it."
+55,9,agent,What else can I get you?
+55,10,customer,I'll take one crab meat.
+55,11,agent,You got it.
+55,12,customer,That's everything.
+55,13,agent,Pickup or delivery today?
+55,14,customer,Pickup - as soon as possible.
+55,15,agent,Great choice - Hey - I need to place a fast order for pickup.; I'll take one godzilla roll.; I'll take one summer kiss roll.. We'll have it ready!
+55,16,customer,Thanks so much.
+56,0,agent,Shokudo - Ken. What can I get started for you?
+56,1,customer,"Hey, it's me again - can I do my usual order?"
+56,2,customer,I'll take one fried ice cream.
+56,3,agent,"Noted, adding it."
+56,4,agent,Want to add anything else?
 56,5,customer,One second.
-56,6,customer,I’ll take one shumai six pieces.
-56,7,agent,Okay.
-56,8,customer,I think that’s all.
-56,9,agent,Pickup or delivery?
-56,10,customer,Delivery.
-56,11,agent,We’ll get started on that.
-56,12,customer,Thank you.
+56,6,customer,I'll take one shumai six pieces.
+56,7,agent,Adding that now.
+56,8,customer,I think that's all.
+56,9,agent,Will this be pickup or delivery?
+56,10,customer,"Pickup, please."
+56,11,agent,We'll get started on that.
+56,12,customer,Thanks!
 57,0,agent,Shokudo Japanese Kitchen.
 57,1,customer,"Hey, can I order some food?"
-57,2,customer,I’ll take one seafood udon ramen.
-57,3,agent,Sounds good.
-57,4,agent,Go ahead.
-57,5,customer,I’ll take one salmon roe.
-57,6,agent,Sounds good.
-57,7,agent,Anything else today?
+57,2,customer,I'll take one seafood udon ramen.
+57,3,agent,I'll add that.
+57,4,agent,Anything more today?
+57,5,customer,I'll take one salmon roe.
+57,6,agent,Perfect.
+57,7,agent,Any other items?
 57,8,customer,"Uh, let me think."
-57,9,customer,I’ll take one fresh water eel.
-57,10,agent,All right.
-57,11,agent,Go ahead.
-57,12,customer,Sorry—
-57,13,customer,I’ll take one spicy scallop roll.
-57,14,agent,Added.
-57,15,agent,Keep going.
-57,16,customer,I’ll take one salmon poke bowl.
-57,17,agent,I’ve got that.
-57,18,customer,That’s everything.
-57,19,agent,Pickup or delivery?
-57,20,customer,Delivery.
-57,21,agent,That should be ready shortly.
-57,22,customer,Thank you.
-58,0,agent,"Shokudo, how can I help you today?"
+57,9,customer,I'll take one fresh water eel.
+57,10,agent,Got it.
+57,11,agent,What else can I get you?
+57,12,customer,Sorry about that -
+57,13,customer,I'll take one spicy scallop roll.
+57,14,agent,Sounds good.
+57,15,agent,Want to add anything else?
+57,16,customer,I'll take one salmon poke bowl.
+57,17,agent,"Noted, adding it."
+57,18,customer,That's everything.
+57,19,agent,Is that for pickup or delivery?
+57,20,customer,Pickup - as soon as possible.
+57,21,agent,Great - I'll take one seafood udon ramen.; I'll take one salmon roe.; I'll take one fresh water eel.. We'll see you soon. Thanks for calling!
+57,22,customer,"Great, thanks."
+58,0,agent,Hi! You've reached Shokudo. This is Mina - how can I help?
 58,1,customer,"Hey, can I order some food?"
 58,2,customer,"Uh, let me think."
-58,3,customer,I’ll take one orange juice.
-58,4,agent,Sounds good.
-58,5,agent,Go ahead.
-58,6,customer,I’ll take one twelve pieces sashimi.
-58,7,agent,Okay.
+58,3,customer,I'll take one orange juice.
+58,4,agent,Perfect.
+58,5,agent,Anything else for you?
+58,6,customer,I'll take one twelve pieces sashimi.
+58,7,agent,You got it.
 58,8,agent,Soup or salad with that?
 58,9,customer,Salad.
-58,10,agent,Keep going.
-58,11,customer,Sorry—
-58,12,customer,I’ll take one rainbow roll.
-58,13,agent,No problem.
-58,14,agent,Keep going.
-58,15,customer,I’ll take one sprite.
-58,16,agent,Added.
-58,17,customer,That’s everything.
-58,18,agent,Pickup or delivery?
+58,10,agent,Anything more today?
+58,11,customer,Oh sorry -
+58,12,customer,I'll take one rainbow roll.
+58,13,agent,Adding that now.
+58,14,agent,What else can I get you?
+58,15,customer,I'll take one sprite.
+58,16,agent,I'll add that.
+58,17,customer,That's everything.
+58,18,agent,Pickup or delivery today?
 58,19,customer,Pickup.
-58,20,agent,That should be ready shortly.
-58,21,customer,Thank you.
+58,20,agent,Awesome - I'll take one orange juice.; I'll take one twelve pieces sashimi.; I'll take one rainbow roll.. We'll have that ready. Thank you!
+58,21,customer,"Great, thanks."
 59,0,agent,Shokudo Japanese Kitchen.
-59,1,customer,"Hello, I need to order dinner."
-59,2,customer,I’ll take one miso ramen.
-59,3,agent,Gotcha.
-59,4,agent,Go ahead.
-59,5,customer,I’ll take one ginger ale.
-59,6,agent,Sure.
-59,7,agent,Keep going.
-59,8,customer,Sorry—
-59,9,customer,I’ll take one spicy kim chi ramen.
-59,10,agent,I’ve got that.
-59,11,agent,What else can I get for you?
+59,1,customer,"Hi... I'm still deciding, but can I start an order?"
+59,2,customer,I'll take one miso ramen.
+59,3,agent,"Okay, no problem."
+59,4,agent,What else can I get you?
+59,5,customer,I'll take one ginger ale.
+59,6,agent,All set.
+59,7,agent,Anything more today?
+59,8,customer,Sorry about that -
+59,9,customer,I'll take one spicy kim chi ramen.
+59,10,agent,You got it.
+59,11,agent,Any other items?
 59,12,customer,"Actually, hang on."
-59,13,customer,I’ll take one tuna dinner.
-59,14,agent,No problem.
+59,13,customer,I'll take one tuna dinner.
+59,14,agent,Sure thing.
 59,15,agent,Soup or salad with that?
 59,16,customer,Miso soup.
-59,17,agent,What else can I get for you?
+59,17,agent,Anything else for you?
 59,18,customer,"Uh, let me think."
-59,19,customer,I’ll take one salmon poke bowl.
-59,20,agent,I’ve got that.
-59,21,customer,"Yep, that’s it."
-59,22,agent,Pickup or delivery?
+59,19,customer,I'll take one salmon poke bowl.
+59,20,agent,"Great, I'll put that in."
+59,21,customer,"Yep, that's it."
+59,22,agent,Pickup or delivery today?
 59,23,customer,Delivery.
-59,24,agent,We’ll get started on that.
-59,25,customer,Thank you.
-60,0,agent,"Shokudo, how can I help you today?"
-60,1,customer,"Hi, I’m calling in an order."
-60,2,customer,I’ll take one summer kiss roll.
-60,3,agent,Gotcha.
-60,4,agent,What else can I get for you?
-60,5,customer,I’ll take one tempura crab meat.
-60,6,agent,I’ve got that.
-60,7,agent,What else can I get for you?
-60,8,customer,I’ll take one shokudo ramen.
-60,9,agent,Added.
-60,10,customer,I think that’s all.
-60,11,agent,Pickup or delivery?
-60,12,customer,Delivery.
-60,13,agent,You’re all set.
-60,14,customer,Thank you.
-61,0,agent,"Shokudo, how can I help you today?"
+59,24,agent,We'll get started on that.
+59,25,customer,"Great, thanks."
+60,0,agent,"Hi, Shokudo - Jay. What can I get for you?"
+60,1,customer,"Hey, can you help me with an order? I'm kind of on the fence."
+60,2,customer,I'll take one summer kiss roll.
+60,3,agent,All set.
+60,4,agent,Anything else for you?
+60,5,customer,I'll take one tempura crab meat.
+60,6,agent,I'll add that.
+60,7,agent,Any other items?
+60,8,customer,I'll take one shokudo ramen.
+60,9,agent,Okay - adding it.
+60,10,customer,I think that's all.
+60,11,agent,Pickup or delivery today?
+60,12,customer,"Delivery, please."
+60,13,agent,Okay. I'll take one summer kiss roll.; I'll take one tempura crab meat.; I'll take one shokudo ramen.. You'll be all set. Thanks.
+60,14,customer,Thanks so much.
+61,0,agent,"Hi there, thanks for calling Shokudo - this is Mina."
 61,1,customer,"Hey, can I order some food?"
-61,2,customer,I’ll take one kani salad.
+61,2,customer,I'll take one kani salad.
 61,3,agent,Sounds good.
-61,4,customer,I’ll take one scallop.
-61,5,agent,Sounds good.
-61,6,agent,What else can I get for you?
+61,4,customer,I'll take one scallop.
+61,5,agent,"Noted, adding it."
+61,6,agent,Want to add anything else?
 61,7,customer,One second.
-61,8,customer,I’ll take one curry tonkotsu.
-61,9,agent,I’ve got that.
-61,10,agent,Go ahead.
-61,11,customer,I’ll take one spicy edamame.
-61,12,agent,Sure.
-61,13,agent,Go ahead.
-61,14,customer,I’ll take one spicy roll.
-61,15,agent,No problem.
+61,8,customer,I'll take one curry tonkotsu.
+61,9,agent,Sure thing.
+61,10,agent,Anything else for you?
+61,11,customer,I'll take one spicy edamame.
+61,12,agent,Perfect.
+61,13,agent,Anything more today?
+61,14,customer,I'll take one spicy roll.
+61,15,agent,I'll add that.
 61,16,customer,"Uh, let me think."
-61,17,customer,I’ll take one fuji mountain roll.
-61,18,agent,Okay.
-61,19,customer,I think that’s all.
-61,20,agent,Pickup or delivery?
-61,21,customer,Delivery.
-61,22,agent,We’ll get started on that.
-61,23,customer,Thank you.
-62,0,agent,"Shokudo, how can I help you today?"
-62,1,customer,"Hello, I need to order dinner."
-62,2,customer,I’ll take one black dragon roll.
-62,3,agent,Sure.
-62,4,agent,What else can I get for you?
-62,5,customer,I’ll take one teriyaki chicken.
-62,6,agent,What else can I get for you?
-62,7,customer,Sorry—
-62,8,customer,I’ll take one edamame.
-62,9,agent,Gotcha.
-62,10,agent,What else can I get for you?
-62,11,customer,I’ll take one smoked salmon.
-62,12,agent,I’ve got that.
-62,13,customer,I’ll take one salmon roe.
-62,14,agent,Sure.
-62,15,agent,Keep going.
-62,16,customer,I’ll take one philly roll.
-62,17,agent,Okay.
+61,17,customer,I'll take one fuji mountain roll.
+61,18,agent,Got it.
+61,19,customer,I think that's all.
+61,20,agent,Is that for pickup or delivery?
+61,21,customer,Pickup.
+61,22,agent,We'll get started on that.
+61,23,customer,Thanks so much.
+62,0,agent,"Hello, Shokudo. This is Sofia. Take your time - what would you like?"
+62,1,customer,"Hi, quick pickup order please."
+62,2,customer,I'll take one black dragon roll.
+62,3,agent,You got it.
+62,4,agent,What else can I get you?
+62,5,customer,I'll take one teriyaki chicken.
+62,6,agent,Anything more today?
+62,7,customer,My bad -
+62,8,customer,I'll take one edamame.
+62,9,agent,"Okay, no problem."
+62,10,agent,Want to add anything else?
+62,11,customer,I'll take one smoked salmon.
+62,12,agent,Adding that now.
+62,13,customer,I'll take one salmon roe.
+62,14,agent,Got it.
+62,15,agent,Anything else for you?
+62,16,customer,I'll take one philly roll.
+62,17,agent,Perfect.
 62,18,customer,That should do it.
-62,19,agent,Pickup or delivery?
-62,20,customer,Pickup.
-62,21,agent,We’ll get started on that.
-62,22,customer,Thank you.
-63,0,agent,"Shokudo, how can I help you today?"
-63,1,customer,"Hi, I’d like to place an order."
-63,2,customer,I’ll take one a a c roll.
-63,3,agent,Added.
+62,19,agent,Is that for pickup or delivery?
+62,20,customer,Pickup. I'll be there shortly.
+62,21,agent,We'll get started on that.
+62,22,customer,Thanks!
+63,0,agent,Hello! Shokudo - Riley here. What sounds good today?
+63,1,customer,"Hey, can you help me with an order? I'm kind of on the fence."
+63,2,customer,I'll take one a a c roll.
+63,3,agent,Adding that now.
 63,4,customer,"Actually, hang on."
-63,5,customer,I’ll take one cucumber avocado roll.
-63,6,agent,Gotcha.
-63,7,customer,I’ll take one teriyaki beef.
-63,8,agent,I’ve got that.
+63,5,customer,I'll take one cucumber avocado roll.
+63,6,agent,"Noted, adding it."
+63,7,customer,I'll take one teriyaki beef.
+63,8,agent,Sounds good.
 63,9,agent,How would you like the beef cooked?
 63,10,customer,Medium well.
-63,11,agent,Keep going.
-63,12,customer,I’ll take one eel dragon roll.
-63,13,agent,All right.
-63,14,customer,I think that’s all.
-63,15,agent,Pickup or delivery?
+63,11,agent,Anything else for you?
+63,12,customer,I'll take one eel dragon roll.
+63,13,agent,"Okay, no problem."
+63,14,customer,I think that's all.
+63,15,agent,Is that for pickup or delivery?
 63,16,customer,Delivery.
-63,17,agent,You’re all set.
-63,18,customer,Thank you.
+63,17,agent,Sweet - I'll take one a a c roll.; I'll take one cucumber avocado roll.; I'll take one teriyaki beef.! We'll get it going. See you soon!
+63,18,customer,Thanks so much.
 64,0,agent,Shokudo Japanese Kitchen.
-64,1,customer,"Hi, I’m calling in an order."
-64,2,customer,I’ll take one kani salad.
-64,3,agent,Added.
+64,1,customer,"Hey, it's me again - can I do my usual order?"
+64,2,customer,I'll take one kani salad.
+64,3,agent,Okay - adding it.
 64,4,customer,"Actually, hang on."
-64,5,customer,I’ll take one tuna avocado roll.
-64,6,agent,Okay.
+64,5,customer,I'll take one tuna avocado roll.
+64,6,agent,Got it.
 64,7,customer,"Uh, let me think."
-64,8,customer,I’ll take one masago.
-64,9,agent,Gotcha.
-64,10,agent,Next item?
+64,8,customer,I'll take one masago.
+64,9,agent,Adding that now.
+64,10,agent,Any other items?
 64,11,customer,"Uh, let me think."
-64,12,customer,I’ll take one mochi.
-64,13,agent,No problem.
-64,14,customer,"Yep, that’s it."
-64,15,agent,Pickup or delivery?
-64,16,customer,Delivery.
-64,17,agent,We’ll get started on that.
+64,12,customer,I'll take one mochi.
+64,13,agent,I'll add that.
+64,14,customer,"Yep, that's it."
+64,15,agent,Pickup or delivery today?
+64,16,customer,Pickup.
+64,17,agent,We'll get started on that.
 64,18,customer,Thank you.
-65,0,agent,"Hi, this is Shokudo."
-65,1,customer,"Hello, I need to order dinner."
-65,2,customer,I’ll take one sunset.
-65,3,agent,Added.
-65,4,agent,What else can I get for you?
-65,5,customer,I’ll take one coke.
-65,6,agent,No problem.
-65,7,agent,What else can I get for you?
-65,8,customer,Sorry—
-65,9,customer,I’ll take one seaweed salad.
-65,10,agent,All right.
-65,11,agent,Next item?
+65,0,agent,"Hello, Shokudo. This is Sofia. Take your time - what would you like?"
+65,1,customer,"Hi, I want to order but I'm not sure what to pick."
+65,2,customer,I'll take one sunset.
+65,3,agent,You got it.
+65,4,agent,Anything else for you?
+65,5,customer,I'll take one coke.
+65,6,agent,Sounds good.
+65,7,agent,Any other items?
+65,8,customer,Sorry about that -
+65,9,customer,I'll take one seaweed salad.
+65,10,agent,Got it.
+65,11,agent,What else can I get you?
 65,12,customer,"Actually, hang on."
-65,13,customer,I’ll take one white profiteroles.
-65,14,agent,All right.
-65,15,customer,I’ll take one ahi tuna.
-65,16,agent,All right.
+65,13,customer,I'll take one white profiteroles.
+65,14,agent,I'll add that.
+65,15,customer,I'll take one ahi tuna.
+65,16,agent,"Noted, adding it."
 65,17,customer,That should do it.
-65,18,agent,Pickup or delivery?
+65,18,agent,Will this be pickup or delivery?
 65,19,customer,Pickup.
-65,20,agent,We’ll get started on that.
-65,21,customer,Thank you.
+65,20,agent,We'll get started on that.
+65,21,customer,Thanks!
 66,0,agent,Thank you for calling Shokudo.
-66,1,customer,"Hi, I’m calling in an order."
-66,2,customer,I’ll take one coke.
-66,3,agent,Added.
-66,4,agent,What else can I get for you?
-66,5,customer,Sorry—
-66,6,customer,I’ll take one ice tea.
-66,7,agent,I’ve got that.
-66,8,agent,Next item?
-66,9,customer,I’ll take one new jersey roll.
-66,10,agent,Gotcha.
-66,11,customer,I’ll take one salmon avocado roll.
+66,1,customer,"Hi - I want to order, but I have a couple questions."
+66,2,customer,I'll take one coke.
+66,3,agent,Sounds good.
+66,4,agent,Any other items?
+66,5,customer,Sorry about that -
+66,6,customer,I'll take one ice tea.
+66,7,agent,I'll add that.
+66,8,agent,Anything else for you?
+66,9,customer,I'll take one new jersey roll.
+66,10,agent,"Great, I'll put that in."
+66,11,customer,I'll take one salmon avocado roll.
 66,12,customer,That should do it.
-66,13,agent,Pickup or delivery?
-66,14,customer,Delivery.
-66,15,agent,We’ll get started on that.
-66,16,customer,Thank you.
+66,13,agent,Pickup or delivery today?
+66,14,customer,Can you do delivery?
+66,15,agent,We'll get started on that.
+66,16,customer,"Great, thanks."
 67,0,agent,Thank you for calling Shokudo.
 67,1,customer,"Hey, can I order some food?"
-67,2,customer,I’ll take one shokudo ramen.
-67,3,agent,Added.
-67,4,agent,What else can I get for you?
-67,5,customer,Sorry—
-67,6,customer,I’ll take one salmon cucumber roll.
-67,7,agent,Okay.
+67,2,customer,I'll take one shokudo ramen.
+67,3,agent,You got it.
+67,4,agent,Anything else for you?
+67,5,customer,Oh sorry -
+67,6,customer,I'll take one salmon cucumber roll.
+67,7,agent,"Great, I'll put that in."
 67,8,customer,That should do it.
-67,9,agent,Pickup or delivery?
-67,10,customer,Delivery.
-67,11,agent,That should be ready shortly.
+67,9,agent,Will this be pickup or delivery?
+67,10,customer,"Pickup, please."
+67,11,agent,Great choice - I'll take one shokudo ramen.; I'll take one salmon cucumber roll.. We'll have it ready!
 67,12,customer,Thank you.
-68,0,agent,"Hi, this is Shokudo."
-68,1,customer,"Hi, I’m calling in an order."
-68,2,customer,I’ll take one japanese soda.
-68,3,agent,Okay.
-68,4,agent,Anything else today?
+68,0,agent,"Shokudo, Ken speaking. Pickup or delivery?"
+68,1,customer,"Hey, it's me again - can I do my usual order?"
+68,2,customer,I'll take one japanese soda.
+68,3,agent,I'll add that.
+68,4,agent,What else can I get you?
 68,5,customer,"Uh, let me think."
-68,6,customer,I’ll take one teriyaki shrimp.
-68,7,agent,I’ve got that.
-68,8,customer,I think that’s all.
-68,9,agent,Pickup or delivery?
-68,10,customer,Pickup.
-68,11,agent,You’re all set.
-68,12,customer,Thank you.
-69,0,agent,"Hi, this is Shokudo."
+68,6,customer,I'll take one teriyaki shrimp.
+68,7,agent,Sure thing.
+68,8,customer,I think that's all.
+68,9,agent,Pickup or delivery today?
+68,10,customer,"Pickup, please."
+68,11,agent,Confirmed: I'll take one japanese soda.; I'll take one teriyaki shrimp.. Thanks.
+68,12,customer,Thanks so much.
+69,0,agent,"Shokudo, Jay. Go ahead with your order."
 69,1,customer,"Hey, can I order some food?"
-69,2,customer,I’ll take one shokudo ramen.
-69,3,agent,I’ve got that.
-69,4,agent,Go ahead.
-69,5,customer,I’ll take one teriyaki shrimp.
-69,6,agent,I’ve got that.
-69,7,agent,Next item?
-69,8,customer,I’ll take one seafood udon ramen.
-69,9,agent,Okay.
-69,10,agent,What else can I get for you?
-69,11,customer,I’ll take one cowboy roll.
-69,12,agent,Sure.
-69,13,customer,"Yep, that’s it."
-69,14,agent,Pickup or delivery?
-69,15,customer,Pickup.
-69,16,agent,You’re all set.
-69,17,customer,Thank you.
-70,0,agent,"Hi, this is Shokudo."
-70,1,customer,"Hello, I need to order dinner."
+69,2,customer,I'll take one shokudo ramen.
+69,3,agent,I'll add that.
+69,4,agent,Want to add anything else?
+69,5,customer,I'll take one teriyaki shrimp.
+69,6,agent,"Noted, adding it."
+69,7,agent,Anything else for you?
+69,8,customer,I'll take one seafood udon ramen.
+69,9,agent,Okay - adding it.
+69,10,agent,What else can I get you?
+69,11,customer,I'll take one cowboy roll.
+69,12,agent,Sounds good.
+69,13,customer,"Yep, that's it."
+69,14,agent,Is that for pickup or delivery?
+69,15,customer,"Pickup, please."
+69,16,agent,Okay. I'll take one shokudo ramen.; I'll take one teriyaki shrimp.; I'll take one seafood udon ramen.. You'll be all set. Thanks.
+69,17,customer,Thanks!
+70,0,agent,"Shokudo, Sofia here. Whenever you're ready, go ahead."
+70,1,customer,"Hi! I'd like to place an order, please."
 70,2,customer,"Uh, let me think."
-70,3,customer,I’ll take one kim chi.
-70,4,agent,Okay.
-70,5,agent,Keep going.
-70,6,customer,I’ll take one spicy kim chi ramen.
-70,7,agent,All right.
-70,8,agent,Anything else today?
-70,9,customer,I’ll take one golden bun four pieces.
-70,10,agent,No problem.
-70,11,agent,Next item?
-70,12,customer,I’ll take one steam bun two pieces pork or chicken.
-70,13,agent,Okay.
+70,3,customer,I'll take one kim chi.
+70,4,agent,Perfect.
+70,5,agent,Want to add anything else?
+70,6,customer,I'll take one spicy kim chi ramen.
+70,7,agent,I'll add that.
+70,8,agent,Any other items?
+70,9,customer,I'll take one golden bun four pieces.
+70,10,agent,"Great, I'll put that in."
+70,11,agent,Anything else for you?
+70,12,customer,I'll take one steam bun two pieces pork or chicken.
+70,13,agent,"Okay, no problem."
 70,14,agent,Pork or chicken for that?
 70,15,customer,Pork.
-70,16,agent,What else can I get for you?
-70,17,customer,I’ll take one salmon roe.
-70,18,agent,Okay.
-70,19,agent,Next item?
+70,16,agent,What else can I get you?
+70,17,customer,I'll take one salmon roe.
+70,18,agent,All set.
+70,19,agent,Anything more today?
 70,20,customer,"Uh, let me think."
-70,21,customer,I’ll take one sprite.
-70,22,agent,Gotcha.
+70,21,customer,I'll take one sprite.
+70,22,agent,Got it.
 70,23,customer,That should do it.
-70,24,agent,Pickup or delivery?
-70,25,customer,Pickup.
-70,26,agent,"Thanks, we’ll take care of it."
-70,27,customer,Thank you.
-71,0,agent,"Hi, this is Shokudo."
-71,1,customer,"Hello, I need to order dinner."
-71,2,customer,I’ll take one tuna cucumber roll.
-71,3,agent,Sounds good.
+70,24,agent,Pickup or delivery today?
+70,25,customer,I'll pick it up.
+70,26,agent,No worries - I'll take one kim chi.; I'll take one spicy kim chi ramen.; I'll take one golden bun four pieces.. We'll have it ready for you.
+70,27,customer,"Great, thanks."
+71,0,agent,"Hey! Thanks for calling Shokudo, this is Riley!"
+71,1,customer,"Hi, quick pickup order please."
+71,2,customer,I'll take one tuna cucumber roll.
+71,3,agent,Got it.
 71,4,customer,"Uh, let me think."
-71,5,customer,I’ll take one miso soup.
-71,6,customer,I think that’s all.
-71,7,agent,Pickup or delivery?
-71,8,customer,Pickup.
-71,9,agent,You’re all set.
-71,10,customer,Thank you.
-72,0,agent,"Hi, this is Shokudo."
-72,1,customer,"Hi, I’d like to place an order."
-72,2,customer,I’ll take one new jersey roll.
-72,3,customer,I’ll take one spicy ramen.
+71,5,customer,I'll take one miso soup.
+71,6,customer,I think that's all.
+71,7,agent,Is that for pickup or delivery?
+71,8,customer,Pickup - as soon as possible.
+71,9,agent,Great choice - I'll take one tuna cucumber roll.; I'll take one miso soup.. We'll have it ready!
+71,10,customer,Thanks!
+72,0,agent,"Shokudo, Sofia here. Whenever you're ready, go ahead."
+72,1,customer,"Hi! I'd like to place an order, please."
+72,2,customer,I'll take one new jersey roll.
+72,3,customer,I'll take one spicy ramen.
 72,4,agent,Sounds good.
-72,5,agent,Keep going.
-72,6,customer,I’ll take one eel dragon roll.
-72,7,agent,Gotcha.
-72,8,agent,Next item?
-72,9,customer,I’ll take one sweet potato roll.
-72,10,agent,Keep going.
-72,11,customer,I’ll take one rainbow roll.
-72,12,agent,Sounds good.
-72,13,agent,Next item?
-72,14,customer,I’ll take one tempura oreo four pieces.
-72,15,agent,Gotcha.
-72,16,customer,I think that’s all.
-72,17,agent,Pickup or delivery?
+72,5,agent,Any other items?
+72,6,customer,I'll take one eel dragon roll.
+72,7,agent,Sure thing.
+72,8,agent,Want to add anything else?
+72,9,customer,I'll take one sweet potato roll.
+72,10,agent,Anything else for you?
+72,11,customer,I'll take one rainbow roll.
+72,12,agent,Got it.
+72,13,agent,What else can I get you?
+72,14,customer,I'll take one tempura oreo four pieces.
+72,15,agent,All set.
+72,16,customer,I think that's all.
+72,17,agent,Will this be pickup or delivery?
 72,18,customer,Pickup.
-72,19,agent,We’ll get started on that.
+72,19,agent,We'll get started on that.
 72,20,customer,Thank you.
 73,0,agent,Thank you for calling Shokudo.
-73,1,customer,"Hello, I need to order dinner."
-73,2,customer,I’ll take one yummy roll.
-73,3,agent,No problem.
-73,4,customer,I’ll take one shio garlic ramen.
-73,5,agent,I’ve got that.
-73,6,agent,Go ahead.
-73,7,customer,I’ll take one chicken roll.
-73,8,agent,Okay.
-73,9,customer,"Yep, that’s it."
-73,10,agent,Pickup or delivery?
-73,11,customer,Delivery.
-73,12,agent,You’re all set.
-73,13,customer,Thank you.
-74,0,agent,"Hi, this is Shokudo."
-74,1,customer,"Hello, I need to order dinner."
-74,2,customer,I’ll take one masago.
-74,3,agent,Okay.
-74,4,customer,I’ll take one coke.
-74,5,agent,I’ve got that.
+73,1,customer,Hello - I'm placing a pickup order.
+73,2,customer,I'll take one yummy roll.
+73,3,agent,I'll add that.
+73,4,customer,I'll take one shio garlic ramen.
+73,5,agent,Got it.
+73,6,agent,Want to add anything else?
+73,7,customer,I'll take one chicken roll.
+73,8,agent,You got it.
+73,9,customer,"Yep, that's it."
+73,10,agent,Will this be pickup or delivery?
+73,11,customer,Pickup.
+73,12,agent,Great choice - I'll take one yummy roll.; I'll take one shio garlic ramen.; I'll take one chicken roll.. We'll have it ready!
+73,13,customer,Thanks!
+74,0,agent,"Hi there, thanks for calling Shokudo - this is Mina."
+74,1,customer,"Hi, quick pickup order please."
+74,2,customer,I'll take one masago.
+74,3,agent,Sure thing.
+74,4,customer,I'll take one coke.
+74,5,agent,You got it.
 74,6,customer,That should do it.
-74,7,agent,Pickup or delivery?
-74,8,customer,Pickup.
-74,9,agent,That should be ready shortly.
-74,10,customer,Thank you.
-75,0,agent,"Hi, this is Shokudo."
+74,7,agent,Will this be pickup or delivery?
+74,8,customer,"Pickup, please."
+74,9,agent,Great - I'll take one masago.; I'll take one coke.. We'll see you soon. Thanks for calling!
+74,10,customer,Thanks so much.
+75,0,agent,Hi hi! Shokudo on the line - Riley speaking!
 75,1,customer,"Hey, can I order some food?"
-75,2,customer,I’ll take one alaska roll.
-75,3,agent,No problem.
-75,4,agent,Anything else today?
-75,5,customer,I’ll take one sunset.
-75,6,agent,I’ve got that.
-75,7,agent,Keep going.
-75,8,customer,I’ll take one eel avocado roll.
-75,9,agent,I’ve got that.
+75,2,customer,I'll take one alaska roll.
+75,3,agent,Okay - adding it.
+75,4,agent,Anything else for you?
+75,5,customer,I'll take one sunset.
+75,6,agent,Sure thing.
+75,7,agent,Any other items?
+75,8,customer,I'll take one eel avocado roll.
+75,9,agent,Got it.
 75,10,customer,That should do it.
-75,11,agent,Pickup or delivery?
-75,12,customer,Pickup.
-75,13,agent,You’re all set.
-75,14,customer,Thank you.
-76,0,agent,"Shokudo, how can I help you today?"
+75,11,agent,Will this be pickup or delivery?
+75,12,customer,Pickup like usual.
+75,13,agent,Sweet - I'll take one alaska roll.; I'll take one sunset.; I'll take one eel avocado roll.! We'll get it going. See you soon!
+75,14,customer,Thanks!
+76,0,agent,Shokudo - Ken. What can I get started for you?
 76,1,customer,"Hey, can I order some food?"
 76,2,customer,"Uh, let me think."
-76,3,customer,I’ll take one eel cucumber roll.
-76,4,agent,Okay.
-76,5,agent,Keep going.
-76,6,customer,I’ll take one ice tea.
-76,7,customer,I’ll take one peanut avocado roll.
-76,8,agent,Okay.
-76,9,agent,What else can I get for you?
-76,10,customer,I’ll take one masago.
-76,11,agent,Okay.
+76,3,customer,I'll take one eel cucumber roll.
+76,4,agent,"Great, I'll put that in."
+76,5,agent,Want to add anything else?
+76,6,customer,I'll take one ice tea.
+76,7,customer,I'll take one peanut avocado roll.
+76,8,agent,Sounds good.
+76,9,agent,Any other items?
+76,10,customer,I'll take one masago.
+76,11,agent,I'll add that.
 76,12,customer,That should do it.
-76,13,agent,Pickup or delivery?
+76,13,agent,Is that for pickup or delivery?
 76,14,customer,Delivery.
-76,15,agent,We’ll get started on that.
+76,15,agent,We'll get started on that.
 76,16,customer,Thank you.
 77,0,agent,Shokudo Japanese Kitchen.
-77,1,customer,"Hello, I need to order dinner."
-77,2,customer,I’ll take one avocado roll.
-77,3,agent,Okay.
-77,4,agent,What else can I get for you?
-77,5,customer,I’ll take one house poke bowl.
-77,6,agent,No problem.
-77,7,customer,I’ll take one salmon dinner.
-77,8,agent,Okay.
+77,1,customer,Hello - I'm placing a pickup order.
+77,2,customer,I'll take one avocado roll.
+77,3,agent,Perfect.
+77,4,agent,Anything more today?
+77,5,customer,I'll take one house poke bowl.
+77,6,agent,You got it.
+77,7,customer,I'll take one salmon dinner.
+77,8,agent,All set.
 77,9,agent,Soup or salad with that?
 77,10,customer,Salad.
-77,11,agent,Next item?
+77,11,agent,Any other items?
 77,12,customer,One second.
-77,13,customer,I’ll take one california roll.
-77,14,agent,Added.
-77,15,agent,Next item?
-77,16,customer,Sorry—
-77,17,customer,I’ll take one sparkling water.
-77,18,agent,Added.
-77,19,agent,Anything else today?
-77,20,customer,Sorry—
-77,21,customer,I’ll take one teriyaki shrimp.
-77,22,agent,Sure.
-77,23,customer,"Yep, that’s it."
-77,24,agent,Pickup or delivery?
-77,25,customer,Delivery.
-77,26,agent,We’ll get started on that.
-77,27,customer,Thank you.
-78,0,agent,"Hi, this is Shokudo."
-78,1,customer,"Hello, I need to order dinner."
-78,2,customer,I’ll take one orange juice.
-78,3,agent,All right.
+77,13,customer,I'll take one california roll.
+77,14,agent,I'll add that.
+77,15,agent,Anything else for you?
+77,16,customer,My bad -
+77,17,customer,I'll take one sparkling water.
+77,18,agent,Sounds good.
+77,19,agent,What else can I get you?
+77,20,customer,Sorry about that -
+77,21,customer,I'll take one teriyaki shrimp.
+77,22,agent,"Okay, no problem."
+77,23,customer,"Yep, that's it."
+77,24,agent,Will this be pickup or delivery?
+77,25,customer,"Pickup, please."
+77,26,agent,We'll get started on that.
+77,27,customer,"Great, thanks."
+78,0,agent,"Hi, Shokudo - Jay. What can I get for you?"
+78,1,customer,"Hi, it's my first time ordering. Can I place an order?"
+78,2,customer,I'll take one orange juice.
+78,3,agent,Sounds good.
 78,4,customer,"Actually, hang on."
-78,5,customer,I’ll take one tempura oreo four pieces.
-78,6,agent,All right.
-78,7,agent,Anything else today?
-78,8,customer,I’ll take one a a c roll.
-78,9,agent,Okay.
-78,10,agent,Keep going.
-78,11,customer,I’ll take one ice tea.
-78,12,agent,No problem.
-78,13,customer,"Yep, that’s it."
-78,14,agent,Pickup or delivery?
+78,5,customer,I'll take one tempura oreo four pieces.
+78,6,agent,"Okay, no problem."
+78,7,agent,Anything else for you?
+78,8,customer,I'll take one a a c roll.
+78,9,agent,Sure thing.
+78,10,agent,Anything more today?
+78,11,customer,I'll take one ice tea.
+78,12,agent,You got it.
+78,13,customer,"Yep, that's it."
+78,14,agent,Is that for pickup or delivery?
 78,15,customer,Pickup.
-78,16,agent,We’ll get started on that.
-78,17,customer,Thank you.
-79,0,agent,"Hi, this is Shokudo."
-79,1,customer,"Hi, I’d like to place an order."
+78,16,agent,We'll get started on that.
+78,17,customer,"Great, thanks."
+79,0,agent,"Hello, Shokudo. This is Sofia. Take your time - what would you like?"
+79,1,customer,"Hi... I'm still deciding, but can I start an order?"
 79,2,customer,"Uh, let me think."
-79,3,customer,I’ll take one masago.
+79,3,customer,I'll take one masago.
 79,4,agent,Sounds good.
 79,5,customer,"Uh, let me think."
-79,6,customer,I’ll take one diet coke.
-79,7,agent,No problem.
-79,8,agent,Go ahead.
-79,9,customer,I’ll take one eel avocado roll.
-79,10,agent,Okay.
-79,11,customer,I’ll take one salmon.
-79,12,agent,No problem.
-79,13,customer,Sorry—
-79,14,customer,I’ll take one shokudo roll.
-79,15,agent,I’ve got that.
-79,16,agent,Keep going.
-79,17,customer,I’ll take one tuna avocado roll.
-79,18,agent,All right.
-79,19,customer,I think that’s all.
-79,20,agent,Pickup or delivery?
+79,6,customer,I'll take one diet coke.
+79,7,agent,I'll add that.
+79,8,agent,Anything more today?
+79,9,customer,I'll take one eel avocado roll.
+79,10,agent,"Noted, adding it."
+79,11,customer,I'll take one salmon.
+79,12,agent,You got it.
+79,13,customer,My bad -
+79,14,customer,I'll take one shokudo roll.
+79,15,agent,Adding that now.
+79,16,agent,Anything else for you?
+79,17,customer,I'll take one tuna avocado roll.
+79,18,agent,Sure thing.
+79,19,customer,I think that's all.
+79,20,agent,Pickup or delivery today?
 79,21,customer,Delivery.
-79,22,agent,"Thanks, we’ll take care of it."
-79,23,customer,Thank you.
-80,0,agent,"Shokudo, how can I help you today?"
+79,22,agent,No worries - I'll take one masago.; I'll take one diet coke.; I'll take one eel avocado roll.. We'll have it ready for you.
+79,23,customer,Thanks so much.
+80,0,agent,Hello! Shokudo - Riley here. What sounds good today?
 80,1,customer,"Hey, can I order some food?"
-80,2,customer,I’ll take one hollywood roll.
+80,2,customer,I'll take one hollywood roll.
 80,3,customer,"Actually, hang on."
-80,4,customer,I’ll take one maguro tamaki for two.
-80,5,agent,I’ve got that.
+80,4,customer,I'll take one maguro tamaki for two.
+80,5,agent,Sure thing.
 80,6,customer,"Uh, let me think."
-80,7,customer,I’ll take one hackettstown roll.
-80,8,agent,I’ve got that.
-80,9,agent,Anything else today?
+80,7,customer,I'll take one hackettstown roll.
+80,8,agent,You got it.
+80,9,agent,Want to add anything else?
 80,10,customer,"Uh, let me think."
-80,11,customer,I’ll take one tuna dinner.
-80,12,agent,No problem.
+80,11,customer,I'll take one tuna dinner.
+80,12,agent,Perfect.
 80,13,agent,Soup or salad with that?
 80,14,customer,Salad.
-80,15,agent,Next item?
-80,16,customer,I’ll take one vegan of the sea bowl.
-80,17,agent,Sounds good.
-80,18,customer,I’ll take one chicken roll.
-80,19,agent,I’ve got that.
+80,15,agent,What else can I get you?
+80,16,customer,I'll take one vegan of the sea bowl.
+80,17,agent,Okay - adding it.
+80,18,customer,I'll take one chicken roll.
+80,19,agent,All set.
 80,20,customer,That should do it.
-80,21,agent,Pickup or delivery?
+80,21,agent,Is that for pickup or delivery?
 80,22,customer,Pickup.
-80,23,agent,"Thanks, we’ll take care of it."
-80,24,customer,Thank you.
+80,23,agent,Sweet - I'll take one hollywood roll.; I'll take one maguro tamaki for two.; I'll take one hackettstown roll.! We'll get it going. See you soon!
+80,24,customer,Appreciate it.
 81,0,agent,Thank you for calling Shokudo.
-81,1,customer,"Hello, I need to order dinner."
-81,2,customer,I’ll take one salmon roll.
-81,3,agent,Added.
-81,4,agent,What else can I get for you?
-81,5,customer,Sorry—
-81,6,customer,I’ll take one vegan of the sea bowl.
-81,7,agent,No problem.
-81,8,agent,Anything else today?
-81,9,customer,I’ll take one spicy ramen.
-81,10,agent,No problem.
-81,11,agent,What else can I get for you?
-81,12,customer,I’ll take one spicy scallop roll.
-81,13,agent,Added.
-81,14,agent,Keep going.
-81,15,customer,I’ll take one eel poke bowl.
-81,16,agent,Okay.
+81,1,customer,"Hi, it's my first time ordering. Can I place an order?"
+81,2,customer,I'll take one salmon roll.
+81,3,agent,"Noted, adding it."
+81,4,agent,Anything else for you?
+81,5,customer,My bad -
+81,6,customer,I'll take one vegan of the sea bowl.
+81,7,agent,I'll add that.
+81,8,agent,Want to add anything else?
+81,9,customer,I'll take one spicy ramen.
+81,10,agent,You got it.
+81,11,agent,Any other items?
+81,12,customer,I'll take one spicy scallop roll.
+81,13,agent,Got it.
+81,14,agent,What else can I get you?
+81,15,customer,I'll take one eel poke bowl.
+81,16,agent,"Okay, no problem."
 81,17,customer,"Actually, hang on."
-81,18,customer,I’ll take one salmon avocado roll.
+81,18,customer,I'll take one salmon avocado roll.
 81,19,customer,That should do it.
-81,20,agent,Pickup or delivery?
-81,21,customer,Delivery.
-81,22,agent,"Thanks, we’ll take care of it."
-81,23,customer,Thank you.
-82,0,agent,"Hi, this is Shokudo."
-82,1,customer,"Hi, I’m calling in an order."
-82,2,customer,I’ll take one salmon.
-82,3,agent,Added.
-82,4,agent,Keep going.
-82,5,customer,I’ll take one avocado roll.
-82,6,agent,Okay.
+81,20,agent,Is that for pickup or delivery?
+81,21,customer,"Delivery, please."
+81,22,agent,Okay. I'll take one salmon roll.; I'll take one vegan of the sea bowl.; I'll take one spicy ramen.. You'll be all set. Thanks.
+81,23,customer,Thanks so much.
+82,0,agent,Hi! You've reached Shokudo. This is Mina - how can I help?
+82,1,customer,"Hey, it's me again - can I do my usual order?"
+82,2,customer,I'll take one salmon.
+82,3,agent,I'll add that.
+82,4,agent,Anything more today?
+82,5,customer,I'll take one avocado roll.
+82,6,agent,Sure thing.
 82,7,customer,That should do it.
-82,8,agent,Pickup or delivery?
-82,9,customer,Pickup.
-82,10,agent,That should be ready shortly.
-82,11,customer,Thank you.
-83,0,agent,"Hi, this is Shokudo."
+82,8,agent,Will this be pickup or delivery?
+82,9,customer,"Pickup, please."
+82,10,agent,Great - I'll take one salmon.; I'll take one avocado roll.. We'll see you soon. Thanks for calling!
+82,11,customer,Thanks!
+83,0,agent,Shokudo - Ken. What can I get started for you?
 83,1,customer,"Hey, can I order some food?"
-83,2,customer,I’ll take one yummy roll.
-83,3,agent,I’ve got that.
-83,4,customer,Sorry—
-83,5,customer,I’ll take one curry tonkotsu.
-83,6,agent,Sounds good.
-83,7,agent,Go ahead.
-83,8,customer,I’ll take one gyoza six pieces.
-83,9,agent,Gotcha.
-83,10,customer,I’ll take one diet coke.
-83,11,agent,Okay.
-83,12,agent,Keep going.
-83,13,customer,I’ll take one beef tataki appetizer.
-83,14,agent,Added.
+83,2,customer,I'll take one yummy roll.
+83,3,agent,All set.
+83,4,customer,Sorry about that -
+83,5,customer,I'll take one curry tonkotsu.
+83,6,agent,Got it.
+83,7,agent,What else can I get you?
+83,8,customer,I'll take one gyoza six pieces.
+83,9,agent,Sure thing.
+83,10,customer,I'll take one diet coke.
+83,11,agent,Okay - adding it.
+83,12,agent,Anything else for you?
+83,13,customer,I'll take one beef tataki appetizer.
+83,14,agent,Sounds good.
 83,15,customer,That should do it.
-83,16,agent,Pickup or delivery?
+83,16,agent,Will this be pickup or delivery?
 83,17,customer,Pickup.
-83,18,agent,You’re all set.
+83,18,agent,Confirmed: I'll take one yummy roll.; I'll take one curry tonkotsu.; I'll take one gyoza six pieces.. Thanks.
 83,19,customer,Thank you.
-84,0,agent,"Shokudo, how can I help you today?"
-84,1,customer,"Hello, I need to order dinner."
+84,0,agent,"Hi there, thanks for calling Shokudo - this is Mina."
+84,1,customer,"Hey, can you help me with an order? I'm kind of on the fence."
 84,2,customer,"Actually, hang on."
-84,3,customer,I’ll take one teriyaki beef.
-84,4,agent,All right.
+84,3,customer,I'll take one teriyaki beef.
+84,4,agent,Adding that now.
 84,5,agent,How would you like the beef cooked?
 84,6,customer,Medium.
-84,7,agent,Next item?
-84,8,customer,I’ll take one white profiteroles.
-84,9,agent,Okay.
+84,7,agent,Want to add anything else?
+84,8,customer,I'll take one white profiteroles.
+84,9,agent,"Okay, no problem."
 84,10,customer,That should do it.
-84,11,agent,Pickup or delivery?
-84,12,customer,Pickup.
-84,13,agent,You’re all set.
-84,14,customer,Thank you.
+84,11,agent,Pickup or delivery today?
+84,12,customer,"Pickup, please."
+84,13,agent,Awesome - I'll take one teriyaki beef.; I'll take one white profiteroles.. We'll have that ready. Thank you!
+84,14,customer,"Great, thanks."
 85,0,agent,Thank you for calling Shokudo.
-85,1,customer,"Hi, I’d like to place an order."
-85,2,customer,I’ll take one chicken roll.
-85,3,agent,Sounds good.
-85,4,customer,I’ll take one shio garlic ramen.
-85,5,agent,I’ve got that.
+85,1,customer,"Hi there, I'd like to order if you're taking orders."
+85,2,customer,I'll take one chicken roll.
+85,3,agent,Perfect.
+85,4,customer,I'll take one shio garlic ramen.
+85,5,agent,Sounds good.
 85,6,customer,That should do it.
-85,7,agent,Pickup or delivery?
+85,7,agent,Will this be pickup or delivery?
 85,8,customer,Pickup.
-85,9,agent,We’ll get started on that.
-85,10,customer,Thank you.
-86,0,agent,"Shokudo, how can I help you today?"
-86,1,customer,"Hello, I need to order dinner."
-86,2,customer,I’ll take one diet coke.
-86,3,agent,Added.
+85,9,agent,We'll get started on that.
+85,10,customer,"Great, thanks."
+86,0,agent,Hi hi! Shokudo on the line - Riley speaking!
+86,1,customer,"Hey, it's me again - can I do my usual order?"
+86,2,customer,I'll take one diet coke.
+86,3,agent,Sure thing.
 86,4,customer,One second.
-86,5,customer,I’ll take one tan tan spicy ramen.
-86,6,agent,Added.
-86,7,customer,"Yep, that’s it."
-86,8,agent,Pickup or delivery?
-86,9,customer,Delivery.
-86,10,agent,You’re all set.
-86,11,customer,Thank you.
+86,5,customer,I'll take one tan tan spicy ramen.
+86,6,agent,"Great, I'll put that in."
+86,7,customer,"Yep, that's it."
+86,8,agent,Will this be pickup or delivery?
+86,9,customer,Pickup.
+86,10,agent,Great choice - I'll take one diet coke.; One second.; I'll take one tan tan spicy ramen.. We'll have it ready!
+86,11,customer,"Great, thanks."
 87,0,agent,Thank you for calling Shokudo.
-87,1,customer,"Hi, I’m calling in an order."
-87,2,customer,I’ll take one angry dragon roll.
-87,3,agent,Added.
-87,4,customer,I’ll take one salmon cucumber roll.
-87,5,agent,All right.
-87,6,agent,What else can I get for you?
-87,7,customer,I’ll take one ten pieces nigiri and one sushi maki.
-87,8,agent,Okay.
+87,1,customer,Hello - I'm placing a pickup order.
+87,2,customer,I'll take one angry dragon roll.
+87,3,agent,You got it.
+87,4,customer,I'll take one salmon cucumber roll.
+87,5,agent,Sounds good.
+87,6,agent,Want to add anything else?
+87,7,customer,I'll take one ten pieces nigiri and one sushi maki.
+87,8,agent,Got it.
 87,9,agent,Soup or salad with that?
 87,10,customer,Salad.
-87,11,customer,I’ll take one yellowtail.
-87,12,agent,No problem.
-87,13,customer,That’s everything.
-87,14,agent,Pickup or delivery?
-87,15,customer,Pickup.
-87,16,agent,You’re all set.
-87,17,customer,Thank you.
-88,0,agent,"Shokudo, how can I help you today?"
-88,1,customer,"Hi, I’m calling in an order."
-88,2,customer,I’ll take one tempura oreo four pieces.
-88,3,agent,I’ve got that.
-88,4,customer,I’ll take one salmon dinner.
-88,5,agent,Okay.
+87,11,customer,I'll take one yellowtail.
+87,12,agent,Perfect.
+87,13,customer,That's everything.
+87,14,agent,Pickup or delivery today?
+87,15,customer,"Pickup, please."
+87,16,agent,Great - I'll take one angry dragon roll.; I'll take one salmon cucumber roll.; I'll take one ten pieces nigiri and one sushi maki.. We'll see you soon. Thanks for calling!
+87,17,customer,Thanks!
+88,0,agent,"Hi, Shokudo - Jay. What can I get for you?"
+88,1,customer,"Hey, it's me again - can I do my usual order?"
+88,2,customer,I'll take one tempura oreo four pieces.
+88,3,agent,Perfect.
+88,4,customer,I'll take one salmon dinner.
+88,5,agent,Got it.
 88,6,agent,Soup or salad with that?
 88,7,customer,Salad.
-88,8,customer,I’ll take one summer kiss roll.
-88,9,agent,Added.
-88,10,agent,Keep going.
-88,11,customer,I’ll take one unsweet green tea.
-88,12,agent,Added.
+88,8,customer,I'll take one summer kiss roll.
+88,9,agent,Adding that now.
+88,10,agent,What else can I get you?
+88,11,customer,I'll take one unsweet green tea.
+88,12,agent,"Noted, adding it."
 88,13,customer,That should do it.
-88,14,agent,Pickup or delivery?
-88,15,customer,Pickup.
-88,16,agent,That should be ready shortly.
-88,17,customer,Thank you.
-89,0,agent,"Hi, this is Shokudo."
-89,1,customer,"Hello, I need to order dinner."
+88,14,agent,Pickup or delivery today?
+88,15,customer,"Pickup, please."
+88,16,agent,Alright - I'll take one tempura oreo four pieces.; I'll take one salmon dinner.; I'll take one summer kiss roll.. We'll start it now.
+88,17,customer,Thanks so much.
+89,0,agent,"Shokudo, Jay. Go ahead with your order."
+89,1,customer,"Hey, can you help me with an order? I'm kind of on the fence."
 89,2,customer,One second.
-89,3,customer,I’ll take one california roll.
-89,4,agent,Okay.
-89,5,agent,Keep going.
-89,6,customer,I’ll take one sweet potato roll.
-89,7,agent,No problem.
-89,8,agent,Keep going.
-89,9,customer,I’ll take one sashimi appetizer.
-89,10,agent,Okay.
-89,11,agent,Anything else today?
-89,12,customer,I’ll take one salmon roe.
-89,13,agent,Sure.
-89,14,agent,Keep going.
-89,15,customer,I’ll take one eel poke bowl.
-89,16,agent,Sounds good.
-89,17,customer,I think that’s all.
-89,18,agent,Pickup or delivery?
+89,3,customer,I'll take one california roll.
+89,4,agent,Sure thing.
+89,5,agent,What else can I get you?
+89,6,customer,I'll take one sweet potato roll.
+89,7,agent,Adding that now.
+89,8,agent,Anything else for you?
+89,9,customer,I'll take one sashimi appetizer.
+89,10,agent,"Okay, no problem."
+89,11,agent,Want to add anything else?
+89,12,customer,I'll take one salmon roe.
+89,13,agent,I'll add that.
+89,14,agent,Any other items?
+89,15,customer,I'll take one eel poke bowl.
+89,16,agent,Perfect.
+89,17,customer,I think that's all.
+89,18,agent,Is that for pickup or delivery?
 89,19,customer,Delivery.
-89,20,agent,You’re all set.
-89,21,customer,Thank you.
+89,20,agent,Okay. One second.; I'll take one california roll.; I'll take one sweet potato roll.. You'll be all set. Thanks.
+89,21,customer,Appreciate it.
 90,0,agent,Thank you for calling Shokudo.
-90,1,customer,"Hello, I need to order dinner."
-90,2,customer,I’ll take one mango avocado roll.
-90,3,agent,Gotcha.
-90,4,agent,Keep going.
+90,1,customer,"Hi, quick pickup order please."
+90,2,customer,I'll take one mango avocado roll.
+90,3,agent,"Great, I'll put that in."
+90,4,agent,Anything more today?
 90,5,customer,One second.
-90,6,customer,I’ll take one shumai six pieces.
-90,7,agent,Sounds good.
-90,8,agent,Anything else today?
+90,6,customer,I'll take one shumai six pieces.
+90,7,agent,Perfect.
+90,8,agent,What else can I get you?
 90,9,customer,One second.
-90,10,customer,I’ll take one spicy kim chi ramen.
-90,11,agent,I’ve got that.
-90,12,customer,I’ll take one eel poke bowl.
-90,13,agent,Added.
-90,14,agent,What else can I get for you?
-90,15,customer,I’ll take one masago.
-90,16,agent,Sure.
-90,17,customer,I think that’s all.
-90,18,agent,Pickup or delivery?
-90,19,customer,Delivery.
-90,20,agent,You’re all set.
-90,21,customer,Thank you.
+90,10,customer,I'll take one spicy kim chi ramen.
+90,11,agent,Okay - adding it.
+90,12,customer,I'll take one eel poke bowl.
+90,13,agent,Sounds good.
+90,14,agent,Want to add anything else?
+90,15,customer,I'll take one masago.
+90,16,agent,You got it.
+90,17,customer,I think that's all.
+90,18,agent,Is that for pickup or delivery?
+90,19,customer,Pickup - as soon as possible.
+90,20,agent,Okay. I'll take one mango avocado roll.; One second.; I'll take one shumai six pieces.. You'll be all set. Thanks.
+90,21,customer,Thanks so much.
 91,0,agent,Thank you for calling Shokudo.
-91,1,customer,"Hi, I’m calling in an order."
-91,2,customer,I’ll take one eel avocado roll.
-91,3,agent,Gotcha.
-91,4,customer,I’ll take one coral sea.
-91,5,agent,Sure.
-91,6,agent,Go ahead.
-91,7,customer,I’ll take one pink lady roll.
-91,8,agent,Okay.
+91,1,customer,"Hey, it's me again - can I do my usual order?"
+91,2,customer,I'll take one eel avocado roll.
+91,3,agent,Perfect.
+91,4,customer,I'll take one coral sea.
+91,5,agent,You got it.
+91,6,agent,What else can I get you?
+91,7,customer,I'll take one pink lady roll.
+91,8,agent,Got it.
 91,9,customer,That should do it.
-91,10,agent,Pickup or delivery?
-91,11,customer,Pickup.
-91,12,agent,You’re all set.
-91,13,customer,Thank you.
-92,0,agent,"Shokudo, how can I help you today?"
-92,1,customer,"Hi, I’m calling in an order."
-92,2,customer,I’ll take one mango tango roll.
-92,3,agent,Added.
-92,4,customer,I’ll take one eel dragon roll.
-92,5,agent,Gotcha.
-92,6,customer,That’s everything.
-92,7,agent,Pickup or delivery?
-92,8,customer,Delivery.
-92,9,agent,"Thanks, we’ll take care of it."
-92,10,customer,Thank you.
+91,10,agent,Will this be pickup or delivery?
+91,11,customer,Pickup like usual.
+91,12,agent,No worries - I'll take one eel avocado roll.; I'll take one coral sea.; I'll take one pink lady roll.. We'll have it ready for you.
+91,13,customer,Thanks!
+92,0,agent,Hi! You've reached Shokudo. This is Mina - how can I help?
+92,1,customer,Hey - I need to place a fast order for pickup.
+92,2,customer,I'll take one mango tango roll.
+92,3,agent,Adding that now.
+92,4,customer,I'll take one eel dragon roll.
+92,5,agent,"Noted, adding it."
+92,6,customer,That's everything.
+92,7,agent,Pickup or delivery today?
+92,8,customer,Pickup. I'll be there shortly.
+92,9,agent,Great - Hey - I need to place a fast order for pickup.; I'll take one mango tango roll.; I'll take one eel dragon roll.. We'll see you soon. Thanks for calling!
+92,10,customer,"Great, thanks."
 93,0,agent,Shokudo Japanese Kitchen.
 93,1,customer,"Hey, can I order some food?"
-93,2,customer,I’ll take one avocado salad.
-93,3,agent,All right.
-93,4,agent,Go ahead.
-93,5,customer,I’ll take one orange juice.
-93,6,agent,Added.
-93,7,agent,Keep going.
-93,8,customer,I’ll take one godzilla roll.
-93,9,agent,Added.
-93,10,customer,I’ll take one tonkotsu ramen.
-93,11,agent,Okay.
-93,12,agent,Next item?
+93,2,customer,I'll take one avocado salad.
+93,3,agent,Sounds good.
+93,4,agent,Want to add anything else?
+93,5,customer,I'll take one orange juice.
+93,6,agent,"Noted, adding it."
+93,7,agent,Any other items?
+93,8,customer,I'll take one godzilla roll.
+93,9,agent,I'll add that.
+93,10,customer,I'll take one tonkotsu ramen.
+93,11,agent,Adding that now.
+93,12,agent,What else can I get you?
 93,13,customer,"Uh, let me think."
-93,14,customer,I’ll take one ahi tuna.
-93,15,agent,All right.
-93,16,customer,"Yep, that’s it."
-93,17,agent,Pickup or delivery?
-93,18,customer,Delivery.
-93,19,agent,That should be ready shortly.
-93,20,customer,Thank you.
+93,14,customer,I'll take one ahi tuna.
+93,15,agent,Got it.
+93,16,customer,"Yep, that's it."
+93,17,agent,Is that for pickup or delivery?
+93,18,customer,Can you do delivery?
+93,19,agent,Alright - I'll take one avocado salad.; I'll take one orange juice.; I'll take one godzilla roll.. We'll start it now.
+93,20,customer,"Great, thanks."
 94,0,agent,Thank you for calling Shokudo.
-94,1,customer,"Hello, I need to order dinner."
-94,2,customer,I’ll take one tuna poke bowl.
-94,3,agent,Sure.
-94,4,agent,What else can I get for you?
-94,5,customer,I’ll take one avocado roll.
-94,6,agent,Sure.
-94,7,customer,I’ll take one hollywood roll.
-94,8,customer,I’ll take one ginger ale.
-94,9,agent,Gotcha.
+94,1,customer,"Hi, can I place an order ASAP?"
+94,2,customer,I'll take one tuna poke bowl.
+94,3,agent,I'll add that.
+94,4,agent,What else can I get you?
+94,5,customer,I'll take one avocado roll.
+94,6,agent,Sounds good.
+94,7,customer,I'll take one hollywood roll.
+94,8,customer,I'll take one ginger ale.
+94,9,agent,"Okay, no problem."
 94,10,customer,That should do it.
-94,11,agent,Pickup or delivery?
-94,12,customer,Delivery.
-94,13,agent,"Thanks, we’ll take care of it."
-94,14,customer,Thank you.
+94,11,agent,Is that for pickup or delivery?
+94,12,customer,"Pickup, please."
+94,13,agent,Confirmed: I'll take one tuna poke bowl.; I'll take one avocado roll.; I'll take one hollywood roll.. Thanks.
+94,14,customer,Appreciate it.
 95,0,agent,Shokudo Japanese Kitchen.
 95,1,customer,"Hey, can I order some food?"
-95,2,customer,I’ll take one sparkling water.
-95,3,agent,Sounds good.
-95,4,agent,Anything else today?
-95,5,customer,I’ll take one shio garlic ramen.
-95,6,agent,I’ve got that.
+95,2,customer,I'll take one sparkling water.
+95,3,agent,I'll add that.
+95,4,agent,Anything more today?
+95,5,customer,I'll take one shio garlic ramen.
+95,6,agent,Adding that now.
 95,7,customer,That should do it.
-95,8,agent,Pickup or delivery?
-95,9,customer,Delivery.
-95,10,agent,That should be ready shortly.
-95,11,customer,Thank you.
-96,0,agent,"Shokudo, how can I help you today?"
-96,1,customer,"Hi, I’m calling in an order."
+95,8,agent,Will this be pickup or delivery?
+95,9,customer,"Delivery, please."
+95,10,agent,Sweet - I'll take one sparkling water.; I'll take one shio garlic ramen.! We'll get it going. See you soon!
+95,11,customer,Thanks!
+96,0,agent,Hi! You've reached Shokudo. This is Mina - how can I help?
+96,1,customer,Hello - I'm placing a pickup order.
 96,2,customer,"Actually, hang on."
-96,3,customer,I’ll take one tiger roll.
-96,4,agent,Sure.
-96,5,customer,I’ll take one crazy tuna roll.
-96,6,agent,All right.
+96,3,customer,I'll take one tiger roll.
+96,4,agent,"Okay, no problem."
+96,5,customer,I'll take one crazy tuna roll.
+96,6,agent,Got it.
 96,7,customer,That should do it.
-96,8,agent,Pickup or delivery?
-96,9,customer,Delivery.
-96,10,agent,We’ll get started on that.
+96,8,agent,Will this be pickup or delivery?
+96,9,customer,Pickup.
+96,10,agent,We'll get started on that.
 96,11,customer,Thank you.
-97,0,agent,"Shokudo, how can I help you today?"
-97,1,customer,"Hi, I’m calling in an order."
-97,2,customer,Sorry—
-97,3,customer,I’ll take one beef tataki appetizer.
-97,4,agent,I’ve got that.
-97,5,agent,What else can I get for you?
-97,6,customer,I’ll take one eel poke bowl.
-97,7,agent,Sounds good.
-97,8,agent,What else can I get for you?
+97,0,agent,Hi! You've reached Shokudo. This is Mina - how can I help?
+97,1,customer,"Hi there, I'd like to order if you're taking orders."
+97,2,customer,My bad -
+97,3,customer,I'll take one beef tataki appetizer.
+97,4,agent,"Okay, no problem."
+97,5,agent,What else can I get you?
+97,6,customer,I'll take one eel poke bowl.
+97,7,agent,Perfect.
+97,8,agent,Want to add anything else?
 97,9,customer,"Uh, let me think."
-97,10,customer,I’ll take one salmon roll.
-97,11,agent,Sounds good.
-97,12,agent,What else can I get for you?
-97,13,customer,I’ll take one rainbow roll.
-97,14,agent,Okay.
-97,15,agent,Next item?
-97,16,customer,I’ll take one sweet potato roll.
-97,17,agent,No problem.
-97,18,agent,Anything else today?
+97,10,customer,I'll take one salmon roll.
+97,11,agent,Sure thing.
+97,12,agent,Anything else for you?
+97,13,customer,I'll take one rainbow roll.
+97,14,agent,All set.
+97,15,agent,Anything more today?
+97,16,customer,I'll take one sweet potato roll.
+97,17,agent,Okay - adding it.
+97,18,agent,Any other items?
 97,19,customer,One second.
-97,20,customer,I’ll take one unsweet green tea.
-97,21,agent,Added.
-97,22,customer,I think that’s all.
-97,23,agent,Pickup or delivery?
+97,20,customer,I'll take one unsweet green tea.
+97,21,agent,I'll add that.
+97,22,customer,I think that's all.
+97,23,agent,Is that for pickup or delivery?
 97,24,customer,Delivery.
-97,25,agent,You’re all set.
-97,26,customer,Thank you.
+97,25,agent,Great - I'll take one beef tataki appetizer.; I'll take one eel poke bowl.; I'll take one salmon roll.. We'll see you soon. Thanks for calling!
+97,26,customer,Thanks so much.
 98,0,agent,Shokudo Japanese Kitchen.
-98,1,customer,"Hi, I’d like to place an order."
-98,2,customer,I’ll take one teriyaki shrimp.
-98,3,agent,Sounds good.
+98,1,customer,Hello - I'm new to your menu. Can you help me order?
+98,2,customer,I'll take one teriyaki shrimp.
+98,3,agent,Okay - adding it.
 98,4,customer,"Actually, hang on."
-98,5,customer,I’ll take one ahi tuna.
-98,6,agent,All right.
-98,7,customer,I think that’s all.
-98,8,agent,Pickup or delivery?
+98,5,customer,I'll take one ahi tuna.
+98,6,agent,Adding that now.
+98,7,customer,I think that's all.
+98,8,agent,Is that for pickup or delivery?
 98,9,customer,Delivery.
-98,10,agent,That should be ready shortly.
-98,11,customer,Thank you.
-99,0,agent,"Shokudo, how can I help you today?"
-99,1,customer,"Hi, I’m calling in an order."
-99,2,customer,I’ll take one yummy roll.
-99,3,agent,Gotcha.
+98,10,agent,All set: I'll take one teriyaki shrimp.; I'll take one ahi tuna.. We'll have it ready. Thank you.
+98,11,customer,Appreciate it.
+99,0,agent,Shokudo - Ken. What can I get started for you?
+99,1,customer,"Hi... I'm still deciding, but can I start an order?"
+99,2,customer,I'll take one yummy roll.
+99,3,agent,"Noted, adding it."
 99,4,customer,"Uh, let me think."
-99,5,customer,I’ll take one cucumber avocado roll.
-99,6,agent,All right.
+99,5,customer,I'll take one cucumber avocado roll.
+99,6,agent,Sure thing.
 99,7,customer,"Actually, hang on."
-99,8,customer,I’ll take one sake tamaki for two.
-99,9,agent,Gotcha.
-99,10,customer,Sorry—
-99,11,customer,I’ll take one california roll.
-99,12,agent,Go ahead.
-99,13,customer,I’ll take one spicy edamame.
-99,14,agent,Sure.
-99,15,customer,I think that’s all.
-99,16,agent,Pickup or delivery?
-99,17,customer,Pickup.
-99,18,agent,"Thanks, we’ll take care of it."
-99,19,customer,Thank you.
+99,8,customer,I'll take one sake tamaki for two.
+99,9,agent,All set.
+99,10,customer,Oh sorry -
+99,11,customer,I'll take one california roll.
+99,12,agent,What else can I get you?
+99,13,customer,I'll take one spicy edamame.
+99,14,agent,"Okay, no problem."
+99,15,customer,I think that's all.
+99,16,agent,Will this be pickup or delivery?
+99,17,customer,"Pickup, please."
+99,18,agent,Confirmed: I'll take one yummy roll.; I'll take one cucumber avocado roll.; I'll take one sake tamaki for two.. Thanks.
+99,19,customer,Appreciate it.

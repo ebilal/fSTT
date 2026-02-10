@@ -6,4 +6,5 @@ node_modules/
 .DS_Store
 outputs/
 audio/
+models/
 
