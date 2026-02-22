@@ -7,4 +7,7 @@ node_modules/
 outputs/
 audio/
 models/
+production/*.tar.gz
+*.safetensors
+*.faiss
 
