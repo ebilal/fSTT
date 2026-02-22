@@ -88,6 +88,33 @@ class VectorIndex:
                 index.nn_index = pickle.load(f)
         return index
 
+    @classmethod
+    def load_shared_index(cls, dir_path: str) -> "VectorIndex":
+        """Load from shared_index format: candidates.json + index.faiss (+ meta.json)."""
+        if not faiss_available():
+            raise RuntimeError("faiss required for load_shared_index")
+        cand_path = os.path.join(dir_path, "candidates.json")
+        faiss_path = os.path.join(dir_path, "index.faiss")
+        if not os.path.isfile(cand_path):
+            raise FileNotFoundError(f"Missing {cand_path}")
+        if not os.path.isfile(faiss_path):
+            raise FileNotFoundError(f"Missing {faiss_path}")
+        with open(cand_path, "r", encoding="utf-8") as f:
+            loaded = json.load(f)
+        target_texts = (
+            loaded.get("candidates", loaded)
+            if isinstance(loaded, dict)
+            else loaded
+        )
+        if not isinstance(target_texts, list):
+            raise ValueError(f"Unexpected candidates.json structure in {dir_path}")
+        target_texts = [str(t) for t in target_texts]
+        faiss_index = faiss.read_index(faiss_path)
+        dim = int(faiss_index.d)
+        index = cls(index_type="faiss", target_texts=target_texts, dim=dim)
+        index.faiss_index = faiss_index
+        return index
+
     def retrieve(self, query_embeddings: np.ndarray, topk: int) -> Tuple[np.ndarray, np.ndarray]:
         if len(self.target_texts) == 0:
             return np.empty((0, 0), dtype=int), np.empty((0, 0), dtype=float)

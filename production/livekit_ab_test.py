@@ -26,6 +26,12 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
+# Ensure project root is on path for src imports
+_SCRIPT_DIR = Path(__file__).resolve().parent
+_PROJECT_ROOT = _SCRIPT_DIR.parent
+if str(_PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(_PROJECT_ROOT))
+
 from livekit import api
 from livekit.agents import Agent, AgentServer, AgentSession, JobContext, cli
 from livekit.plugins import deepgram
@@ -35,13 +41,31 @@ DEFAULT_LIVEKIT_URL = "wss://healthbot-bfkuu2w0.livekit.cloud"
 DEFAULT_LIVEKIT_API_KEY = "APIRGMSsjKnsGuw"
 DEFAULT_LIVEKIT_API_SECRET = "P7urIbOH6mknqdhobJ9pthRCfDrp972Xr6KuFlUFz2J"
 DEFAULT_AGENT_NAME = "fstt-ab-agent"
-DEFAULT_GREETING = "This is chinese restaurant what would you like to order today"
+DEFAULT_GREETING = "This is Ginko restaurant what would you like to order today"
 DEFAULT_TRANSCRIPTS_DIR = "outputs/live_ab_transcripts"
 DEFAULT_SIP_TRUNK_ID = "ST_XLdWcK2UnAUx"
 DEFAULT_STT_MODEL = "deepgram/nova-3"
 DEFAULT_STT_LANGUAGE = "en-US"
+DEFAULT_DEEPGRAM_API_KEY = "7970a96b7a1d73b9df6c0ca0a986d995f6866e10"
 DEFAULT_LLM_MODEL = "google/gemini-2.5-flash-lite"
 DEFAULT_TTS_MODEL = "cartesia/sonic-3"
+DEFAULT_CAPTION_OFFSET_SECONDS = 1.8
+DEFAULT_PREDICTOR_LOAD_TIMEOUT_SECONDS = 20.0
+# Default model dir for preloading (relative to project root, parent of production/)
+DEFAULT_MODEL_DIR = "models/retrieval_minilm_l3_user_only_20260211_001736"
+DEFAULT_MAX_TERMS = 10
+# What to inject into Deepgram keyterm param: "keyterms" | "keywords" | "both"
+INJECT_MODE = "both"
+# Seconds to wait after callee joins before greeting (lets audio path establish)
+GREETING_DELAY_SECONDS = 1.2
+
+_ENCODER_INDEX_CACHE: dict[str, tuple[Any, Any]] = {}
+
+
+def _default_model_dir() -> str:
+    """Resolve default model path relative to project root."""
+    root = Path(__file__).resolve().parent.parent
+    return str(root / DEFAULT_MODEL_DIR)
 
 
 def _apply_default_env() -> None:
@@ -50,18 +74,34 @@ def _apply_default_env() -> None:
     os.environ.setdefault("LIVEKIT_API_KEY", DEFAULT_LIVEKIT_API_KEY)
     os.environ.setdefault("LIVEKIT_API_SECRET", DEFAULT_LIVEKIT_API_SECRET)
     os.environ.setdefault("LIVEKIT_SIP_TRUNK_ID_OUTBOUND", DEFAULT_SIP_TRUNK_ID)
-    # LiveKit Inference flow uses LiveKit auth; keep worker setup zero-config.
-    os.environ.setdefault("DEEPGRAM_API_KEY", os.environ["LIVEKIT_API_KEY"])
+    # Direct Deepgram mode for keyterm injection; use hardcoded key.
+    os.environ.setdefault("DEEPGRAM_API_KEY", DEFAULT_DEEPGRAM_API_KEY)
     # Reduce noisy worker telemetry unless explicitly overridden by user.
     os.environ.setdefault("LIVEKIT_LOG_LEVEL", "WARNING")
+
+
+def _suppress_noisy_logs(record: logging.LogRecord) -> bool:
+    """Filter out known noisy LiveKit messages that don't affect behavior."""
+    try:
+        msg = (record.msg % record.args) if record.args else str(record.msg)
+    except (TypeError, ValueError):
+        msg = str(record.msg)
+    skip = (
+        "process memory usage is high" in msg
+        or "failed to upload the session report to LiveKit Cloud" in msg
+        or "Failed to export logs batch" in msg
+        or "project data recording is disabled by owner" in msg
+    )
+    return not skip
 
 
 def _configure_logging() -> None:
     level_name = os.getenv("LIVEKIT_LOG_LEVEL", "WARNING").upper()
     level = getattr(logging, level_name, logging.WARNING)
-    logging.getLogger("livekit").setLevel(level)
-    logging.getLogger("livekit.agents").setLevel(level)
-    logging.getLogger("livekit.api").setLevel(level)
+    for name in ("livekit", "livekit.agents", "livekit.api", "opentelemetry.exporter.otlp.proto.http._log_exporter"):
+        logger = logging.getLogger(name)
+        logger.setLevel(level)
+        logger.addFilter(_suppress_noisy_logs)
 
 
 def _utc_now() -> str:
@@ -89,21 +129,69 @@ def _coerce_text(content: Any) -> str:
     return str(content).strip()
 
 
+def _normalize_role_for_history(role: str) -> str:
+    """Match training format: SYSTEM and USER (assistant → SYSTEM)."""
+    r = (role or "").strip().lower()
+    if r in {"user", "customer", "human", "client", "guest"}:
+        return "USER"
+    if r in {"system", "assistant", "agent", "bot", "server"}:
+        return "SYSTEM"
+    return "SYSTEM"
+
+
 def _history_text(turns: list[dict[str, str]], max_turns: int = 8) -> str:
     clipped = turns[-max_turns:]
-    return "\n".join(f"{t['role'].upper()}: {t['text']}" for t in clipped if t["text"].strip())
+    return "\n".join(
+        f"{_normalize_role_for_history(t['role'])}: {t['text']}"
+        for t in clipped
+        if t["text"].strip()
+    )
 
 
-def _load_prior_predictor_class():
+def _get_audio_duration_seconds(audio_path: Path) -> float | None:
     try:
-        from fstt_priors import PriorPredictor  # type: ignore
-        return PriorPredictor
-    except ImportError:
-        this_dir = Path(__file__).resolve().parent
-        if str(this_dir) not in sys.path:
-            sys.path.insert(0, str(this_dir))
-        from fstt_priors import PriorPredictor  # type: ignore
-        return PriorPredictor
+        import av  # type: ignore
+
+        with av.open(str(audio_path)) as container:
+            if container.duration is not None:
+                return float(container.duration) / 1_000_000.0
+            stream = next((s for s in container.streams if s.type == "audio"), None)
+            if stream and stream.duration is not None and stream.time_base is not None:
+                return float(stream.duration * stream.time_base)
+    except Exception:
+        return None
+    return None
+
+
+def _load_encoder_index_cached(model_dir: str) -> tuple[Any, Any]:
+    """Load encoder + shared_index (FAISS) from src pipeline; cache by model_dir."""
+    model_dir_abs = str(Path(model_dir).resolve())
+    if model_dir_abs in _ENCODER_INDEX_CACHE:
+        return _ENCODER_INDEX_CACHE[model_dir_abs]
+
+    from src.model import load_encoder
+    from src.index import VectorIndex
+
+    encoder_path = str(Path(model_dir_abs) / "best_model")
+    index_path = str(Path(model_dir_abs) / "shared_index")
+    encoder = load_encoder(encoder_path, device="cpu")
+    index = VectorIndex.load_shared_index(index_path)
+    _ENCODER_INDEX_CACHE[model_dir_abs] = (encoder, index)
+    return encoder, index
+
+
+def _preload_encoder_index(model_dir: str | None) -> None:
+    """Load encoder + index at startup so calls have no delay."""
+    if not model_dir or not model_dir.strip():
+        return
+    path = Path(model_dir).resolve()
+    if not path.is_dir():
+        return
+    try:
+        _load_encoder_index_cached(str(path))
+        print(f"[ab-test] encoder + index preloaded: {path}")
+    except Exception as e:
+        print(f"[ab-test] encoder+index preload skipped: {e}")
 
 
 @dataclass
@@ -164,24 +252,17 @@ class TranscriptRecorder:
         path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
         return path
 
-    def write_vtt(self, json_path: Path) -> Path | None:
+    def _build_segments(
+        self,
+        caption_offset_seconds: float = DEFAULT_CAPTION_OFFSET_SECONDS,
+        audio_duration_seconds: float | None = None,
+    ) -> list[tuple[float, float, str]]:
         turn_events = [e for e in self.events if e.get("type") == "turn"]
         if not turn_events:
-            return None
+            return []
 
-        def _parse_time(iso_ts: str) -> datetime:
-            return datetime.fromisoformat(iso_ts)
-
-        def _fmt_vtt_time(seconds: float) -> str:
-            seconds = max(seconds, 0.0)
-            hours = int(seconds // 3600)
-            minutes = int((seconds % 3600) // 60)
-            secs = int(seconds % 60)
-            millis = int((seconds - int(seconds)) * 1000)
-            return f"{hours:02d}:{minutes:02d}:{secs:02d}.{millis:03d}"
-
-        base_dt = _parse_time(turn_events[0]["time"])
-        segments: list[tuple[float, float, str]] = []
+        base_dt = datetime.fromisoformat(turn_events[0]["time"])
+        raw: list[tuple[float, float, str]] = []
 
         for idx, ev in enumerate(turn_events):
             payload = ev.get("payload", {})
@@ -190,19 +271,65 @@ class TranscriptRecorder:
             if not text:
                 continue
 
-            start_dt = _parse_time(ev["time"])
+            start_dt = datetime.fromisoformat(ev["time"])
             if idx + 1 < len(turn_events):
-                next_dt = _parse_time(turn_events[idx + 1]["time"])
-                end_dt = next_dt
+                end_dt = datetime.fromisoformat(turn_events[idx + 1]["time"])
             else:
                 end_dt = start_dt + timedelta(seconds=4)
 
-            start_s = (start_dt - base_dt).total_seconds()
-            end_s = (end_dt - base_dt).total_seconds()
+            start_s = (start_dt - base_dt).total_seconds() + caption_offset_seconds
+            end_s = (end_dt - base_dt).total_seconds() + caption_offset_seconds
             if end_s <= start_s + 0.2:
                 end_s = start_s + 2.0
 
-            segments.append((start_s, end_s, f"{role}: {text}"))
+            raw.append((start_s, end_s, f"{role}: {text}"))
+
+        # Keep starts non-negative and ordered.
+        segments: list[tuple[float, float, str]] = []
+        last_end = 0.0
+        for start_s, end_s, text in raw:
+            start_s = max(start_s, 0.0)
+            end_s = max(end_s, start_s + 0.6)
+            if start_s < last_end:
+                shift = last_end - start_s
+                start_s += shift
+                end_s += shift
+            segments.append((start_s, end_s, text))
+            last_end = end_s
+
+        # If we know audio duration, gently scale timeline so final subtitle aligns.
+        if audio_duration_seconds and audio_duration_seconds > 1.0 and segments:
+            last_end = segments[-1][1]
+            target_end = max(audio_duration_seconds - 0.2, 0.5)
+            if last_end > 0.1:
+                ratio = target_end / last_end
+                if 0.7 <= ratio <= 1.3:
+                    scaled: list[tuple[float, float, str]] = []
+                    for start_s, end_s, text in segments:
+                        s = max(start_s * ratio, 0.0)
+                        e = max(end_s * ratio, s + 0.6)
+                        scaled.append((s, e, text))
+                    segments = scaled
+
+        return segments
+
+    def write_vtt(
+        self,
+        json_path: Path,
+        caption_offset_seconds: float = DEFAULT_CAPTION_OFFSET_SECONDS,
+        audio_duration_seconds: float | None = None,
+    ) -> Path | None:
+        def _fmt_vtt_time(seconds: float) -> str:
+            seconds = max(seconds, 0.0)
+            hours = int(seconds // 3600)
+            minutes = int((seconds % 3600) // 60)
+            secs = int(seconds % 60)
+            millis = int((seconds - int(seconds)) * 1000)
+            return f"{hours:02d}:{minutes:02d}:{secs:02d}.{millis:03d}"
+
+        segments = self._build_segments(caption_offset_seconds, audio_duration_seconds)
+        if not segments:
+            return None
 
         cues: list[str] = ["WEBVTT", ""]
         for start_s, end_s, text in segments:
@@ -214,14 +341,12 @@ class TranscriptRecorder:
         vtt_path.write_text("\n".join(cues), encoding="utf-8")
         return vtt_path
 
-    def write_srt(self, json_path: Path) -> Path | None:
-        turn_events = [e for e in self.events if e.get("type") == "turn"]
-        if not turn_events:
-            return None
-
-        def _parse_time(iso_ts: str) -> datetime:
-            return datetime.fromisoformat(iso_ts)
-
+    def write_srt(
+        self,
+        json_path: Path,
+        caption_offset_seconds: float = DEFAULT_CAPTION_OFFSET_SECONDS,
+        audio_duration_seconds: float | None = None,
+    ) -> Path | None:
         def _fmt_srt_time(seconds: float) -> str:
             seconds = max(seconds, 0.0)
             hours = int(seconds // 3600)
@@ -230,32 +355,16 @@ class TranscriptRecorder:
             millis = int((seconds - int(seconds)) * 1000)
             return f"{hours:02d}:{minutes:02d}:{secs:02d},{millis:03d}"
 
-        base_dt = _parse_time(turn_events[0]["time"])
+        segments = self._build_segments(caption_offset_seconds, audio_duration_seconds)
+        if not segments:
+            return None
+
         cues: list[str] = []
         cue_idx = 1
-
-        for idx, ev in enumerate(turn_events):
-            payload = ev.get("payload", {})
-            role = str(payload.get("role", "unknown")).upper()
-            text = str(payload.get("text", "")).strip()
-            if not text:
-                continue
-
-            start_dt = _parse_time(ev["time"])
-            if idx + 1 < len(turn_events):
-                next_dt = _parse_time(turn_events[idx + 1]["time"])
-                end_dt = next_dt
-            else:
-                end_dt = start_dt + timedelta(seconds=4)
-
-            start_s = (start_dt - base_dt).total_seconds()
-            end_s = (end_dt - base_dt).total_seconds()
-            if end_s <= start_s + 0.2:
-                end_s = start_s + 2.0
-
+        for start_s, end_s, text in segments:
             cues.append(str(cue_idx))
             cues.append(f"{_fmt_srt_time(start_s)} --> {_fmt_srt_time(end_s)}")
-            cues.append(f"{role}: {text}")
+            cues.append(text)
             cues.append("")
             cue_idx += 1
 
@@ -263,25 +372,170 @@ class TranscriptRecorder:
         srt_path.write_text("\n".join(cues), encoding="utf-8")
         return srt_path
 
-    def write_player_html(self, json_path: Path, audio_path: Path, vtt_path: Path | None) -> Path:
-        track_tag = ""
-        if vtt_path is not None:
-            track_tag = f'<track kind="captions" src="{vtt_path.name}" srclang="en" label="Transcript" default>'
+    def write_player_html(
+        self,
+        json_path: Path,
+        audio_path: Path,
+        vtt_path: Path | None,
+        caption_offset_seconds: float = DEFAULT_CAPTION_OFFSET_SECONDS,
+        audio_duration_seconds: float | None = None,
+    ) -> Path:
+        segments = self._build_segments(caption_offset_seconds, audio_duration_seconds)
+        cues_payload = [{"start": s, "end": e, "text": t} for s, e, t in segments]
+        cues_json = json.dumps(cues_payload, ensure_ascii=False)
         html = f"""<!doctype html>
 <html>
-<head><meta charset="utf-8"><title>Call Playback</title></head>
+<head>
+  <meta charset="utf-8">
+  <title>Call Playback</title>
+  <style>
+    body {{
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 20px;
+    }}
+    #captions {{
+      margin-top: 12px;
+      min-height: 48px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #111;
+      color: #fff;
+      font-size: 15px;
+      line-height: 1.4;
+      white-space: pre-wrap;
+    }}
+    #meta {{
+      color: #666;
+      font-size: 12px;
+      margin-top: 6px;
+    }}
+    #controls {{
+      margin-top: 10px;
+      font-size: 13px;
+      color: #333;
+    }}
+    #transcript {{
+      margin-top: 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      max-height: 320px;
+      overflow: auto;
+    }}
+    .line {{
+      padding: 8px 10px;
+      border-bottom: 1px solid #f2f2f2;
+      font-size: 14px;
+      line-height: 1.35;
+    }}
+    .line.active {{
+      background: #fff4cc;
+    }}
+  </style>
+</head>
 <body>
   <h3>{json_path.stem}</h3>
-  <audio controls style="width: 100%;">
+  <audio id="player" controls style="width: 100%;">
     <source src="{audio_path.name}" type="audio/ogg">
-    {track_tag}
   </audio>
+  <div id="captions">(captions will appear during playback)</div>
+  <div id="controls">
+    Caption offset: <input id="offset" type="range" min="-8" max="8" step="0.1" value="0"> <span id="offsetVal">0.0s</span>
+  </div>
+  <div id="meta">Captions are synced from saved transcript events. Increase offset if text appears early.</div>
+  <div id="transcript"></div>
+
+  <script>
+    const audio = document.getElementById("player");
+    const captionBox = document.getElementById("captions");
+    const transcript = document.getElementById("transcript");
+    const offsetInput = document.getElementById("offset");
+    const offsetVal = document.getElementById("offsetVal");
+    const CUES = {cues_json};
+    let activeIndex = -1;
+
+    function setCaption(text) {{
+      captionBox.textContent = text && text.trim() ? text : "";
+    }}
+
+    function renderTranscript() {{
+      transcript.innerHTML = "";
+      for (let i = 0; i < CUES.length; i += 1) {{
+        const row = document.createElement("div");
+        row.className = "line";
+        row.dataset.idx = String(i);
+        row.textContent = CUES[i].text;
+        row.addEventListener("click", () => {{
+          audio.currentTime = Math.max(CUES[i].start - parseFloat(offsetInput.value || "0"), 0);
+          syncCaption();
+        }});
+        transcript.appendChild(row);
+      }}
+    }}
+
+    function syncCaption() {{
+      if (!CUES || CUES.length === 0) {{
+        setCaption("(no saved captions)");
+        return;
+      }}
+      const t = (audio.currentTime || 0) + parseFloat(offsetInput.value || "0");
+      let active = "";
+      let nextIdx = -1;
+      for (let i = 0; i < CUES.length; i += 1) {{
+        const cue = CUES[i];
+        if (t >= cue.start && t < cue.end) {{
+          active = cue.text;
+          nextIdx = i;
+          break;
+        }}
+      }}
+      setCaption(active);
+      if (nextIdx !== activeIndex) {{
+        if (activeIndex >= 0) {{
+          const prev = transcript.querySelector(`.line[data-idx="${{activeIndex}}"]`);
+          if (prev) prev.classList.remove("active");
+        }}
+        if (nextIdx >= 0) {{
+          const curr = transcript.querySelector(`.line[data-idx="${{nextIdx}}"]`);
+          if (curr) {{
+            curr.classList.add("active");
+            curr.scrollIntoView({{ block: "nearest" }});
+          }}
+        }}
+        activeIndex = nextIdx;
+      }}
+    }}
+
+    audio.addEventListener("timeupdate", syncCaption);
+    audio.addEventListener("seeked", syncCaption);
+    audio.addEventListener("loadedmetadata", syncCaption);
+    offsetInput.addEventListener("input", () => {{
+      offsetVal.textContent = `${{parseFloat(offsetInput.value).toFixed(1)}}s`;
+      syncCaption();
+    }});
+    window.addEventListener("load", () => {{
+      renderTranscript();
+      syncCaption();
+    }});
+  </script>
 </body>
 </html>
 """
         html_path = json_path.with_suffix(".player.html")
         html_path.write_text(html, encoding="utf-8")
         return html_path
+
+    def write_vlc_playlist(self, audio_path: Path, srt_path: Path) -> Path:
+        m3u = "\n".join(
+            [
+                "#EXTM3U",
+                f"#EXTVLCOPT:sub-file={srt_path.name}",
+                audio_path.name,
+                "",
+            ]
+        )
+        playlist_path = audio_path.with_suffix(".vlc.m3u")
+        playlist_path.write_text(m3u, encoding="utf-8")
+        return playlist_path
 
 
 def _build_agent_instructions() -> str:
@@ -294,10 +548,7 @@ def _build_agent_instructions() -> str:
 
 
 def _build_stt(use_injection: bool):
-    stt_model = os.getenv("LK_STT_MODEL", DEFAULT_STT_MODEL)
-    direct_dg = os.getenv("AB_USE_DIRECT_DEEPGRAM", "0") == "1"
-    if use_injection and direct_dg:
-        # Direct Deepgram mode enables dynamic keyterm updates, but requires a real Deepgram key.
+    if use_injection:
         return deepgram.STT(
             model="nova-3",
             language=os.getenv("LK_STT_LANGUAGE", DEFAULT_STT_LANGUAGE),
@@ -306,8 +557,7 @@ def _build_stt(use_injection: bool):
             interim_results=True,
             keyterm=[],
         )
-    # LiveKit Inference mode (no direct Deepgram key required).
-    return stt_model
+    return os.getenv("LK_STT_MODEL", DEFAULT_STT_MODEL)
 
 
 async def _worker_entrypoint(ctx: JobContext) -> None:
@@ -322,10 +572,13 @@ async def _worker_entrypoint(ctx: JobContext) -> None:
     output_dir = Path(str(metadata.get("output_dir", DEFAULT_TRANSCRIPTS_DIR)))
     greeting = str(metadata.get("greeting", DEFAULT_GREETING))
     model_dir = metadata.get("model_dir")
-    max_terms = int(metadata.get("max_terms", 10))
+    max_terms = int(metadata.get("max_terms", DEFAULT_MAX_TERMS))
     topk = int(metadata.get("topk", 30))
     sip_identity = str(metadata.get("sip_participant_identity", "")).strip() or None
     max_call_seconds = int(metadata.get("max_call_seconds", 900))
+    caption_offset_seconds = float(
+        metadata.get("caption_offset_seconds", DEFAULT_CAPTION_OFFSET_SECONDS)
+    )
 
     recorder = TranscriptRecorder(
         room_name=ctx.room.name,
@@ -334,7 +587,7 @@ async def _worker_entrypoint(ctx: JobContext) -> None:
         output_dir=output_dir,
     )
 
-    predictor = None
+    encoder, index = None, None
     if inject_priors:
         if not model_dir:
             recorder.add_event(
@@ -343,8 +596,23 @@ async def _worker_entrypoint(ctx: JobContext) -> None:
             )
             inject_priors = False
         else:
-            PriorPredictor = _load_prior_predictor_class()
-            predictor = PriorPredictor(str(model_dir), device="cpu")
+            timeout_s = float(
+                metadata.get("predictor_load_timeout_seconds", DEFAULT_PREDICTOR_LOAD_TIMEOUT_SECONDS)
+            )
+            try:
+                encoder, index = await asyncio.wait_for(
+                    asyncio.to_thread(_load_encoder_index_cached, str(model_dir)),
+                    timeout=timeout_s,
+                )
+            except Exception as exc:
+                recorder.add_event(
+                    "warning",
+                    {
+                        "message": "encoder+index load failed or timed out; disabling injection for this call",
+                        "error": str(exc),
+                    },
+                )
+                inject_priors = False
 
     stt = _build_stt(inject_priors)
     session = AgentSession(
@@ -374,28 +642,26 @@ async def _worker_entrypoint(ctx: JobContext) -> None:
         text = _coerce_text(getattr(item, "content", None))
         recorder.add_turn(role, text)
 
-        if not inject_priors or predictor is None:
+        if not inject_priors or encoder is None or index is None:
             return
 
         history = _history_text(recorder.history_turns, max_turns=8)
         if not history.strip():
             return
         try:
-            terms = predictor.predict(history, max_terms=max_terms, topk=topk)
+            from src.livekit_deepgram_inject import predict_terms
+
+            terms = predict_terms(
+                encoder, index, history,
+                topk=topk, max_terms=max_terms,
+                inject_mode=INJECT_MODE,
+            )
         except Exception as exc:
             recorder.add_event("prior_prediction_error", {"error": str(exc)})
             return
 
         if hasattr(stt, "update_options"):
             stt.update_options(keyterm=terms)
-        else:
-            recorder.add_event(
-                "keyterm_update_skipped",
-                {
-                    "message": "STT is running via LiveKit Inference string model; dynamic keyterm updates are not applied in this mode.",
-                    "predicted_terms_count": len(terms),
-                },
-            )
         recorder.log_terms(terms, history)
         recorder.add_event("deepgram_keyterm_update", {"count": len(terms), "terms": terms})
 
@@ -405,11 +671,14 @@ async def _worker_entrypoint(ctx: JobContext) -> None:
         record={"audio": True, "logs": False, "traces": False, "transcript": False},
     )
 
-    # Wait for the PSTN callee to appear, then greet immediately.
+    # Wait for the PSTN callee to appear.
     if sip_identity:
         await ctx.wait_for_participant(identity=sip_identity)
     else:
         await ctx.wait_for_participant()
+
+    # Brief delay so audio path (LiveKit -> SIP -> PSTN) is established before greeting.
+    await asyncio.sleep(GREETING_DELAY_SECONDS)
 
     greeting_handle = session.say(greeting, add_to_chat_ctx=True)
     await greeting_handle
@@ -434,16 +703,38 @@ async def _worker_entrypoint(ctx: JobContext) -> None:
         await session.drain()
         await session.aclose()
         out_path = recorder.save()
-        vtt_path = recorder.write_vtt(out_path)
-        srt_path = recorder.write_srt(out_path)
 
         session_audio = Path(ctx.session_directory) / "audio.ogg"
         audio_out_path: Path | None = None
-        player_path: Path | None = None
+        audio_duration_seconds: float | None = None
         if session_audio.is_file():
             audio_out_path = out_path.with_suffix(".ogg")
             shutil.copy2(session_audio, audio_out_path)
-            player_path = recorder.write_player_html(out_path, audio_out_path, vtt_path)
+            audio_duration_seconds = _get_audio_duration_seconds(audio_out_path)
+
+        vtt_path = recorder.write_vtt(
+            out_path,
+            caption_offset_seconds=caption_offset_seconds,
+            audio_duration_seconds=audio_duration_seconds,
+        )
+        srt_path = recorder.write_srt(
+            out_path,
+            caption_offset_seconds=caption_offset_seconds,
+            audio_duration_seconds=audio_duration_seconds,
+        )
+
+        player_path: Path | None = None
+        vlc_playlist_path: Path | None = None
+        if audio_out_path is not None:
+            player_path = recorder.write_player_html(
+                out_path,
+                audio_out_path,
+                vtt_path,
+                caption_offset_seconds=caption_offset_seconds,
+                audio_duration_seconds=audio_duration_seconds,
+            )
+            if srt_path:
+                vlc_playlist_path = recorder.write_vlc_playlist(audio_out_path, srt_path)
 
         print(f"[ab-test] transcript saved: {out_path}")
         if audio_out_path:
@@ -454,6 +745,8 @@ async def _worker_entrypoint(ctx: JobContext) -> None:
             print(f"[ab-test] srt saved: {srt_path}")
         if player_path:
             print(f"[ab-test] player saved: {player_path}")
+        if vlc_playlist_path:
+            print(f"[ab-test] vlc playlist saved: {vlc_playlist_path}")
 
 
 def _make_server() -> AgentServer:
@@ -473,6 +766,8 @@ def _build_metadata(args: argparse.Namespace, sip_participant_identity: str) -> 
         "greeting": args.greeting,
         "sip_participant_identity": sip_participant_identity,
         "max_call_seconds": args.max_call_seconds,
+        "caption_offset_seconds": args.caption_offset_seconds,
+        "predictor_load_timeout_seconds": args.predictor_load_timeout_seconds,
     }
     return json.dumps(payload)
 
@@ -529,7 +824,12 @@ def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="LiveKit + Deepgram A/B phone call test")
     sub = parser.add_subparsers(dest="mode", required=True)
 
-    sub.add_parser("worker", help="Run the LiveKit agent worker")
+    worker_parser = sub.add_parser("worker", help="Run the LiveKit agent worker")
+    worker_parser.add_argument(
+        "--model-dir",
+        default=os.getenv("FSTT_MODEL_DIR", _default_model_dir()),
+        help="Preload predictor + FAISS index at startup (no per-call delay)",
+    )
 
     dial = sub.add_parser("dial", help="Start one outbound A/B call")
     dial.add_argument("--call-to", required=True, help="Target phone number in E.164 format")
@@ -550,10 +850,10 @@ def _parser() -> argparse.ArgumentParser:
     )
     dial.add_argument(
         "--model-dir",
-        default=os.getenv("FSTT_MODEL_DIR", ""),
-        help="Model directory containing best_model/ and shared_index/",
+        default=os.getenv("FSTT_MODEL_DIR", _default_model_dir()),
+        help="Model dir for injection (optional; defaults to same path preloaded by worker)",
     )
-    dial.add_argument("--max-terms", type=int, default=10, help="Max Deepgram keyterms")
+    dial.add_argument("--max-terms", type=int, default=DEFAULT_MAX_TERMS, help="Max Deepgram keyterms")
     dial.add_argument("--topk", type=int, default=30, help="Top-k retrieval depth")
     dial.add_argument(
         "--output-dir",
@@ -571,6 +871,18 @@ def _parser() -> argparse.ArgumentParser:
         default=900,
         help="Hard timeout for the call session",
     )
+    dial.add_argument(
+        "--caption-offset-seconds",
+        type=float,
+        default=DEFAULT_CAPTION_OFFSET_SECONDS,
+        help="Shift captions later (+) or earlier (-) to align with audio",
+    )
+    dial.add_argument(
+        "--predictor-load-timeout-seconds",
+        type=float,
+        default=DEFAULT_PREDICTOR_LOAD_TIMEOUT_SECONDS,
+        help="Timeout for loading retrieval predictor before fallback to no-injection",
+    )
     return parser
 
 
@@ -580,6 +892,7 @@ def main() -> None:
     args = _parser().parse_args()
 
     if args.mode == "worker":
+        _preload_encoder_index(getattr(args, "model_dir", None))
         server = _make_server()
         # LiveKit's runner expects a command like "start"; this script already
         # chose mode via argparse, so force the worker runner command here.

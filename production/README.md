@@ -219,6 +219,24 @@ actual ordering.
 pip install livekit-agents livekit-plugins-deepgram livekit
 ```
 
+For keyterm injection, the predictor uses the prebuilt FAISS index shipped with the model. Install:
+
+```bash
+pip install faiss-cpu
+```
+
+The worker loads the encoder + index at startup so there is no per-call delay. You do **not** need to pass the model location when dialing—it uses the same default.
+
+```bash
+# Start worker (preloads default model: models/retrieval_minilm_l3_user_only_20260211_001736)
+python production/livekit_ab_test.py worker
+
+# Dial with injection—no --model-dir needed
+python production/livekit_ab_test.py dial --call-to "+1..." --inject-priors
+```
+
+Override with `--model-dir` on worker or dial only if using a different path (or set `FSTT_MODEL_DIR`).
+
 ### Configure environment
 
 You do **not** need to export LiveKit variables for this script. It already includes your shared defaults:
@@ -237,7 +255,7 @@ Notes:
 - Worker logs are quiet by default (`LIVEKIT_LOG_LEVEL=WARNING` inside the script).
 - To see detailed logs while debugging, run with `LIVEKIT_LOG_LEVEL=INFO` or `LIVEKIT_LOG_LEVEL=DEBUG`.
 - STT defaults to LiveKit Inference model strings (for example `deepgram/nova-3`) to avoid direct Deepgram auth errors.
-- Optional direct-Deepgram mode for runtime keyterm updates: set `AB_USE_DIRECT_DEEPGRAM=1` and provide a valid Deepgram API key.
+- The A/B test uses the `src` pipeline (load_encoder, VectorIndex.load_shared_index, predict_terms) and direct Deepgram STT with keyterm injection. Default max_terms is 20.
 
 ### Start the worker
 
@@ -257,7 +275,7 @@ python production/livekit_ab_test.py dial --call-to "+15555551234"
 python production/livekit_ab_test.py dial \
   --call-to "+15555551234" \
   --inject-priors \
-  --model-dir "models/retrieval_minilm_l3_user_only_20260211_001736"
+  # --model-dir optional; defaults to path preloaded by worker
 ```
 
 Call artifacts are written to `outputs/live_ab_transcripts/` by default:
@@ -268,6 +286,7 @@ Call artifacts are written to `outputs/live_ab_transcripts/` by default:
 - `.vtt` captions (from turn events)
 - `.srt` captions (for VLC/Premiere/other players)
 - `.player.html` local playback page (audio + captions)
+- `.vlc.m3u` playlist that auto-loads `.srt` in VLC
 
 Example outputs per call:
 - `20260222T154229Z__ab-...__inject_off.json`
@@ -275,3 +294,13 @@ Example outputs per call:
 - `20260222T154229Z__ab-...__inject_off.vtt`
 - `20260222T154229Z__ab-...__inject_off.srt`
 - `20260222T154229Z__ab-...__inject_off.player.html`
+- `20260222T154229Z__ab-...__inject_off.vlc.m3u`
+
+Caption sync tips:
+- If captions appear early, increase `--caption-offset-seconds` (default `1.8`).
+- If captions appear late, decrease it.
+- Subtitle timing is automatically normalized to recorded audio duration when available.
+- `.player.html` now shows the full transcript and highlights the currently spoken line.
+
+Injection note:
+- The worker preloads the encoder + index at startup; you do not need to pass the model location when dialing.

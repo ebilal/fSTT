@@ -66,6 +66,78 @@ def filter_stopwords(terms: List[str]) -> List[str]:
     return out
 
 
+# Substrings that indicate venue/business names (biases Deepgram to mishear).
+_MISLEADING_SUBSTRINGS = (
+    "restaurant",
+    "noodle bar",
+    " bar",
+)
+
+# Person names and other-domain terms that degrade food-order transcription.
+_BLOCKED_WORDS = frozenset({
+    # Common first/last names (injecting biases Deepgram to mishear real names)
+    "jim", "mary", "steve", "john", "mike", "david", "sarah", "bob", "johnson",
+    "smith", "chen", "wong", "yongmei", "allen", "bell", "tom", "jane", "sir",
+    "james", "nicholas", "martin", "benjamin", "george", "iris", "walter",
+    "madison", "jenny", "clinton", "daniel", "patrick", "kevin", "jason",
+    "paula", "paul", "lucy", "charles", "lee", "peter", "claire", "linda",
+    "donald", "alex", "sam", "chris", "mark", "ryan", "nick", "lisa",
+    "mac", "barbara", "bradley", "henry", "joann", "obama", "kelly",
+    # Other domains (train, taxi, hotel, cinema, hospital)
+    "taxi", "train", "trains", "departing", "leaving", "hotel", "cinema",
+    "cineworld", "hospital", "appointment", "postcode", "reference", "booking",
+    # Address fragments / places
+    "riverside", "wilton", "cambridge", "tokyo",
+})
+
+# Pattern: mostly digits (phone numbers, IDs)
+_RE_MOSTLY_DIGITS = re.compile(r"^[\d\s\-:\.]+$")
+# Pattern: alphanumeric code (postcodes, ref IDs: cb21ad, v5weda1v)
+_RE_CODE_LIKE = re.compile(r"^[a-z0-9]{5,12}$", re.I)
+
+
+def _looks_like_code(term: str) -> bool:
+    """True if term looks like a postcode, ref ID, or similar."""
+    t = term.strip()
+    if len(t) < 5:
+        return False
+    # All digits with optional separators = phone/time
+    if _RE_MOSTLY_DIGITS.match(t.replace(" ", "").replace("-", "").replace(":", "")):
+        return True
+    # Short alphanumeric = postcode or ref
+    if _RE_CODE_LIKE.match(t) and sum(c.isdigit() for c in t) >= 1:
+        return True
+    return False
+
+
+def filter_misleading_terms(terms: List[str]) -> List[str]:
+    """Exclude terms that could bias Deepgram toward wrong words."""
+    out: List[str] = []
+    for term in terms:
+        lower = term.lower().strip()
+        if not lower:
+            continue
+        # Venue-name substrings
+        if any(sub in lower for sub in _MISLEADING_SUBSTRINGS):
+            continue
+        # Blocked words (names, other-domain)
+        if lower in _BLOCKED_WORDS:
+            continue
+        # Multi-word: block if every word is blocked
+        words = lower.split()
+        if words and all(w in _BLOCKED_WORDS for w in words):
+            continue
+        # Phone numbers, postcodes, reference codes
+        if _looks_like_code(term):
+            continue
+        # Title-Case multi-word (proper nouns)
+        title_words = term.split()
+        if len(title_words) >= 2 and all(w and w[0].isupper() for w in title_words):
+            continue
+        out.append(term)
+    return out
+
+
 def interleave(a: List[str], b: List[str]) -> List[str]:
     """Interleave two lists, deduplicating by lowercase, preserving order."""
     result: List[str] = []
@@ -113,6 +185,7 @@ def predict_terms(
     history_text: str,
     topk: int = DEFAULT_TOPK,
     max_terms: int = DEFAULT_MAX_TERMS,
+    inject_mode: str = "both",
 ) -> List[str]:
     """Core prediction function.
 
@@ -120,8 +193,11 @@ def predict_terms(
     2. Retrieve top-K candidates from the shared index.
     3. Parse keywords and keyterms from each candidate.
     4. Filter stopwords from both lists.
-    5. Interleave keywords + keyterms.
+    5. Select by inject_mode: "keyterms" | "keywords" | "both" (interleaved).
     6. Return the top ``max_terms`` (capped at Deepgram's 100 limit).
+
+    Deepgram uses the ``keyterm`` parameter for both; this switch controls what
+    we pass into it (keywords only, keyterms only, or interleaved both).
 
     Returns a flat list of terms ready to pass as Deepgram ``keyterm`` params.
     """
@@ -150,9 +226,18 @@ def predict_terms(
 
     clean_kw = filter_stopwords(all_keywords)
     clean_kt = filter_stopwords(all_keyterms)
+    clean_kw = filter_misleading_terms(clean_kw)
+    clean_kt = filter_misleading_terms(clean_kt)
 
-    merged = interleave(clean_kw, clean_kt)
     effective_cap = min(max_terms, DEEPGRAM_MAX_KEYTERMS)
+    mode = (inject_mode or "both").lower()
+
+    if mode == "keyterms":
+        return clean_kt[:effective_cap]
+    if mode == "keywords":
+        return clean_kw[:effective_cap]
+    # "both" (default): interleave keywords + keyterms
+    merged = interleave(clean_kw, clean_kt)
     return merged[:effective_cap]
 
 
