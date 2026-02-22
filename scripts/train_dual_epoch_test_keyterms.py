@@ -1,4 +1,5 @@
 import argparse
+import csv
 import json
 import os
 import random
@@ -22,6 +23,53 @@ from src.prior import extract_priors
 from src.index import VectorIndex
 from src.model import build_input_examples, encode_texts
 from src.utils import ensure_dir, get_device, timestamp_run_id, write_json, write_latest_pointer
+
+
+def _normalize_speaker_for_dialogs(speaker: str) -> str:
+    s = (speaker or "").strip().lower()
+    if s in {"agent", "assistant", "system", "bot", "server"}:
+        return "SYSTEM"
+    if s in {"customer", "user", "human", "client", "guest"}:
+        return "USER"
+    return "SYSTEM"
+
+
+def load_dialogs_from_csv(path: str, max_dialogs: int = 0) -> List[List[Tuple[str, str]]]:
+    """Load dialogs from a local CSV (dialog_id, utterance_id, speaker, text)."""
+    dialogs_dict: Dict[str, List[Dict[str, str]]] = {}
+    with open(path, "r", encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+        for idx, row in enumerate(reader):
+            dialog_id = (row.get("dialog_id") or "").strip()
+            if not dialog_id:
+                continue
+            text = (row.get("text") or "").strip()
+            if not text:
+                continue
+            dialogs_dict.setdefault(dialog_id, []).append({
+                "utterance_id": (row.get("utterance_id") or "").strip(),
+                "speaker": (row.get("speaker") or "").strip(),
+                "text": text,
+                "_row": idx,
+            })
+    # Sort by utterance_id (numeric when possible)
+    def _utt_key(t):
+        try:
+            return (0, int(t["utterance_id"]), t["_row"])
+        except (ValueError, TypeError):
+            return (1, str(t["utterance_id"]), t["_row"])
+
+    for turns in dialogs_dict.values():
+        turns.sort(key=_utt_key)
+    # Convert to List[List[RoleTurn]]
+    result: List[List[Tuple[str, str]]] = []
+    for did in sorted(dialogs_dict.keys(), key=str):
+        turns = dialogs_dict[did]
+        role_turns = [(_normalize_speaker_for_dialogs(t["speaker"]), t["text"]) for t in turns]
+        result.append(role_turns)
+        if max_dialogs and len(result) >= max_dialogs:
+            break
+    return result
 
 
 def _split_examples(
@@ -334,7 +382,13 @@ def _eval_keyterm_retrieval(
 def main() -> None:
     p = argparse.ArgumentParser(description="Colab-friendly dual-dataset training optimized for keyterm prediction")
     p.add_argument("--output_dir", type=str, default=None)
-
+    p.add_argument(
+        "--local_csv",
+        type=str,
+        default=None,
+        help="Path to local CSV (dialog_id, utterance_id, speaker, text). If set, trains only on this; skips MultiWOZ/DailyDialog.",
+    )
+    p.add_argument("--max_dialogs_local", type=int, default=0, help="Max dialogs from local_csv (0 = all)")
     p.add_argument("--max_dialogs_multiwoz", type=int, default=8437)
     p.add_argument("--max_dialogs_dailydialog", type=int, default=11118)
     p.add_argument("--history_turns", type=int, default=6)
@@ -377,16 +431,30 @@ def main() -> None:
     if device.startswith("cuda") and torch.cuda.is_available():
         torch.cuda.manual_seed_all(args.seed)
 
-    print("Loading dialogs...")
-    mw_train = load_dialogs("multiwoz", split="train", max_dialogs=args.max_dialogs_multiwoz)
-    dd_train = load_dialogs("dailydialog", split="train", max_dialogs=args.max_dialogs_dailydialog)
-
-    print("Building keyterm examples...")
-    mw_ex = build_keyterm_examples(mw_train, history_turns=args.history_turns, target_role=args.target_role, 
-                                   max_keywords=args.max_keywords, max_keyterms=args.max_keyterms)
-    dd_ex = build_keyterm_examples(dd_train, history_turns=args.history_turns, target_role=args.target_role,
-                                   max_keywords=args.max_keywords, max_keyterms=args.max_keyterms)
-    examples: List[Dict] = mw_ex + dd_ex
+    examples: List[Dict] = []
+    if args.local_csv:
+        if not os.path.exists(args.local_csv):
+            raise FileNotFoundError(f"Local CSV not found: {args.local_csv}")
+        print(f"Loading dialogs from local CSV: {args.local_csv}")
+        local_dialogs = load_dialogs_from_csv(args.local_csv, max_dialogs=args.max_dialogs_local)
+        print(f"Loaded {len(local_dialogs)} dialogs from local CSV")
+        examples = build_keyterm_examples(
+            local_dialogs,
+            history_turns=args.history_turns,
+            target_role=args.target_role,
+            max_keywords=args.max_keywords,
+            max_keyterms=args.max_keyterms,
+        )
+    else:
+        print("Loading dialogs from Hugging Face (MultiWOZ + DailyDialog)...")
+        mw_train = load_dialogs("multiwoz", split="train", max_dialogs=args.max_dialogs_multiwoz)
+        dd_train = load_dialogs("dailydialog", split="train", max_dialogs=args.max_dialogs_dailydialog)
+        print("Building keyterm examples...")
+        mw_ex = build_keyterm_examples(mw_train, history_turns=args.history_turns, target_role=args.target_role,
+                                       max_keywords=args.max_keywords, max_keyterms=args.max_keyterms)
+        dd_ex = build_keyterm_examples(dd_train, history_turns=args.history_turns, target_role=args.target_role,
+                                       max_keywords=args.max_keywords, max_keyterms=args.max_keyterms)
+        examples = mw_ex + dd_ex
 
     train_examples, val_examples, test_examples = _split_examples(
         examples, seed=args.seed, val_ratio=args.val_ratio, test_ratio=args.test_ratio
@@ -404,17 +472,22 @@ def main() -> None:
     write_examples_jsonl(examples_path, val_examples, split="val")
     write_examples_jsonl(examples_path, test_examples, split="test")
 
+    metadata_sources = (
+        {"local_csv": args.local_csv, "max_dialogs_local": args.max_dialogs_local}
+        if args.local_csv
+        else {
+            "multiwoz_repo": "pfb30/multi_woz_v22",
+            "dailydialog_repo": "roskoN/dailydialog",
+            "max_dialogs_multiwoz": args.max_dialogs_multiwoz,
+            "max_dialogs_dailydialog": args.max_dialogs_dailydialog,
+        }
+    )
     write_json(
         os.path.join(output_dir, "metadata.json"),
         {
-            "dataset": "combined",
+            "dataset": "local" if args.local_csv else "combined",
             "optimization_goal": "keyterm_prediction",
-            "sources": {
-                "multiwoz_repo": "pfb30/multi_woz_v22",
-                "dailydialog_repo": "roskoN/dailydialog",
-            },
-            "max_dialogs_multiwoz": args.max_dialogs_multiwoz,
-            "max_dialogs_dailydialog": args.max_dialogs_dailydialog,
+            "sources": metadata_sources,
             "history_turns": args.history_turns,
             "target_role": args.target_role,
             "max_keywords": args.max_keywords,
