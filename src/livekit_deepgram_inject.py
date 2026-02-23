@@ -139,6 +139,27 @@ def filter_misleading_terms(terms: List[str]) -> List[str]:
     return out
 
 
+def extract_explicit_options_from_utterance(text: str) -> List[str]:
+    """Extract menu-option-like terms from agent text for keyterm injection.
+
+    When the agent says "we have chicken pork shrimp and vegetable lo mein",
+    the user will likely say one of those next. Extracting them ensures they
+    get injected regardless of retrieval results.
+    """
+    if not text or not isinstance(text, str):
+        return []
+    words = re.findall(r"[a-zA-Z0-9']+", text)
+    seen: set = set()
+    out: List[str] = []
+    for w in words:
+        if len(w) >= 2 and w.lower() not in _STOPWORDS and not _looks_like_code(w):
+            key = w.lower()
+            if key not in seen:
+                seen.add(key)
+                out.append(w)
+    return filter_misleading_terms(out)
+
+
 def interleave(a: List[str], b: List[str]) -> List[str]:
     """Interleave two lists, deduplicating by lowercase, preserving order."""
     result: List[str] = []

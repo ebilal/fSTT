@@ -1,12 +1,12 @@
 """
-Simple live A/B calling test for Deepgram keyterm injection.
+Simple live A/B calling test for Deepgram keyword injection.
 
 This script supports two modes:
 1) worker: starts a LiveKit telephony agent worker
 2) dial: creates an outbound call job (dispatch + SIP participant)
 
 Use this to compare:
-- A: Deepgram STT with retrieval-based keyterm injection enabled
+- A: Deepgram STT with retrieval-based keyword injection enabled
 - B: Deepgram STT with injection disabled
 """
 
@@ -52,17 +52,18 @@ DEFAULT_TTS_MODEL = "cartesia/sonic-3"
 DEFAULT_CAPTION_OFFSET_SECONDS = 1.8
 DEFAULT_PREDICTOR_LOAD_TIMEOUT_SECONDS = 20.0
 # Default model dir for preloading (relative to project root, parent of production/)
-DEFAULT_MODEL_DIR = "models/retrieval_local_restaurant_type_20260223_012742"
+DEFAULT_MODEL_DIR = "models/retrieval_local_restaurant_type_20260223_134013"
 DEFAULT_MAX_TERMS = 50
-DEFAULT_TOPK = 10
-# What to inject into Deepgram keyterm param: "keyterms" | "keywords" | "both"
+DEFAULT_TOPK = 50
+# Keywords-only (models trained with colab_train_retrieval_local_restaurant_type)
 INJECT_MODE = "keywords"
-# Max conversation turns to include in keyterm forecast input (override via metadata history_turns).
+# Max conversation turns to include in keyword forecast input (override via metadata history_turns).
 # We forecast terms the user might say next, before they speak.
 DEFAULT_HISTORY_TURNS = 4
 # Restaurant type for models trained with colab_train_retrieval_local_restaurant_type.
-# When set, history is prefixed with "Restaurant type: X\n\n". When None, no prefix (backward compat).
-DEFAULT_RESTAURANT_TYPE = "chinese"
+# Must match a type in the training CSV exactly (e.g. chinese_american, thai, greek, ramen).
+# The training data has NO plain "chinese"; use "chinese_american" for Chinese cuisine.
+DEFAULT_RESTAURANT_TYPE = "chinese_american"
 # Seconds to wait after callee joins before greeting (lets audio path establish)
 GREETING_DELAY_SECONDS = 1.2
 
@@ -81,7 +82,7 @@ def _apply_default_env() -> None:
     os.environ.setdefault("LIVEKIT_API_KEY", DEFAULT_LIVEKIT_API_KEY)
     os.environ.setdefault("LIVEKIT_API_SECRET", DEFAULT_LIVEKIT_API_SECRET)
     os.environ.setdefault("LIVEKIT_SIP_TRUNK_ID_OUTBOUND", DEFAULT_SIP_TRUNK_ID)
-    # Direct Deepgram mode for keyterm injection; use hardcoded key.
+    # Direct Deepgram mode for keyword injection; use hardcoded key.
     os.environ.setdefault("DEEPGRAM_API_KEY", DEFAULT_DEEPGRAM_API_KEY)
     # Reduce noisy worker telemetry unless explicitly overridden by user.
     os.environ.setdefault("LIVEKIT_LOG_LEVEL", "WARNING")
@@ -654,7 +655,7 @@ async def _worker_entrypoint(ctx: JobContext) -> None:
         text = _coerce_text(getattr(item, "content", None))
         recorder.add_turn(role, text)
 
-        # Only forecast keyterms when SYSTEM spoke (user's next turn is coming).
+        # Only forecast keywords when SYSTEM spoke (user's next turn is coming).
         # We don't know what the user will say yet—we forecast terms to bias transcription.
         # Forecasting on USER turn would use history without the system's reply yet.
         if role != "SYSTEM":
@@ -670,13 +671,21 @@ async def _worker_entrypoint(ctx: JobContext) -> None:
         if restaurant_type:
             history = f"Restaurant type: {restaurant_type}\n\n{history}"
         try:
-            from src.livekit_deepgram_inject import predict_terms
+            from src.livekit_deepgram_inject import predict_terms, extract_explicit_options_from_utterance
 
             terms = predict_terms(
                 encoder, index, history,
                 topk=topk, max_terms=max_terms,
                 inject_mode=INJECT_MODE,
             )
+            # Prepend explicit options from the agent's last utterance (e.g. "chicken pork
+            # shrimp" when agent said "we have chicken pork shrimp and vegetable lo mein").
+            # Retrieval can miss these; extracting them ensures they are always injected.
+            explicit = extract_explicit_options_from_utterance(text)
+            if explicit:
+                explicit_set = {t.lower() for t in explicit}
+                terms = explicit + [t for t in terms if t.lower() not in explicit_set]
+            terms = terms[:max_terms]
         except Exception as exc:
             recorder.add_event("prior_prediction_error", {"error": str(exc)})
             return
@@ -684,7 +693,7 @@ async def _worker_entrypoint(ctx: JobContext) -> None:
         if hasattr(stt, "update_options"):
             stt.update_options(keyterm=terms)
         recorder.log_terms(terms, history)
-        recorder.add_event("deepgram_keyterm_update", {"count": len(terms), "terms": terms})
+        recorder.add_event("deepgram_keyword_update", {"count": len(terms), "terms": terms})
 
     await session.start(
         agent=agent,
@@ -869,26 +878,27 @@ def _parser() -> argparse.ArgumentParser:
     dial.add_argument(
         "--inject-priors",
         action="store_true",
-        help="Enable retrieval-based keyterm injection",
+        help="Enable retrieval-based keyword injection",
     )
     dial.add_argument(
         "--model-dir",
         default=os.getenv("FSTT_MODEL_DIR", _default_model_dir()),
         help="Model dir for injection (optional; defaults to same path preloaded by worker)",
     )
-    dial.add_argument("--max-terms", type=int, default=DEFAULT_MAX_TERMS, help="Max Deepgram keyterms")
+    dial.add_argument("--max-terms", type=int, default=DEFAULT_MAX_TERMS, help="Max keywords to inject")
     dial.add_argument("--topk", type=int, default=DEFAULT_TOPK, help="Top-k retrieval depth")
     dial.add_argument(
         "--history-turns",
         type=int,
         default=DEFAULT_HISTORY_TURNS,
-        help="Max conversation turns for keyterm forecast input",
+        help="Max conversation turns for keyword forecast input",
     )
     dial.add_argument(
         "--restaurant-type",
         type=str,
         default=None,
-        help="Restaurant type for models trained with restaurant_type (e.g. Chinese, Japanese)",
+        help="Restaurant type for models trained with restaurant_type. Must match CSV exactly "
+        "(e.g. chinese_american, thai, greek, ramen, vietnamese, korean).",
     )
     dial.add_argument(
         "--output-dir",
