@@ -63,7 +63,7 @@ DEFAULT_HISTORY_TURNS = 4
 # Restaurant type for models trained with colab_train_retrieval_local_restaurant_type.
 # Must match a type in the training CSV exactly (e.g. chinese_american, thai, greek, ramen).
 # The training data has NO plain "chinese"; use "chinese_american" for Chinese cuisine.
-DEFAULT_RESTAURANT_TYPE = "chinese_american"
+DEFAULT_RESTAURANT_TYPE = "chinese" # asian_fusion
 # Seconds to wait after callee joins before greeting (lets audio path establish)
 GREETING_DELAY_SECONDS = 1.2
 
