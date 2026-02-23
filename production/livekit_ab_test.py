@@ -52,7 +52,7 @@ DEFAULT_TTS_MODEL = "cartesia/sonic-3"
 DEFAULT_CAPTION_OFFSET_SECONDS = 1.8
 DEFAULT_PREDICTOR_LOAD_TIMEOUT_SECONDS = 20.0
 # Default model dir for preloading (relative to project root, parent of production/)
-DEFAULT_MODEL_DIR = "models/retrieval_local_restaurant_type_20260223_134013"
+DEFAULT_MODEL_DIR = "models/retrieval_local_restaurant_type_20260223_181516"
 DEFAULT_MAX_TERMS = 50
 DEFAULT_TOPK = 50
 # Keywords-only (models trained with colab_train_retrieval_local_restaurant_type)
@@ -63,7 +63,7 @@ DEFAULT_HISTORY_TURNS = 4
 # Restaurant type for models trained with colab_train_retrieval_local_restaurant_type.
 # Must match a type in the training CSV exactly (e.g. chinese_american, thai, greek, ramen).
 # The training data has NO plain "chinese"; use "chinese_american" for Chinese cuisine.
-DEFAULT_RESTAURANT_TYPE = "chinese" # asian_fusion
+DEFAULT_RESTAURANT_TYPE = "asian_fusion" # asian_fusion, chinese
 # Seconds to wait after callee joins before greeting (lets audio path establish)
 GREETING_DELAY_SECONDS = 1.2
 
