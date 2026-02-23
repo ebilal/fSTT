@@ -43,7 +43,8 @@ _STOPWORDS = frozenset(
     "you your yours yourself yourselves yay nope think believe need come comes came nice good going go "
     "got know let's look looks make makes much really right see take tell thing things thought try um uh "
     "one two three four five six seven eight nine ten also already actually maybe probably still another "
-    "something anything hi hey hello bye sorry wait hang adding order pickup delivery".split()
+    "something anything hi hey hello bye sorry wait hang adding order pickup delivery "
+    "alright place real quick ope wanna ma worries gonna gotta kinda sorta yep yup first fast".split()
 )
 
 # Deepgram documents a maximum of 100 keyterms per request.

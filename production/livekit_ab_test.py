@@ -52,16 +52,17 @@ DEFAULT_TTS_MODEL = "cartesia/sonic-3"
 DEFAULT_CAPTION_OFFSET_SECONDS = 1.8
 DEFAULT_PREDICTOR_LOAD_TIMEOUT_SECONDS = 20.0
 # Default model dir for preloading (relative to project root, parent of production/)
-DEFAULT_MODEL_DIR = "models/retrieval_local_only_20260222_194807"
+DEFAULT_MODEL_DIR = "models/retrieval_local_restaurant_type_20260223_012742"
 DEFAULT_MAX_TERMS = 50
+DEFAULT_TOPK = 10
 # What to inject into Deepgram keyterm param: "keyterms" | "keywords" | "both"
-INJECT_MODE = "both"
+INJECT_MODE = "keywords"
 # Max conversation turns to include in keyterm forecast input (override via metadata history_turns).
 # We forecast terms the user might say next, before they speak.
 DEFAULT_HISTORY_TURNS = 4
 # Restaurant type for models trained with colab_train_retrieval_local_restaurant_type.
 # When set, history is prefixed with "Restaurant type: X\n\n". When None, no prefix (backward compat).
-DEFAULT_RESTAURANT_TYPE: str | None = None
+DEFAULT_RESTAURANT_TYPE = "chinese"
 # Seconds to wait after callee joins before greeting (lets audio path establish)
 GREETING_DELAY_SECONDS = 1.2
 
@@ -579,7 +580,7 @@ async def _worker_entrypoint(ctx: JobContext) -> None:
     greeting = str(metadata.get("greeting", DEFAULT_GREETING))
     model_dir = metadata.get("model_dir")
     max_terms = int(metadata.get("max_terms", DEFAULT_MAX_TERMS))
-    topk = int(metadata.get("topk", 30))
+    topk = int(metadata.get("topk", DEFAULT_TOPK))
     history_turns = int(metadata.get("history_turns", DEFAULT_HISTORY_TURNS))
     restaurant_type = metadata.get("restaurant_type", DEFAULT_RESTAURANT_TYPE)
     if isinstance(restaurant_type, str):
@@ -876,7 +877,7 @@ def _parser() -> argparse.ArgumentParser:
         help="Model dir for injection (optional; defaults to same path preloaded by worker)",
     )
     dial.add_argument("--max-terms", type=int, default=DEFAULT_MAX_TERMS, help="Max Deepgram keyterms")
-    dial.add_argument("--topk", type=int, default=30, help="Top-k retrieval depth")
+    dial.add_argument("--topk", type=int, default=DEFAULT_TOPK, help="Top-k retrieval depth")
     dial.add_argument(
         "--history-turns",
         type=int,
