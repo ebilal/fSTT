@@ -52,10 +52,16 @@ DEFAULT_TTS_MODEL = "cartesia/sonic-3"
 DEFAULT_CAPTION_OFFSET_SECONDS = 1.8
 DEFAULT_PREDICTOR_LOAD_TIMEOUT_SECONDS = 20.0
 # Default model dir for preloading (relative to project root, parent of production/)
-DEFAULT_MODEL_DIR = "models/retrieval_minilm_l3_user_only_20260211_001736"
-DEFAULT_MAX_TERMS = 10
+DEFAULT_MODEL_DIR = "models/retrieval_local_only_20260222_194807"
+DEFAULT_MAX_TERMS = 50
 # What to inject into Deepgram keyterm param: "keyterms" | "keywords" | "both"
 INJECT_MODE = "both"
+# Max conversation turns to include in keyterm forecast input (override via metadata history_turns).
+# We forecast terms the user might say next, before they speak.
+DEFAULT_HISTORY_TURNS = 4
+# Restaurant type for models trained with colab_train_retrieval_local_restaurant_type.
+# When set, history is prefixed with "Restaurant type: X\n\n". When None, no prefix (backward compat).
+DEFAULT_RESTAURANT_TYPE: str | None = None
 # Seconds to wait after callee joins before greeting (lets audio path establish)
 GREETING_DELAY_SECONDS = 1.2
 
@@ -574,6 +580,10 @@ async def _worker_entrypoint(ctx: JobContext) -> None:
     model_dir = metadata.get("model_dir")
     max_terms = int(metadata.get("max_terms", DEFAULT_MAX_TERMS))
     topk = int(metadata.get("topk", 30))
+    history_turns = int(metadata.get("history_turns", DEFAULT_HISTORY_TURNS))
+    restaurant_type = metadata.get("restaurant_type", DEFAULT_RESTAURANT_TYPE)
+    if isinstance(restaurant_type, str):
+        restaurant_type = restaurant_type.strip() or None
     sip_identity = str(metadata.get("sip_participant_identity", "")).strip() or None
     max_call_seconds = int(metadata.get("max_call_seconds", 900))
     caption_offset_seconds = float(
@@ -638,16 +648,26 @@ async def _worker_entrypoint(ctx: JobContext) -> None:
     @session.on("conversation_item_added")
     def _on_conversation_item_added(event) -> None:
         item = event.item
-        role = str(getattr(item, "role", "unknown"))
+        role_raw = str(getattr(item, "role", "unknown"))
+        role = _normalize_role_for_history(role_raw)  # assistant → SYSTEM, user → USER
         text = _coerce_text(getattr(item, "content", None))
         recorder.add_turn(role, text)
+
+        # Only forecast keyterms when SYSTEM spoke (user's next turn is coming).
+        # We don't know what the user will say yet—we forecast terms to bias transcription.
+        # Forecasting on USER turn would use history without the system's reply yet.
+        if role != "SYSTEM":
+            return
 
         if not inject_priors or encoder is None or index is None:
             return
 
-        history = _history_text(recorder.history_turns, max_turns=8)
+        history = _history_text(recorder.history_turns, max_turns=history_turns)
         if not history.strip():
             return
+        # Prepend restaurant type for models trained with restaurant_type input
+        if restaurant_type:
+            history = f"Restaurant type: {restaurant_type}\n\n{history}"
         try:
             from src.livekit_deepgram_inject import predict_terms
 
@@ -762,6 +782,8 @@ def _build_metadata(args: argparse.Namespace, sip_participant_identity: str) -> 
         "model_dir": args.model_dir,
         "max_terms": args.max_terms,
         "topk": args.topk,
+        "history_turns": getattr(args, "history_turns", DEFAULT_HISTORY_TURNS),
+        "restaurant_type": getattr(args, "restaurant_type", None) or None,
         "output_dir": args.output_dir,
         "greeting": args.greeting,
         "sip_participant_identity": sip_participant_identity,
@@ -855,6 +877,18 @@ def _parser() -> argparse.ArgumentParser:
     )
     dial.add_argument("--max-terms", type=int, default=DEFAULT_MAX_TERMS, help="Max Deepgram keyterms")
     dial.add_argument("--topk", type=int, default=30, help="Top-k retrieval depth")
+    dial.add_argument(
+        "--history-turns",
+        type=int,
+        default=DEFAULT_HISTORY_TURNS,
+        help="Max conversation turns for keyterm forecast input",
+    )
+    dial.add_argument(
+        "--restaurant-type",
+        type=str,
+        default=None,
+        help="Restaurant type for models trained with restaurant_type (e.g. Chinese, Japanese)",
+    )
     dial.add_argument(
         "--output-dir",
         default=DEFAULT_TRANSCRIPTS_DIR,
