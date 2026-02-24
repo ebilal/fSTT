@@ -67,6 +67,21 @@ def filter_stopwords(terms: List[str]) -> List[str]:
     return out
 
 
+def filter_easy_to_pronounce(terms: List[str]) -> List[str]:
+    """Drop words Deepgram transcribes fine without biasing (filler, slang, etc)."""
+    out: List[str] = []
+    for term in terms:
+        low = term.lower().strip()
+        if not low or len(low) < 3:
+            continue
+        if low in _EASY_TO_PRONOUNCE:
+            continue
+        if _RE_PURE_DIGITS.match(low):
+            continue
+        out.append(term)
+    return out
+
+
 # Substrings that indicate venue/business names (biases Deepgram to mishear).
 _MISLEADING_SUBSTRINGS = (
     "restaurant",
@@ -95,6 +110,22 @@ _BLOCKED_WORDS = frozenset({
 _RE_MOSTLY_DIGITS = re.compile(r"^[\d\s\-:\.]+$")
 # Pattern: alphanumeric code (postcodes, ref IDs: cb21ad, v5weda1v)
 _RE_CODE_LIKE = re.compile(r"^[a-z0-9]{5,12}$", re.I)
+# Pattern: pure digits
+_RE_PURE_DIGITS = re.compile(r"^\d+$")
+
+# Easy-to-pronounce / filler words that Deepgram transcribes fine without biasing.
+# Mirrors training notebook; extended with slang that retrieval often surfaces after greeting.
+# Biasing these wastes slots and can hurt transcription of actual menu terms.
+_EASY_TO_PRONOUNCE = frozenset(
+    (
+        "yes yeah yep yup nah nope ok okay sure mm uh um oh ah huh "
+        "hold lemme gimme wanna gotta kinda sorta mean add cup side "
+        "hmm key regular lowkey wicked man bad fixin hella guys dude super "
+        "cool awesome bet aight appreciate today ginko "
+        "one two three four five six seven eight nine ten eleven twelve "
+        "st unit com goi string "
+    ).split()
+)
 
 
 def _looks_like_code(term: str) -> bool:
@@ -250,6 +281,8 @@ def predict_terms(
     clean_kt = filter_stopwords(all_keyterms)
     clean_kw = filter_misleading_terms(clean_kw)
     clean_kt = filter_misleading_terms(clean_kt)
+    clean_kw = filter_easy_to_pronounce(clean_kw)
+    clean_kt = filter_easy_to_pronounce(clean_kt)
 
     effective_cap = min(max_terms, DEEPGRAM_MAX_KEYTERMS)
     mode = (inject_mode or "both").lower()

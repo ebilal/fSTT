@@ -52,9 +52,9 @@ DEFAULT_TTS_MODEL = "cartesia/sonic-3"
 DEFAULT_CAPTION_OFFSET_SECONDS = 1.8
 DEFAULT_PREDICTOR_LOAD_TIMEOUT_SECONDS = 20.0
 # Default model dir for preloading (relative to project root, parent of production/)
-DEFAULT_MODEL_DIR = "models/retrieval_local_restaurant_type_20260223_181516"
+DEFAULT_MODEL_DIR = "models/retrieval_local_restaurant_type_20260223_203218"
 DEFAULT_MAX_TERMS = 50
-DEFAULT_TOPK = 50
+DEFAULT_TOPK = 12
 # Keywords-only (models trained with colab_train_retrieval_local_restaurant_type)
 INJECT_MODE = "keywords"
 # Max conversation turns to include in keyword forecast input (override via metadata history_turns).
@@ -305,13 +305,13 @@ class TranscriptRecorder:
             segments.append((start_s, end_s, text))
             last_end = end_s
 
-        # If we know audio duration, gently scale timeline so final subtitle aligns.
+        # If we know audio duration, scale timeline so captions align with full audio.
         if audio_duration_seconds and audio_duration_seconds > 1.0 and segments:
             last_end = segments[-1][1]
             target_end = max(audio_duration_seconds - 0.2, 0.5)
             if last_end > 0.1:
                 ratio = target_end / last_end
-                if 0.7 <= ratio <= 1.3:
+                if 0.4 <= ratio <= 2.5:
                     scaled: list[tuple[float, float, str]] = []
                     for start_s, end_s, text in segments:
                         s = max(start_s * ratio, 0.0)
@@ -389,7 +389,20 @@ class TranscriptRecorder:
         audio_duration_seconds: float | None = None,
     ) -> Path:
         segments = self._build_segments(caption_offset_seconds, audio_duration_seconds)
-        cues_payload = [{"start": s, "end": e, "text": t} for s, e, t in segments]
+        # Use history_turns as canonical source (matches JSON); merge with segment timing.
+        transcript_items = [f"{t['role']}: {t['text']}" for t in self.history_turns]
+        cues_payload = []
+        last_end = 0.0
+        n = max(len(segments), len(transcript_items))
+        for i in range(n):
+            if i < len(segments):
+                start_s, end_s, _ = segments[i]
+                last_end = end_s
+            else:
+                start_s, end_s = last_end, last_end + 2.0
+                last_end = end_s
+            text = transcript_items[i] if i < len(transcript_items) else segments[i][2]
+            cues_payload.append({"start": start_s, "end": end_s, "text": text})
         cues_json = json.dumps(cues_payload, ensure_ascii=False)
         html = f"""<!doctype html>
 <html>
@@ -426,7 +439,7 @@ class TranscriptRecorder:
       margin-top: 14px;
       border: 1px solid #ddd;
       border-radius: 8px;
-      max-height: 320px;
+      max-height: 70vh;
       overflow: auto;
     }}
     .line {{
@@ -449,7 +462,7 @@ class TranscriptRecorder:
   <div id="controls">
     Caption offset: <input id="offset" type="range" min="-8" max="8" step="0.1" value="0"> <span id="offsetVal">0.0s</span>
   </div>
-  <div id="meta">Captions are synced from saved transcript events. Increase offset if text appears early.</div>
+  <div id="meta">Full transcript below (scroll to see all). Captions sync to playback; adjust offset if text appears early.</div>
   <div id="transcript"></div>
 
   <script>
@@ -627,11 +640,24 @@ async def _worker_entrypoint(ctx: JobContext) -> None:
                 inject_priors = False
 
     stt = _build_stt(inject_priors)
+    # Tuning to reduce "agent stops answering" after interruptions (speech scheduling gets stuck).
+    # - max_endpointing_delay: wait longer before assuming user is done; reduces agent responding
+    #   while user is still speaking -> fewer interruptions -> fewer stuck states (GitHub #3418).
+    # - false_interruption_timeout: longer wait to confirm user speech before resuming; helps on
+    #   phone calls where brief noises can falsely trigger interruption.
+    # - min_interruption_duration: slight increase to ignore very brief noises as interruptions.
     session = AgentSession(
         stt=stt,
         llm=os.getenv("LK_DIALOG_LLM_MODEL", DEFAULT_LLM_MODEL),
         tts=os.getenv("LK_TTS_MODEL", DEFAULT_TTS_MODEL),
-        max_endpointing_delay=2.0,
+        max_endpointing_delay=float(metadata.get("max_endpointing_delay", 3.5)),
+        false_interruption_timeout=float(
+            metadata.get("false_interruption_timeout", 2.5)
+        ),
+        min_interruption_duration=float(
+            metadata.get("min_interruption_duration", 0.6)
+        ),
+        resume_false_interruption=True,
     )
     agent = Agent(instructions=_build_agent_instructions())
 
