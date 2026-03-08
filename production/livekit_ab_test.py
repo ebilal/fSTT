@@ -1,19 +1,20 @@
 """
-Simple live A/B calling test for Deepgram keyword injection.
+Simple live A/C calling test for AssemblyAI STT.
 
 This script supports two modes:
 1) worker: starts a LiveKit telephony agent worker
 2) dial: creates an outbound call job (dispatch + SIP participant)
 
 Use this to compare:
-- A: Deepgram STT with retrieval-based keyword injection enabled
-- B: Deepgram STT with injection disabled
+- A: AssemblyAI STT without fixed keyterms
+- C: AssemblyAI STT with fixed keyterms enabled
 """
 
 from __future__ import annotations
 
 import argparse
 import asyncio
+import contextlib
 import json
 import logging
 import os
@@ -29,12 +30,14 @@ from typing import Any
 # Ensure project root is on path for src imports
 _SCRIPT_DIR = Path(__file__).resolve().parent
 _PROJECT_ROOT = _SCRIPT_DIR.parent
+_WORKSPACE_ROOT = _PROJECT_ROOT.parent
+_STT_BENCHMARK_ROOT = _WORKSPACE_ROOT / "stt-benchmark"
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
 from livekit import api
 from livekit.agents import Agent, AgentServer, AgentSession, JobContext, cli
-from livekit.plugins import deepgram
+from livekit.plugins import assemblyai
 
 
 DEFAULT_LIVEKIT_URL = "wss://healthbot-bfkuu2w0.livekit.cloud"
@@ -44,13 +47,13 @@ DEFAULT_AGENT_NAME = "fstt-ab-agent"
 DEFAULT_GREETING = "This is Ginko restaurant what would you like to order today"
 DEFAULT_TRANSCRIPTS_DIR = "outputs/live_ab_transcripts"
 DEFAULT_SIP_TRUNK_ID = "ST_XLdWcK2UnAUx"
-DEFAULT_STT_MODEL = "deepgram/nova-3"
-DEFAULT_STT_LANGUAGE = "en-US"
-DEFAULT_DEEPGRAM_API_KEY = "7970a96b7a1d73b9df6c0ca0a986d995f6866e10"
-DEFAULT_LLM_MODEL = "google/gemini-2.5-flash-lite"
+DEFAULT_STT_MODEL = "u3-rt-pro"
+DEFAULT_ASSEMBLYAI_API_KEY = "05aac036582e4a07b667191d1ea90a2f"
+DEFAULT_LLM_MODEL = "google/gemini-3-flash"
 DEFAULT_TTS_MODEL = "cartesia/sonic-3"
 DEFAULT_CAPTION_OFFSET_SECONDS = 1.8
 DEFAULT_PREDICTOR_LOAD_TIMEOUT_SECONDS = 20.0
+DEFAULT_FIXED_KEYTERMS_PATH = str(_PROJECT_ROOT / "examples" / "asian_rest_keyterms.json")
 # Default model dir for preloading (relative to project root, parent of production/)
 DEFAULT_MODEL_DIR = "models/retrieval_local_restaurant_type_20260223_203218"
 DEFAULT_MAX_TERMS = 50
@@ -59,7 +62,7 @@ DEFAULT_TOPK = 12
 INJECT_MODE = "keywords"
 # Max conversation turns to include in keyword forecast input (override via metadata history_turns).
 # We forecast terms the user might say next, before they speak.
-DEFAULT_HISTORY_TURNS = 4
+DEFAULT_HISTORY_TURNS = 8
 # Restaurant type for models trained with colab_train_retrieval_local_restaurant_type.
 # Must match a type in the training CSV exactly (e.g. chinese_american, thai, greek, ramen).
 # The training data has NO plain "chinese"; use "chinese_american" for Chinese cuisine.
@@ -76,14 +79,57 @@ def _default_model_dir() -> str:
     return str(root / DEFAULT_MODEL_DIR)
 
 
+def _load_env_value(path: Path, key: str) -> str:
+    if not path.is_file():
+        return ""
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        if raw.startswith(f"{key}="):
+            return raw.split("=", 1)[1].strip()
+    return ""
+
+
+def _default_assemblyai_api_key() -> str:
+    shared_key = _load_env_value(_STT_BENCHMARK_ROOT / ".env", "ASSEMBLYAI_API_KEY")
+    return shared_key or DEFAULT_ASSEMBLYAI_API_KEY
+
+
+def _load_fixed_keyterms(path: str, *, max_terms: int | None = None) -> list[str]:
+    keyterms_path = Path(path).expanduser()
+    payload = json.loads(keyterms_path.read_text(encoding="utf-8"))
+    if isinstance(payload, list):
+        raw_terms = payload
+    elif isinstance(payload, dict):
+        raw_terms = payload.get("keyterms", [])
+    else:
+        raise ValueError(f"Unexpected keyterms format in {keyterms_path}")
+
+    deduped: list[str] = []
+    seen: set[str] = set()
+    for term in raw_terms:
+        text = str(term).strip()
+        lowered = text.lower()
+        if not text or lowered in seen:
+            continue
+        seen.add(lowered)
+        deduped.append(text)
+
+    if not deduped:
+        raise ValueError(f"Fixed keyterms list is empty: {keyterms_path}")
+
+    if max_terms is None:
+        return deduped
+    if max_terms <= 0:
+        raise ValueError(f"max_terms must be > 0, got {max_terms}")
+    return deduped[:max_terms]
+
+
 def _apply_default_env() -> None:
     # Let users override these, but make your shared defaults work out-of-the-box.
     os.environ.setdefault("LIVEKIT_URL", DEFAULT_LIVEKIT_URL)
     os.environ.setdefault("LIVEKIT_API_KEY", DEFAULT_LIVEKIT_API_KEY)
     os.environ.setdefault("LIVEKIT_API_SECRET", DEFAULT_LIVEKIT_API_SECRET)
     os.environ.setdefault("LIVEKIT_SIP_TRUNK_ID_OUTBOUND", DEFAULT_SIP_TRUNK_ID)
-    # Direct Deepgram mode for keyword injection; use hardcoded key.
-    os.environ.setdefault("DEEPGRAM_API_KEY", DEFAULT_DEEPGRAM_API_KEY)
+    os.environ.setdefault("ASSEMBLYAI_API_KEY", _default_assemblyai_api_key())
     # Reduce noisy worker telemetry unless explicitly overridden by user.
     os.environ.setdefault("LIVEKIT_LOG_LEVEL", "WARNING")
 
@@ -106,10 +152,48 @@ def _suppress_noisy_logs(record: logging.LogRecord) -> bool:
 def _configure_logging() -> None:
     level_name = os.getenv("LIVEKIT_LOG_LEVEL", "WARNING").upper()
     level = getattr(logging, level_name, logging.WARNING)
-    for name in ("livekit", "livekit.agents", "livekit.api", "opentelemetry.exporter.otlp.proto.http._log_exporter"):
+    noisy_logger_names = (
+        "livekit",
+        "livekit.agents",
+        "livekit.api",
+        "livekit.plugins",
+        "opentelemetry",
+        "opentelemetry.exporter",
+        "opentelemetry.exporter.otlp",
+        "opentelemetry.exporter.otlp.proto.http",
+        "opentelemetry.exporter.otlp.proto.http._log_exporter",
+    )
+    for name in noisy_logger_names:
         logger = logging.getLogger(name)
         logger.setLevel(level)
         logger.addFilter(_suppress_noisy_logs)
+        for handler in logger.handlers:
+            handler.addFilter(_suppress_noisy_logs)
+
+    root_logger = logging.getLogger()
+    root_logger.addFilter(_suppress_noisy_logs)
+    for handler in root_logger.handlers:
+        handler.addFilter(_suppress_noisy_logs)
+
+
+def _disable_livekit_cloud_uploads() -> None:
+    async def _noop_upload_session_report(**kwargs: Any) -> None:
+        return None
+
+    def _noop_setup_cloud_tracer(**kwargs: Any) -> None:
+        return None
+
+    try:
+        from livekit.agents import job as lk_job
+        from livekit.agents.telemetry import traces as lk_traces
+
+        lk_job._upload_session_report = _noop_upload_session_report
+        lk_job._setup_cloud_tracer = _noop_setup_cloud_tracer
+        lk_traces._upload_session_report = _noop_upload_session_report
+        lk_traces._setup_cloud_tracer = _noop_setup_cloud_tracer
+    except Exception:
+        # Keep startup resilient if LiveKit internals change.
+        pass
 
 
 def _utc_now() -> str:
@@ -563,25 +647,27 @@ def _build_agent_instructions() -> str:
     return (
         "You are taking phone orders for a Chinese restaurant. "
         "Keep replies short and natural for a phone call. "
-        "Ask clarifying questions only when needed. "
-        "Confirm the order details before ending."
+        "If the customer's request is unclear, inconsistent, or likely mistranscribed, ask a short clarifying question. "
+        "If the text seems garbled or low confidence, ask the customer to repeat the item. "
+        "Track the order carefully. "
+        "Before finishing, repeat the full order clearly and ask the customer to confirm it is correct."
     )
 
 
-def _build_stt(use_injection: bool):
-    if use_injection:
-        return deepgram.STT(
-            model="nova-3",
-            language=os.getenv("LK_STT_LANGUAGE", DEFAULT_STT_LANGUAGE),
-            punctuate=True,
-            smart_format=True,
-            interim_results=True,
-            keyterm=[],
-        )
-    return os.getenv("LK_STT_MODEL", DEFAULT_STT_MODEL)
+def _build_stt(use_injection: bool, *, speech_model: str, fixed_terms: list[str]) -> assemblyai.STT:
+    kwargs: dict[str, Any] = {
+        "api_key": os.getenv("ASSEMBLYAI_API_KEY", _default_assemblyai_api_key()),
+        "model": speech_model,
+        "format_turns": True,
+    }
+    if use_injection and fixed_terms:
+        kwargs["keyterms_prompt"] = fixed_terms
+    return assemblyai.STT(**kwargs)
 
 
 async def _worker_entrypoint(ctx: JobContext) -> None:
+    _disable_livekit_cloud_uploads()
+
     metadata_raw = getattr(ctx.job, "metadata", "") or "{}"
     try:
         metadata = json.loads(metadata_raw)
@@ -592,18 +678,14 @@ async def _worker_entrypoint(ctx: JobContext) -> None:
     call_to = str(metadata.get("call_to", "unknown"))
     output_dir = Path(str(metadata.get("output_dir", DEFAULT_TRANSCRIPTS_DIR)))
     greeting = str(metadata.get("greeting", DEFAULT_GREETING))
-    model_dir = metadata.get("model_dir")
-    max_terms = int(metadata.get("max_terms", DEFAULT_MAX_TERMS))
-    topk = int(metadata.get("topk", DEFAULT_TOPK))
-    history_turns = int(metadata.get("history_turns", DEFAULT_HISTORY_TURNS))
-    restaurant_type = metadata.get("restaurant_type", DEFAULT_RESTAURANT_TYPE)
-    if isinstance(restaurant_type, str):
-        restaurant_type = restaurant_type.strip() or None
     sip_identity = str(metadata.get("sip_participant_identity", "")).strip() or None
     max_call_seconds = int(metadata.get("max_call_seconds", 900))
     caption_offset_seconds = float(
         metadata.get("caption_offset_seconds", DEFAULT_CAPTION_OFFSET_SECONDS)
     )
+    speech_model = str(metadata.get("assemblyai_speech_model", DEFAULT_STT_MODEL))
+    fixed_keyterms_path = str(metadata.get("fixed_keyterms_path", DEFAULT_FIXED_KEYTERMS_PATH))
+    max_keyterms = int(metadata.get("assemblyai_max_keyterms", DEFAULT_MAX_TERMS))
 
     recorder = TranscriptRecorder(
         room_name=ctx.room.name,
@@ -612,40 +694,47 @@ async def _worker_entrypoint(ctx: JobContext) -> None:
         output_dir=output_dir,
     )
 
-    encoder, index = None, None
+    fixed_terms: list[str] = []
     if inject_priors:
-        if not model_dir:
-            recorder.add_event(
-                "warning",
-                {"message": "inject_priors=true but model_dir missing; disabling injection"},
-            )
-            inject_priors = False
-        else:
-            timeout_s = float(
-                metadata.get("predictor_load_timeout_seconds", DEFAULT_PREDICTOR_LOAD_TIMEOUT_SECONDS)
-            )
-            try:
-                encoder, index = await asyncio.wait_for(
-                    asyncio.to_thread(_load_encoder_index_cached, str(model_dir)),
-                    timeout=timeout_s,
-                )
-            except Exception as exc:
+        try:
+            all_fixed_terms = _load_fixed_keyterms(fixed_keyterms_path)
+            fixed_terms = all_fixed_terms[:max_keyterms]
+            if len(fixed_terms) < len(all_fixed_terms):
                 recorder.add_event(
                     "warning",
                     {
-                        "message": "encoder+index load failed or timed out; disabling injection for this call",
-                        "error": str(exc),
+                        "message": "fixed keyterms prompt truncated to keep AssemblyAI websocket stable",
+                        "configured_count": len(all_fixed_terms),
+                        "used_count": len(fixed_terms),
+                        "max_keyterms": max_keyterms,
                     },
                 )
-                inject_priors = False
+        except Exception as exc:
+            recorder.add_event(
+                "warning",
+                {
+                    "message": "fixed keyterms load failed; disabling injection for this call",
+                    "error": str(exc),
+                },
+            )
+            inject_priors = False
 
-    stt = _build_stt(inject_priors)
-    # Tuning to reduce "agent stops answering" after interruptions (speech scheduling gets stuck).
-    # - max_endpointing_delay: wait longer before assuming user is done; reduces agent responding
-    #   while user is still speaking -> fewer interruptions -> fewer stuck states (GitHub #3418).
-    # - false_interruption_timeout: longer wait to confirm user speech before resuming; helps on
-    #   phone calls where brief noises can falsely trigger interruption.
-    # - min_interruption_duration: slight increase to ignore very brief noises as interruptions.
+    stt = _build_stt(inject_priors, speech_model=speech_model, fixed_terms=fixed_terms)
+    recorder.add_event(
+        "assemblyai_stt_config",
+        {
+            "speech_model": speech_model,
+            "fixed_keyterms_enabled": inject_priors,
+            "fixed_keyterms_path": fixed_keyterms_path,
+            "fixed_keyterms_count": len(fixed_terms),
+        },
+    )
+    if fixed_terms:
+        recorder.log_terms(fixed_terms, "fixed keyterms prompt")
+        recorder.add_event(
+            "assemblyai_keyterms_configured",
+            {"count": len(fixed_terms), "terms": fixed_terms},
+        )
     session = AgentSession(
         stt=stt,
         llm=os.getenv("LK_DIALOG_LLM_MODEL", DEFAULT_LLM_MODEL),
@@ -680,52 +769,15 @@ async def _worker_entrypoint(ctx: JobContext) -> None:
         role = _normalize_role_for_history(role_raw)  # assistant → SYSTEM, user → USER
         text = _coerce_text(getattr(item, "content", None))
         recorder.add_turn(role, text)
+        return
 
-        # Only forecast keywords when SYSTEM spoke (user's next turn is coming).
-        # We don't know what the user will say yet—we forecast terms to bias transcription.
-        # Forecasting on USER turn would use history without the system's reply yet.
-        if role != "SYSTEM":
-            return
-
-        if not inject_priors or encoder is None or index is None:
-            return
-
-        history = _history_text(recorder.history_turns, max_turns=history_turns)
-        if not history.strip():
-            return
-        # Prepend restaurant type for models trained with restaurant_type input
-        if restaurant_type:
-            history = f"Restaurant type: {restaurant_type}\n\n{history}"
-        try:
-            from src.livekit_deepgram_inject import predict_terms, extract_explicit_options_from_utterance
-
-            terms = predict_terms(
-                encoder, index, history,
-                topk=topk, max_terms=max_terms,
-                inject_mode=INJECT_MODE,
-            )
-            # Prepend explicit options from the agent's last utterance (e.g. "chicken pork
-            # shrimp" when agent said "we have chicken pork shrimp and vegetable lo mein").
-            # Retrieval can miss these; extracting them ensures they are always injected.
-            explicit = extract_explicit_options_from_utterance(text)
-            if explicit:
-                explicit_set = {t.lower() for t in explicit}
-                terms = explicit + [t for t in terms if t.lower() not in explicit_set]
-            terms = terms[:max_terms]
-        except Exception as exc:
-            recorder.add_event("prior_prediction_error", {"error": str(exc)})
-            return
-
-        if hasattr(stt, "update_options"):
-            stt.update_options(keyterm=terms)
-        recorder.log_terms(terms, history)
-        recorder.add_event("deepgram_keyword_update", {"count": len(terms), "terms": terms})
-
+    session_started = False
     await session.start(
         agent=agent,
         room=ctx.room,
         record={"audio": True, "logs": False, "traces": False, "transcript": False},
     )
+    session_started = True
 
     # Wait for the PSTN callee to appear.
     if sip_identity:
@@ -756,8 +808,11 @@ async def _worker_entrypoint(ctx: JobContext) -> None:
             {"message": f"call exceeded {max_call_seconds}s, closing session"},
         )
     finally:
-        await session.drain()
-        await session.aclose()
+        if session_started:
+            with contextlib.suppress(RuntimeError):
+                await session.drain()
+            with contextlib.suppress(Exception):
+                await session.aclose()
         out_path = recorder.save()
 
         session_audio = Path(ctx.session_directory) / "audio.ogg"
@@ -815,11 +870,9 @@ def _build_metadata(args: argparse.Namespace, sip_participant_identity: str) -> 
     payload = {
         "call_to": args.call_to,
         "inject_priors": bool(args.inject_priors),
-        "model_dir": args.model_dir,
-        "max_terms": args.max_terms,
-        "topk": args.topk,
-        "history_turns": getattr(args, "history_turns", DEFAULT_HISTORY_TURNS),
-        "restaurant_type": getattr(args, "restaurant_type", None) or None,
+        "assemblyai_speech_model": args.assemblyai_speech_model,
+        "fixed_keyterms_path": args.fixed_keyterms_path,
+        "assemblyai_max_keyterms": args.max_keyterms,
         "output_dir": args.output_dir,
         "greeting": args.greeting,
         "sip_participant_identity": sip_participant_identity,
@@ -879,7 +932,7 @@ async def _dial(args: argparse.Namespace) -> None:
 
 
 def _parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="LiveKit + Deepgram A/B phone call test")
+    parser = argparse.ArgumentParser(description="LiveKit + AssemblyAI A/C phone call test")
     sub = parser.add_subparsers(dest="mode", required=True)
 
     worker_parser = sub.add_parser("worker", help="Run the LiveKit agent worker")
@@ -889,7 +942,7 @@ def _parser() -> argparse.ArgumentParser:
         help="Preload predictor + FAISS index at startup (no per-call delay)",
     )
 
-    dial = sub.add_parser("dial", help="Start one outbound A/B call")
+    dial = sub.add_parser("dial", help="Start one outbound A/C call")
     dial.add_argument("--call-to", required=True, help="Target phone number in E.164 format")
     dial.add_argument(
         "--sip-trunk-id",
@@ -904,27 +957,23 @@ def _parser() -> argparse.ArgumentParser:
     dial.add_argument(
         "--inject-priors",
         action="store_true",
-        help="Enable retrieval-based keyword injection",
+        help="Enable fixed keyterms prompt from asian_rest_keyterms.json",
     )
     dial.add_argument(
-        "--model-dir",
-        default=os.getenv("FSTT_MODEL_DIR", _default_model_dir()),
-        help="Model dir for injection (optional; defaults to same path preloaded by worker)",
+        "--assemblyai-speech-model",
+        default=os.getenv("LK_STT_MODEL", DEFAULT_STT_MODEL),
+        help="AssemblyAI streaming speech model",
     )
-    dial.add_argument("--max-terms", type=int, default=DEFAULT_MAX_TERMS, help="Max keywords to inject")
-    dial.add_argument("--topk", type=int, default=DEFAULT_TOPK, help="Top-k retrieval depth")
     dial.add_argument(
-        "--history-turns",
+        "--fixed-keyterms-path",
+        default=DEFAULT_FIXED_KEYTERMS_PATH,
+        help="JSON file containing fixed keyterms for method C",
+    )
+    dial.add_argument(
+        "--max-keyterms",
         type=int,
-        default=DEFAULT_HISTORY_TURNS,
-        help="Max conversation turns for keyword forecast input",
-    )
-    dial.add_argument(
-        "--restaurant-type",
-        type=str,
-        default=None,
-        help="Restaurant type for models trained with restaurant_type. Must match CSV exactly "
-        "(e.g. chinese_american, thai, greek, ramen, vietnamese, korean).",
+        default=int(os.getenv("ASSEMBLYAI_MAX_KEYTERMS", DEFAULT_MAX_TERMS)),
+        help="Maximum fixed keyterms sent to AssemblyAI in the websocket prompt",
     )
     dial.add_argument(
         "--output-dir",
@@ -960,10 +1009,10 @@ def _parser() -> argparse.ArgumentParser:
 def main() -> None:
     _apply_default_env()
     _configure_logging()
+    _disable_livekit_cloud_uploads()
     args = _parser().parse_args()
 
     if args.mode == "worker":
-        _preload_encoder_index(getattr(args, "model_dir", None))
         server = _make_server()
         # LiveKit's runner expects a command like "start"; this script already
         # chose mode via argparse, so force the worker runner command here.
