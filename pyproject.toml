@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fstt"
+version = "0.1.0"
+description = "fSTT experiments for retrieval-based priors and LiveKit phone testing"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "av",
+    "datasets<4.0.0",
+    "livekit",
+    "livekit-agents",
+    "livekit-plugins-assemblyai",
+    "numpy",
+    "packaging",
+    "pandas",
+    "pyyaml",
+    "scikit-learn",
+    "sentence-transformers",
+    "torch",
+    "tqdm",
+]
+
+[project.optional-dependencies]
+faiss = [
+    "faiss-cpu",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+]
+
+[tool.setuptools]
+py-modules = []
+
+[tool.setuptools.packages.find]
+include = ["src*"]

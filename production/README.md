@@ -7,11 +7,14 @@ transcription accuracy for restaurant phone orders.
 ## Quick Start
 
 ```bash
-# Install
-pip install .
+# Install uv once (Ubuntu/Debian)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Create an isolated env and install the package
+uv sync
 
 # Optional: install FAISS for faster index lookups (sklearn fallback works fine)
-pip install ".[faiss]"
+uv sync --extra faiss
 ```
 
 ```python
@@ -206,36 +209,35 @@ actual ordering.
 **Slow first call** — The first call loads the model into memory (~2-3s). Subsequent calls are
 ~50-150ms. Load the predictor at application startup, not per-request.
 
-## Live A/B Phone Test (LiveKit + Telnyx + Deepgram)
+## Live A/C Phone Test (LiveKit + Telnyx + AssemblyAI)
 
 `production/livekit_ab_test.py` adds a simple end-to-end outbound calling test with:
-- Fixed first prompt: `"This is chinese restaurant what would you like to order today"`
+- Fixed first prompt: `"This is Ginko restaurant what would you like to order today"`
 - Full conversation transcript capture to JSON
-- Toggle for retrieval-based keyterm injection (`--inject-priors` on/off)
+- Toggle for fixed AssemblyAI keyterms prompting (`--inject-priors` on/off)
 
 ### Install runtime dependencies
 
 ```bash
-pip install livekit-agents livekit-plugins-deepgram livekit
+# Install uv once (Ubuntu/Debian)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# From the repo root
+uv sync
+
+# Optional: install FAISS support
+uv sync --extra faiss
 ```
 
-For keyterm injection, the predictor uses the prebuilt FAISS index shipped with the model. Install:
+The current phone test uses a fixed keyterms JSON file, so there is no retrieval model preload step.
 
 ```bash
-pip install faiss-cpu
+# Start worker
+uv run python production/livekit_ab_test.py worker
+
+# Dial with fixed keyterms injection
+uv run python production/livekit_ab_test.py dial --call-to "+1..." --inject-priors
 ```
-
-The worker loads the encoder + index at startup so there is no per-call delay. You do **not** need to pass the model location when dialing—it uses the same default.
-
-```bash
-# Start worker (preloads default model: models/retrieval_minilm_l3_user_only_20260211_001736)
-python production/livekit_ab_test.py worker
-
-# Dial with injection—no --model-dir needed
-python production/livekit_ab_test.py dial --call-to "+1..." --inject-priors
-```
-
-Override with `--model-dir` on worker or dial only if using a different path (or set `FSTT_MODEL_DIR`).
 
 ### Configure environment
 
@@ -244,44 +246,44 @@ You do **not** need to export LiveKit variables for this script. It already incl
 - `LIVEKIT_API_KEY=APIRGMSsjKnsGuw`
 - `LIVEKIT_API_SECRET=...`
 - `LIVEKIT_SIP_TRUNK_ID_OUTBOUND=ST_XLdWcK2UnAUx`
+- `ASSEMBLYAI_API_KEY=...`
 
-Deepgram key handling:
-- You do not need to set `DEEPGRAM_API_KEY` manually for this script.
-- If `DEEPGRAM_API_KEY` is missing, the script auto-fills it from `LIVEKIT_API_KEY`.
+AssemblyAI key handling:
+- You do not need to set `ASSEMBLYAI_API_KEY` manually if the shared default or `stt-benchmark/.env` is available.
+- If needed, export `ASSEMBLYAI_API_KEY` to override the built-in default.
 
 Notes:
 - `--sip-trunk-id` is optional because of the built-in default.
 - Any explicit env var or CLI arg still overrides built-in defaults.
 - Worker logs are quiet by default (`LIVEKIT_LOG_LEVEL=WARNING` inside the script).
 - To see detailed logs while debugging, run with `LIVEKIT_LOG_LEVEL=INFO` or `LIVEKIT_LOG_LEVEL=DEBUG`.
-- STT defaults to LiveKit Inference model strings (for example `deepgram/nova-3`) to avoid direct Deepgram auth errors.
-- The A/B test uses the `src` pipeline (load_encoder, VectorIndex.load_shared_index, predict_terms) and direct Deepgram STT with keyterm injection. Default max_terms is 20.
+- STT defaults to AssemblyAI Universal Streaming (`u3-rt-pro` by default in the script).
+- When `--inject-priors` is enabled, the script sends a capped fixed-keyterms prompt from `examples/asian_rest_keyterms.json`.
 
 ### Start the worker
 
 ```bash
-python production/livekit_ab_test.py worker
+uv run python production/livekit_ab_test.py worker
 ```
 
-### Place one call (A = injection OFF)
+### Place one call (A = keyterms OFF)
 
 ```bash
-python production/livekit_ab_test.py dial --call-to "+15555551234"
+uv run python production/livekit_ab_test.py dial --call-to "+15555551234"
 ```
 
-### Place one call (B = injection ON)
+### Place one call (C = keyterms ON)
 
 ```bash
-python production/livekit_ab_test.py dial \
+uv run python production/livekit_ab_test.py dial \
   --call-to "+15555551234" \
-  --inject-priors \
-  # --model-dir optional; defaults to path preloaded by worker
+  --inject-priors
 ```
 
 Call artifacts are written to `outputs/live_ab_transcripts/` by default:
 - ordered conversation turns
 - raw transcription/conversation events
-- keyterm updates used for each injected step (when enabled)
+- fixed keyterms configuration used for the call (when enabled)
 - `.ogg` audio recording (agent + caller mixed)
 - `.vtt` captions (from turn events)
 - `.srt` captions (for VLC/Premiere/other players)
